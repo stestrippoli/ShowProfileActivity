@@ -9,12 +9,12 @@
 
     <ImageView
         android:id="@+id/profilepic"
+        android:contentDescription="@string/propic"
         android:layout_width="365dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:contentDescription="@string/propic"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,12 +25,12 @@
 
     <TextView
         android:id="@+id/address"
+        android:text="@string/address"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/address"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintBottom_toTopOf="@+id/nickname"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.024"
@@ -40,12 +40,13 @@
 
     <TextView
         android:id="@+id/email"
+
+        android:text="@string/email"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/email"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintBottom_toTopOf="@+id/address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -55,12 +56,13 @@
 
     <TextView
         android:id="@+id/nickname"
+
+        android:text="@string/username"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/username"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.024"
@@ -70,12 +72,13 @@
 
     <TextView
         android:id="@+id/textView3"
+        android:text="@string/name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         app:layout_constraintBottom_toTopOf="@+id/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

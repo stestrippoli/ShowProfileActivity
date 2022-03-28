@@ -5,7 +5,10 @@
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="propic">Your Profile Picture</string>
+
     <string name="modify">Modify your profile</string>
 
+    <string name="camera">Use camera to take picture</string>
+    <string name="gallery">Select an image from the phone gallery</string>
 
 </resources>
