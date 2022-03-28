@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(androidx.core.R.menu.example_menu, menu)
+        inflater.inflate(R.menu.custom_menu, menu)
         return true
     }
 }

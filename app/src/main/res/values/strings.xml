@@ -5,5 +5,7 @@
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="propic">Your Profile Picture</string>
+    <string name="modify">Modify your profile</string>
+
 
 </resources>
