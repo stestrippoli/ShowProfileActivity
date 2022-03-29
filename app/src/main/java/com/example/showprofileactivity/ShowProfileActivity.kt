@@ -2,6 +2,7 @@ package com.example.showprofileactivity
 
 import android.app.Activity
 import android.content.Intent
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -49,6 +50,7 @@ class ShowProfileActivity : AppCompatActivity() {
         b.putString("showprofileactivity.EMAIL", findViewById<TextView>(R.id.email).text.toString())
         b.putString("showprofileactivity.LOCATION", findViewById<TextView>(R.id.location).text.toString())
         i.putExtras(b)
+
         launcher.launch(i)
 
 

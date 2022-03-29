@@ -7,7 +7,7 @@
     tools:context=".ShowProfileActivity">
 
     <ImageButton
-        android:id="@+id/imagebtn"
+        android:id="@+id/propic_e"
         android:layout_width="0dp"
 
         android:layout_height="235dp"
@@ -15,14 +15,14 @@
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/propic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/address"
+        app:layout_constraintEnd_toStartOf="@+id/location_e"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
     <EditText
 
-        android:id="@+id/name"
+        android:id="@+id/name_e"
         android:autofillHints="name"
         android:inputType="textPersonName"
         android:hint="@string/name"
@@ -31,16 +31,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/email"
+        app:layout_constraintBottom_toTopOf="@+id/email_e"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintStart_toEndOf="@+id/imagebtn"
+        app:layout_constraintStart_toEndOf="@+id/propic_e"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread" />
 
     <EditText
-        android:id="@+id/address"
+        android:id="@+id/location_e"
         android:inputType="textPostalAddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -48,15 +48,15 @@
         android:layout_marginEnd="16dp"
         android:hint="@string/location"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toTopOf="@+id/nickname"
+        app:layout_constraintBottom_toTopOf="@+id/nickname_e"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintStart_toEndOf="@+id/imagebtn"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintStart_toEndOf="@+id/propic_e"
+        app:layout_constraintTop_toBottomOf="@+id/email_e" />
 
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/email_e"
         android:inputType="textEmailAddress"
         android:hint="@string/email"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -65,15 +65,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/address"
+        app:layout_constraintBottom_toTopOf="@+id/location_e"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintStart_toEndOf="@+id/imagebtn"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        app:layout_constraintStart_toEndOf="@+id/propic_e"
+        app:layout_constraintTop_toBottomOf="@+id/name_e" />
 
     <EditText
-        android:id="@+id/nickname"
+        android:id="@+id/nickname_e"
         android:inputType="text"
         android:autofillHints="username"
         android:hint="@string/username"
@@ -84,8 +84,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imagebtn"
-        app:layout_constraintTop_toBottomOf="@+id/address" />
+        app:layout_constraintStart_toEndOf="@+id/propic_e"
+        app:layout_constraintTop_toBottomOf="@+id/location_e" />
 
 
 

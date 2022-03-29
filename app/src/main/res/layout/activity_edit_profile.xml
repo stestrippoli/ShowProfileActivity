@@ -9,20 +9,17 @@
 
     <ImageButton
         android:id="@+id/propic_e"
-        android:contentDescription="@string/propic"
-        app:srcCompat="@android:drawable/ic_menu_gallery"
-        app:layout_constraintBottom_toTopOf="@+id/name_e"
-        android:layout_width="365dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="230dp"
+        android:layout_height="227dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/propic"
+        app:layout_constraintBottom_toTopOf="@+id/name_e"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintVertical_weight="1"
-         />
+        android:src="@android:drawable/ic_menu_gallery" />
     <EditText
         android:id="@+id/name_e"
         android:autofillHints="name"
