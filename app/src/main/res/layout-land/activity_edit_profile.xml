@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ShowProfileActivity">
 
     <ImageButton
         android:id="@+id/imagebtn"
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:autofillHints="postalAddress"
         android:layout_marginEnd="16dp"
-        android:hint="@string/address"
+        android:hint="@string/location"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toTopOf="@+id/nickname"
         app:layout_constraintEnd_toEndOf="parent"

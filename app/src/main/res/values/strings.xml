@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ShowProfileActivity</string>
     <string name="name">First Name</string>
-    <string name="address">Address</string>
+    <string name="location">Location</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="propic">Your Profile Picture</string>

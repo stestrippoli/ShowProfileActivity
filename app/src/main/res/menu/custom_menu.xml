@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/modify"
+
+        android:id="@+id/modifybtn"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/modify"
         app:showAsAction="always" />

@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_constraintDimensionRatio="v,2:3"
-    tools:context=".MainActivity">
+    tools:context=".ShowProfileActivity">
 
     <ImageButton
-        android:id="@+id/imagebtn"
+        android:id="@+id/propic_e"
         android:contentDescription="@string/propic"
         app:srcCompat="@android:drawable/ic_menu_gallery"
-        app:layout_constraintBottom_toTopOf="@+id/name"
+        app:layout_constraintBottom_toTopOf="@+id/name_e"
         android:layout_width="365dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -24,7 +24,7 @@
         app:layout_constraintVertical_weight="1"
          />
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/name_e"
         android:autofillHints="name"
         android:inputType="textPersonName"
         android:layout_width="0dp"
@@ -33,52 +33,15 @@
         android:layout_marginEnd="16dp"
         android:hint="@string/name"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        app:layout_constraintBottom_toTopOf="@+id/email"
+        app:layout_constraintBottom_toTopOf="@+id/email_e"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagebtn"
+        app:layout_constraintTop_toBottomOf="@+id/propic_e"
         app:layout_constraintVertical_weight="0.5" />
 
     <EditText
-        android:id="@+id/email"
-        android:inputType="textEmailAddress"
-        android:autofillHints="emailAddress"
-
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/email"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/address"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name"
-        app:layout_constraintVertical_weight="0.5" />
-
-    <EditText
-
-        android:id="@+id/address"
-        android:inputType="textPostalAddress"
-        android:autofillHints="postalAddress"
-
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/address"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/nickname"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.024"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_weight="0.5" />
-
-    <EditText
-        android:id="@+id/nickname"
+        android:id="@+id/nickname_e"
         android:inputType="text"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -91,8 +54,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.024"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/address"
+        app:layout_constraintTop_toBottomOf="@+id/location_e"
         app:layout_constraintVertical_weight="0.5" />
+
+    <EditText
+        android:id="@+id/email_e"
+        android:inputType="textEmailAddress"
+        android:autofillHints="emailAddress"
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/email"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintBottom_toTopOf="@+id/location_e"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_e"
+        app:layout_constraintVertical_weight="0.5" />
+
+    <EditText
+
+        android:id="@+id/location_e"
+        android:inputType="textPostalAddress"
+        android:autofillHints="postalAddress"
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/location"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintBottom_toTopOf="@+id/nickname_e"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.024"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_e"
+        app:layout_constraintVertical_weight="0.5" />
+
 
 
 
