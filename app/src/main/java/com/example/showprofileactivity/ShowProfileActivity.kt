@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -50,7 +49,9 @@ class ShowProfileActivity : AppCompatActivity() {
         b.putString("showprofileactivity.EMAIL", findViewById<TextView>(R.id.email).text.toString())
         b.putString("showprofileactivity.LOCATION", findViewById<TextView>(R.id.location).text.toString())
         i.putExtras(b)
-        startActivityForResult(i,1)
+        launcher.launch(i)
+
+
 
     }
 
@@ -67,16 +68,12 @@ class ShowProfileActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        println(requestCode)
-        println(resultCode)
-        println(data)
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode==1 &&  resultCode== Activity.RESULT_OK && data!=null){
-           // val imgbox = findViewById<ImageView>(R.id.profilepic)
-
-               val namebox = findViewById<TextView>(R.id.name)
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        println(result)
+        if (result.resultCode == Activity.RESULT_OK
+            && result.getData()!=null) {
+            val data: Intent = result.getData()!!
+            val namebox = findViewById<TextView>(R.id.name)
             val nicknamebox = findViewById<TextView>(R.id.nickname)
             val emailbox = findViewById<TextView>(R.id.email)
             val locationbox = findViewById<TextView>(R.id.location)
@@ -84,7 +81,7 @@ class ShowProfileActivity : AppCompatActivity() {
             locationbox.text = data.getStringExtra("showprofileactivity.LOCATION")
             emailbox.text = data.getStringExtra("showprofileactivity.EMAIL")
             nicknamebox.text = data.getStringExtra("showprofileactivity.NICKNAME")
-
         }
     }
+
 }

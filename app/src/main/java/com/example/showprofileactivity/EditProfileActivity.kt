@@ -8,6 +8,7 @@ import android.view.ContextMenu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -52,17 +53,19 @@ class EditProfileActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        super.onBackPressed()
         val i = Intent()
         val b = Bundle()
-        b.putString("showprofileactivity.FULL_NAME", findViewById<TextView>(R.id.name_e).text.toString())
-        b.putString("showprofileactivity.NICKNAME", findViewById<TextView>(R.id.nickname_e).text.toString())
-        b.putString("showprofileactivity.EMAIL", findViewById<TextView>(R.id.email_e).text.toString())
-        b.putString("showprofileactivity.LOCATION", findViewById<TextView>(R.id.location_e).text.toString())
+        b.putString("showprofileactivity.FULL_NAME", findViewById<EditText>(R.id.name_e).text.toString())
+        b.putString("showprofileactivity.NICKNAME", findViewById<EditText>(R.id.nickname_e).text.toString())
+        b.putString("showprofileactivity.EMAIL", findViewById<EditText>(R.id.email_e).text.toString())
+        b.putString("showprofileactivity.LOCATION", findViewById<EditText>(R.id.location_e).text.toString())
 
         i.putExtras(b)
         println(i.extras)
         setResult(Activity.RESULT_OK, i)
+        super.onBackPressed()
+
+
 
     }
 
