@@ -5,7 +5,7 @@
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="propic">Your Profile Picture</string>
-
+    <string name="preference_profile_info_file">preferences</string>
     <string name="modify">Modify your profile</string>
 
     <string name="camera">Use camera to take picture</string>

@@ -1,10 +1,8 @@
 package com.example.showprofileactivity
 
 import android.app.Activity
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -17,7 +15,9 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.showprofileactivity.databinding.ActivityEditProfileBinding
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.drawToBitmap
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,6 +33,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         populate(getIntent())
         val btn = findViewById<ImageButton>(R.id.propic_e)
+
         registerForContextMenu(btn)
     }
 
@@ -49,15 +50,13 @@ class EditProfileActivity : AppCompatActivity() {
         //imgbox.setImageResource(R.drawable.propic)
 
     }
-    override fun onCreateContextMenu(
-        menu: ContextMenu?,
-        v: View?,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
+    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.image_menu, menu)
     }
+
+
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         println(item)
@@ -78,30 +77,15 @@ class EditProfileActivity : AppCompatActivity() {
     private val photolauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
         if (result.resultCode == Activity.RESULT_OK && result.data!=null) {
             val imageBitmap = result.data!!.extras?.get("data") as Bitmap
-            findViewById<ImageView>(R.id.propic_e).setImageBitmap(imageBitmap)
-        }
-    }
-    /*
-    private fun createImageFile(): File {
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = absolutePath
+            findViewById<ImageButton>(R.id.propic_e).setImageBitmap(imageBitmap)
         }
     }
 
-
-     */
     override fun onBackPressed() {
 
         val i = Intent()
         val b = Bundle()
+
         b.putString("showprofileactivity.FULL_NAME", findViewById<EditText>(R.id.name_e).text.toString())
         b.putString("showprofileactivity.NICKNAME", findViewById<EditText>(R.id.nickname_e).text.toString())
         b.putString("showprofileactivity.EMAIL", findViewById<EditText>(R.id.email_e).text.toString())
@@ -112,8 +96,8 @@ class EditProfileActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, i)
         super.onBackPressed()
 
-
-
     }
+
+
 
 }
