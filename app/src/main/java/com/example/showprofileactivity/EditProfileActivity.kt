@@ -1,8 +1,10 @@
 package com.example.showprofileactivity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -16,9 +18,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.core.view.drawToBitmap
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,7 +43,6 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun populate(i: Intent){
-        //val imgbox = findViewById<ImageView>(R.id.propic_e)
         val namebox = findViewById<TextView>(R.id.name_e)
         val nicknamebox = findViewById<TextView>(R.id.nickname_e)
         val emailbox = findViewById<TextView>(R.id.email_e)
@@ -47,7 +51,6 @@ class EditProfileActivity : AppCompatActivity() {
         locationbox.text = i.getStringExtra("showprofileactivity.LOCATION")
         emailbox.text = i.getStringExtra("showprofileactivity.EMAIL")
         nicknamebox.text = i.getStringExtra("showprofileactivity.NICKNAME")
-        //imgbox.setImageResource(R.drawable.propic)
 
     }
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
@@ -57,13 +60,12 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
 
-
     override fun onContextItemSelected(item: MenuItem): Boolean {
         println(item)
         return when (item.itemId) {
             R.id.camera -> {
-                    photolauncher.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
-                    true
+                dispatchTakePictureIntent()
+                true
             }
             R.id.gallery -> {
                 true
@@ -74,10 +76,63 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
 
-    private val photolauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            // Ensure that there's a camera activity to handle the intent
+
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                // Create the File where the photo should go
+                val photoFile: File? = try {
+                    createImageFile()
+
+                } catch (ex: IOException) {
+                    println(ex)
+                    null
+                }
+
+                // Continue only if the File was successfully created
+                photoFile?.also {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        this,
+                        "com.example.android.showprofileactivity",
+                        it
+                    )
+
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    println("1 "+ (takePictureIntent.extras?.get(MediaStore.EXTRA_OUTPUT) ?: "ciao" ))
+                    photolauncher.launch(takePictureIntent)
+                }
+            }
+        }
+    }
+
+    lateinit var currentPhotoPath: String
+
+    @SuppressLint("SimpleDateFormat")
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+
+        }
+    }
+
+    private val photolauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()){ result ->
+
         if (result.resultCode == Activity.RESULT_OK && result.data!=null) {
-            val imageBitmap = result.data!!.extras?.get("data") as Bitmap
-            findViewById<ImageButton>(R.id.propic_e).setImageBitmap(imageBitmap)
+            println(result)
+            val imgbox = findViewById<ImageButton>(R.id.propic_e)
+            println(currentPhotoPath)
+            imgbox.setImageURI(currentPhotoPath.toUri())
         }
     }
 
@@ -90,9 +145,9 @@ class EditProfileActivity : AppCompatActivity() {
         b.putString("showprofileactivity.NICKNAME", findViewById<EditText>(R.id.nickname_e).text.toString())
         b.putString("showprofileactivity.EMAIL", findViewById<EditText>(R.id.email_e).text.toString())
         b.putString("showprofileactivity.LOCATION", findViewById<EditText>(R.id.location_e).text.toString())
-
+        b.putString("showprofileactivity.IMG", currentPhotoPath)
         i.putExtras(b)
-        println(i.extras)
+
         setResult(Activity.RESULT_OK, i)
         super.onBackPressed()
 
