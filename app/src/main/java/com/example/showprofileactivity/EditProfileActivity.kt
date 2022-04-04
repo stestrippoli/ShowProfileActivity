@@ -3,7 +3,6 @@ package com.example.showprofileactivity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -20,8 +19,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
-import androidx.core.view.drawToBitmap
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -69,11 +66,39 @@ class EditProfileActivity : AppCompatActivity() {
                 true
             }
             R.id.gallery -> {
+                openGalleryForImage()
                 true
             }
 
             else -> {super.onOptionsItemSelected(item)}
         }
+    }
+
+    private fun openGalleryForImage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1)
+        //val intent = Intent(Intent.ACTION_PICK)
+        //intent.type = "image/*"
+        //startActivityForResult(intent, 100)
+        //val imageView = findViewById<ImageView>(R.id.propic_e)
+        //val imageBitmap = intent.extras?.get("data") as Bitmap
+        //imageView.setImageBitmap(imageBitmap)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val imageView = findViewById<ImageView>(R.id.propic_e)
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK && requestCode == 100) {
+            imageView.setImageURI(data?.data)
+            //val imgbox = findViewById<ImageButton>(R.id.propic_e)
+        }
+
+        if (requestCode == 1)
+            imageView.setImageURI(data?.data)
     }
 
 
