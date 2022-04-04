@@ -49,11 +49,16 @@ class ShowProfileActivity : AppCompatActivity() {
     private fun editProfile(){
         val i = Intent(this, EditProfileActivity::class.java)
         val b = Bundle()
+        val sharedPref =this.getPreferences(Context.MODE_PRIVATE) ?: return
+        val myJSON = JSONObject(
+            sharedPref.getString("profile",
+                """{"fullname":"Default Name","nickname":"default nickname","email":"default@anna.com","location":"defaultlocation","img": "android.resource://com.example.showprofileactivity/${R.drawable.propic}"}""")
+        )
         b.putString("showprofileactivity.FULL_NAME", findViewById<TextView>(R.id.name).text.toString())
         b.putString("showprofileactivity.NICKNAME", findViewById<TextView>(R.id.nickname).text.toString())
         b.putString("showprofileactivity.EMAIL", findViewById<TextView>(R.id.email).text.toString())
         b.putString("showprofileactivity.LOCATION", findViewById<TextView>(R.id.location).text.toString())
-
+        b.putString("showprofileactivity.IMG", myJSON.getString("img").toString())
         i.putExtras(b)
 
         launcher.launch(i)
@@ -89,7 +94,6 @@ class ShowProfileActivity : AppCompatActivity() {
                 profile.put("location", data.getStringExtra("showprofileactivity.LOCATION"))
                 profile.put("img", data.getStringExtra("showprofileactivity.IMG"))
                 putString("profile", profile.toString())
-                println(profile)
                 apply()
             }
             populateBoxes()

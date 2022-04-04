@@ -36,7 +36,7 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
-        populate(getIntent())
+        populate(intent)
         val btn = findViewById<ImageButton>(R.id.propic_e)
 
         registerForContextMenu(btn)
@@ -51,7 +51,7 @@ class EditProfileActivity : AppCompatActivity() {
         locationbox.text = i.getStringExtra("showprofileactivity.LOCATION")
         emailbox.text = i.getStringExtra("showprofileactivity.EMAIL")
         nicknamebox.text = i.getStringExtra("showprofileactivity.NICKNAME")
-
+        currentPhotoPath = i.getStringExtra("showprofileactivity.IMG").toString()
     }
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
