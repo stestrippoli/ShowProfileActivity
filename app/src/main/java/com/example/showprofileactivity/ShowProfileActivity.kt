@@ -29,14 +29,11 @@ class ShowProfileActivity : AppCompatActivity() {
                 """{"fullname":"Default Name","nickname":"default nickname","email":"default@anna.com","location":"defaultlocation","img": "android.resource://com.example.showprofileactivity/${R.drawable.propic}"}""")
         )
 
-
         namebox.text = myJSON.getString("fullname")
         locationbox.text = myJSON.getString("location")
         emailbox.text = myJSON.getString("email")
         nicknamebox.text = myJSON.getString("nickname")
         imgbox.setImageURI(myJSON.getString("img").toUri())
-
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +41,6 @@ class ShowProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_show_profile)
         populateBoxes()
     }
-
 
     private fun editProfile(){
         val i = Intent(this, EditProfileActivity::class.java)
@@ -62,9 +58,6 @@ class ShowProfileActivity : AppCompatActivity() {
         i.putExtras(b)
 
         launcher.launch(i)
-
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -97,9 +90,6 @@ class ShowProfileActivity : AppCompatActivity() {
                 apply()
             }
             populateBoxes()
-            println(sharedPref.all)
-
-
         }
     }
 

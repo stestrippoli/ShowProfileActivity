@@ -29,9 +29,6 @@ import java.util.*
 
 
 class EditProfileActivity : AppCompatActivity() {
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
@@ -61,9 +58,7 @@ class EditProfileActivity : AppCompatActivity() {
         inflater.inflate(R.menu.image_menu, menu)
     }
 
-
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        println(item)
         return when (item.itemId) {
             R.id.camera -> {
                 dispatchTakePictureIntent()
@@ -88,7 +83,6 @@ class EditProfileActivity : AppCompatActivity() {
                     createImageFile()
 
                 } catch (ex: IOException) {
-                    println(ex)
                     null
                 }
 
@@ -101,7 +95,6 @@ class EditProfileActivity : AppCompatActivity() {
                     )
 
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    println("1 "+ (takePictureIntent.extras?.get(MediaStore.EXTRA_OUTPUT) ?: "ciao" ))
                     photolauncher.launch(takePictureIntent)
                 }
             }
@@ -131,15 +124,12 @@ class EditProfileActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()){ result ->
 
         if (result.resultCode == Activity.RESULT_OK && result.data!=null) {
-            println(result)
             val imgbox = findViewById<ImageButton>(R.id.propic_e)
-            println(currentPhotoPath)
             imgbox.setImageURI(currentPhotoPath.toUri())
         }
     }
 
     override fun onBackPressed() {
-
         val i = Intent()
         val b = Bundle()
 
@@ -152,7 +142,6 @@ class EditProfileActivity : AppCompatActivity() {
 
         setResult(Activity.RESULT_OK, i)
         super.onBackPressed()
-
     }
 
 
