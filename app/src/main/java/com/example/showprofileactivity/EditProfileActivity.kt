@@ -39,6 +39,8 @@ class EditProfileActivity : AppCompatActivity() {
         populate(intent)
         val btn = findViewById<ImageButton>(R.id.propic_e)
 
+        btn.setOnClickListener { btn.performLongClick() }
+
         registerForContextMenu(btn)
     }
 
