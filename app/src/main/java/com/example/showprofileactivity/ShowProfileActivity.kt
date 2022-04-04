@@ -23,16 +23,20 @@ class ShowProfileActivity : AppCompatActivity() {
         val nicknamebox = findViewById<TextView>(R.id.nickname)
         val emailbox = findViewById<TextView>(R.id.email)
         val locationbox = findViewById<TextView>(R.id.location)
+        val skillsbox = findViewById<TextView>(R.id.skills)
+        val descbox = findViewById<TextView>(R.id.description)
         val sharedPref =this.getPreferences(Context.MODE_PRIVATE) ?: return
         val myJSON = JSONObject(
             sharedPref.getString("profile",
-                """{"fullname":"Default Name","nickname":"default nickname","email":"default@anna.com","location":"defaultlocation","img": "android.resource://com.example.showprofileactivity/${R.drawable.propic}"}""")
+                """{"fullname":"Default Name","nickname":"Default nickname","email":"default@email.com","location":"Default location","skills":"Skill1 | Skill2 | Skill3","description": "Default description","img": "android.resource://com.example.showprofileactivity/${R.drawable.propic}"}""")
         )
 
         namebox.text = myJSON.getString("fullname")
         locationbox.text = myJSON.getString("location")
         emailbox.text = myJSON.getString("email")
         nicknamebox.text = myJSON.getString("nickname")
+        skillsbox.text = myJSON.getString("skills")
+        descbox.text = myJSON.getString("description")
         imgbox.setImageURI(myJSON.getString("img").toUri())
     }
 
@@ -48,12 +52,14 @@ class ShowProfileActivity : AppCompatActivity() {
         val sharedPref =this.getPreferences(Context.MODE_PRIVATE) ?: return
         val myJSON = JSONObject(
             sharedPref.getString("profile",
-                """{"fullname":"Default Name","nickname":"default nickname","email":"default@anna.com","location":"defaultlocation","img": "android.resource://com.example.showprofileactivity/${R.drawable.propic}"}""")
+                """{"fullname":"Default Name","nickname":"Default nickname","email":"default@email.com","location":"Default location","skills":"Skill1 | Skill2 | Skill3","description": "Default description","img": "android.resource://com.example.showprofileactivity/${R.drawable.propic}"}""")
         )
         b.putString("showprofileactivity.FULL_NAME", findViewById<TextView>(R.id.name).text.toString())
         b.putString("showprofileactivity.NICKNAME", findViewById<TextView>(R.id.nickname).text.toString())
         b.putString("showprofileactivity.EMAIL", findViewById<TextView>(R.id.email).text.toString())
         b.putString("showprofileactivity.LOCATION", findViewById<TextView>(R.id.location).text.toString())
+        b.putString("showprofileactivity.SKILLS", findViewById<TextView>(R.id.skills).text.toString())
+        b.putString("showprofileactivity.DESCRIPTION", findViewById<TextView>(R.id.description).text.toString())
         b.putString("showprofileactivity.IMG", myJSON.getString("img").toString())
         i.putExtras(b)
 
@@ -85,6 +91,8 @@ class ShowProfileActivity : AppCompatActivity() {
                 profile.put("nickname", data.getStringExtra("showprofileactivity.NICKNAME"))
                 profile.put("email", data.getStringExtra("showprofileactivity.EMAIL"))
                 profile.put("location", data.getStringExtra("showprofileactivity.LOCATION"))
+                profile.put("skills", data.getStringExtra("showprofileactivity.SKILLS"))
+                profile.put("description", data.getStringExtra("showprofileactivity.DESCRIPTION"))
                 profile.put("img", data.getStringExtra("showprofileactivity.IMG"))
                 putString("profile", profile.toString())
                 apply()

@@ -1,9 +1,17 @@
 <resources>
-    <string name="app_name">ShowProfileActivity</string>
-    <string name="name">First Name</string>
-    <string name="location">Location</string>
-    <string name="username">Username</string>
-    <string name="email">Email</string>
+    <string name="app_name">Your Profile</string>
+    <string name="name">Full Name</string>
+    <string name="location">Your Location</string>
+    <string name="username">Your Username</string>
+    <string name="email">Your Email</string>
+    <string name="skills">Skill1 | Skill2 | Skill3</string>
+    <string name="description">Your Description</string>
+    <string name="labelFullname">Full Name</string>
+    <string name="labelLocation">Location</string>
+    <string name="labelUsername">Username</string>
+    <string name="labelEmail">Email</string>
+    <string name="labelSkills">Skills</string>
+    <string name="labelDescription">Description</string>
     <string name="propic">Your Profile Picture</string>
     <string name="preference_profile_info_file">preferences</string>
     <string name="modify">Modify your profile</string>

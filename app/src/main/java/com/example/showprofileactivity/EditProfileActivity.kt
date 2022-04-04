@@ -46,10 +46,14 @@ class EditProfileActivity : AppCompatActivity() {
         val nicknamebox = findViewById<TextView>(R.id.nickname_e)
         val emailbox = findViewById<TextView>(R.id.email_e)
         val locationbox = findViewById<TextView>(R.id.location_e)
+        val skillsbox = findViewById<TextView>(R.id.skills_e)
+        val descbox = findViewById<TextView>(R.id.description_e)
         namebox.text = i.getStringExtra("showprofileactivity.FULL_NAME")
         locationbox.text = i.getStringExtra("showprofileactivity.LOCATION")
         emailbox.text = i.getStringExtra("showprofileactivity.EMAIL")
         nicknamebox.text = i.getStringExtra("showprofileactivity.NICKNAME")
+        skillsbox.text = i.getStringExtra("showprofileactivity.SKILLS")?.replace(" | ", ", ")
+        descbox.text = i.getStringExtra("showprofileactivity.DESCRIPTION")
         currentPhotoPath = i.getStringExtra("showprofileactivity.IMG").toString()
     }
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
@@ -137,6 +141,8 @@ class EditProfileActivity : AppCompatActivity() {
         b.putString("showprofileactivity.NICKNAME", findViewById<EditText>(R.id.nickname_e).text.toString())
         b.putString("showprofileactivity.EMAIL", findViewById<EditText>(R.id.email_e).text.toString())
         b.putString("showprofileactivity.LOCATION", findViewById<EditText>(R.id.location_e).text.toString())
+        b.putString("showprofileactivity.SKILLS", findViewById<EditText>(R.id.skills_e).text.toString().replace(", ", " | "))
+        b.putString("showprofileactivity.DESCRIPTION", findViewById<EditText>(R.id.description_e).text.toString())
         b.putString("showprofileactivity.IMG", currentPhotoPath)
         i.putExtras(b)
 

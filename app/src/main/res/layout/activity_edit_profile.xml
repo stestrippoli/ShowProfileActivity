@@ -9,89 +9,153 @@
 
     <ImageButton
         android:id="@+id/propic_e"
-        android:layout_width="230dp"
-        android:layout_height="227dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/propic"
-        app:layout_constraintBottom_toTopOf="@+id/name_e"
+        android:src="@android:drawable/ic_menu_gallery"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintVertical_weight="1"
-        android:src="@android:drawable/ic_menu_gallery" />
-    <EditText
-        android:id="@+id/name_e"
-        android:autofillHints="name"
-        android:inputType="textPersonName"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        app:layout_constraintBottom_toTopOf="@+id/email_e"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/propic_e"
-        app:layout_constraintVertical_weight="0.5" />
+        app:layout_constraintVertical_weight="1" />
 
-    <EditText
-        android:id="@+id/nickname_e"
-        android:inputType="text"
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:hint="@string/username"
-        android:autofillHints="username"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.024"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location_e"
-        app:layout_constraintVertical_weight="0.5" />
+        app:layout_constraintTop_toBottomOf="@+id/propic_e">
 
-    <EditText
-        android:id="@+id/email_e"
-        android:inputType="textEmailAddress"
-        android:autofillHints="emailAddress"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/email"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/location_e"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_e"
-        app:layout_constraintVertical_weight="0.5" />
+            <TextView
+                android:id="@+id/labelFullname_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelFullname"
+                android:textColor="#A6A6A6"
+                android:textSize="22sp" />
 
-    <EditText
+            <EditText
+                android:id="@+id/name_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:autofillHints="name"
+                android:hint="@string/name"
+                android:inputType="textPersonName"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textSize="36sp" />
 
-        android:id="@+id/location_e"
-        android:inputType="textPostalAddress"
-        android:autofillHints="postalAddress"
+            <TextView
+                android:id="@+id/labelUsername_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelUsername"
+                android:textColor="#A6A6A6"
+                android:textSize="22sp" />
 
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/location"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/nickname_e"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.024"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_e"
-        app:layout_constraintVertical_weight="0.5" />
+            <EditText
+                android:id="@+id/nickname_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:autofillHints="username"
+                android:hint="@string/username"
+                android:inputType="text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="30sp" />
 
+            <TextView
+                android:id="@+id/labelLocation_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelLocation"
+                android:textColor="#A6A6A6"
+                android:textSize="22sp" />
 
+            <EditText
+
+                android:id="@+id/location_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="8dp"
+                android:autofillHints="postalAddress"
+                android:hint="@string/location"
+                android:inputType="textPostalAddress"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/labelSkills_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelSkills"
+                android:textColor="#A6A6A6"
+                android:textSize="22sp" />
+
+            <EditText
+                android:id="@+id/skills_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:autofillHints="username"
+                android:hint="@string/skills"
+                android:inputType="text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/labelEmail_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelEmail"
+                android:textColor="#A6A6A6"
+                android:textSize="22sp" />
+
+            <EditText
+                android:id="@+id/email_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="8dp"
+                android:autofillHints="emailAddress"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="26sp" />
+
+            <TextView
+                android:id="@+id/labelDescription_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelDescription"
+                android:textColor="#A6A6A6"
+                android:textSize="22sp" />
+
+            <EditText
+                android:id="@+id/description_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:autofillHints="username"
+                android:hint="@string/description"
+                android:inputType="textLongMessage|textMultiLine"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
