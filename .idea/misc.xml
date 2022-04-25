@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/layout/activity_edit_profile.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/layout/activity_show_profile.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/layout/fragment_time_slot_details.xml" value="0.33" />
+        <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/menu/custom_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/menu/fragment_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/menu/image_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout-land/activity_edit_profile.xml" value="0.32522522522522523" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout-land/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout-land/activity_show_profile.xml" value="0.22994652406417113" />

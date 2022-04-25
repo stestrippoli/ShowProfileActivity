@@ -22,9 +22,9 @@ class ShowProfileActivity : AppCompatActivity() {
         val namebox = findViewById<TextView>(R.id.name)
         val nicknamebox = findViewById<TextView>(R.id.nickname)
         val emailbox = findViewById<TextView>(R.id.email)
-        val locationbox = findViewById<TextView>(R.id.location)
+        val locationbox = findViewById<TextView>(R.id.locationLabel)
         val skillsbox = findViewById<TextView>(R.id.skills)
-        val descbox = findViewById<TextView>(R.id.description)
+        val descbox = findViewById<TextView>(R.id.descriptionLabel)
         val sharedPref =this.getPreferences(Context.MODE_PRIVATE) ?: return
         val myJSON = JSONObject(
             sharedPref.getString("profile",
@@ -57,9 +57,9 @@ class ShowProfileActivity : AppCompatActivity() {
         b.putString("showprofileactivity.FULL_NAME", findViewById<TextView>(R.id.name).text.toString())
         b.putString("showprofileactivity.NICKNAME", findViewById<TextView>(R.id.nickname).text.toString())
         b.putString("showprofileactivity.EMAIL", findViewById<TextView>(R.id.email).text.toString())
-        b.putString("showprofileactivity.LOCATION", findViewById<TextView>(R.id.location).text.toString())
+        b.putString("showprofileactivity.LOCATION", findViewById<TextView>(R.id.locationLabel).text.toString())
         b.putString("showprofileactivity.SKILLS", findViewById<TextView>(R.id.skills).text.toString())
-        b.putString("showprofileactivity.DESCRIPTION", findViewById<TextView>(R.id.description).text.toString())
+        b.putString("showprofileactivity.DESCRIPTION", findViewById<TextView>(R.id.descriptionLabel).text.toString())
         b.putString("showprofileactivity.IMG", myJSON.getString("img").toString())
         i.putExtras(b)
 

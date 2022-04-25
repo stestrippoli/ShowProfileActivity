@@ -12,11 +12,16 @@
     <string name="labelEmail">Email</string>
     <string name="labelSkills">Skills</string>
     <string name="labelDescription">Description</string>
+    <string name="labelDate">Date</string>
+    <string name="labelTime">Time</string>
+    <string name="labelDuration">Duration</string>
     <string name="propic">Your Profile Picture</string>
     <string name="preference_profile_info_file">preferences</string>
     <string name="modify">Modify your profile</string>
 
     <string name="camera">Use camera to take picture</string>
     <string name="gallery">Select an image from the phone gallery</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
