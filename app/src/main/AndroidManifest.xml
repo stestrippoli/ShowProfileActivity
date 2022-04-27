@@ -24,7 +24,9 @@
         android:theme="@style/Theme.ShowProfileActivity">
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.ShowProfileActivity.NoActionBar" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -33,7 +35,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity
