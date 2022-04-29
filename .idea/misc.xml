@@ -23,9 +23,13 @@
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout-land/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout-land/activity_show_profile.xml" value="0.22994652406417113" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/activity_edit_profile.xml" value="0.22" />
-        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/activity_show_profile.xml" value="0.18" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_time_slot_details.xml" value="0.2" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_time_slot_edit.xml" value="0.16" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/time_slot_edit_fragment.xml" value="0.15598290598290598" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/menu/custom_menu.xml" value="0.1" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/menu/fragment_menu.xml" value="0.18" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/menu/image_menu.xml" value="0.1" />
         <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.332" />
         <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/drawable/ic_launcher_background.xml" value="0.332" />

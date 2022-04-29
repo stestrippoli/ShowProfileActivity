@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 
@@ -19,7 +20,7 @@ import androidx.navigation.ui.NavigationUI
  * create an instance of this fragment.
  */
 class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
-    // TODO: Rename and change types of parameters
+    val vm by viewModels<TimeSlotEditViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +39,7 @@ class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
         val time = view.findViewById<TextView>(R.id.time)
         val duration = view.findViewById<TextView>(R.id.duration)
         val location = view.findViewById<TextView>(R.id.location)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater:MenuInflater){
@@ -50,4 +52,6 @@ class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
             requireView().findNavController())
                 || super.onOptionsItemSelected(item)
     }
+
+
 }
