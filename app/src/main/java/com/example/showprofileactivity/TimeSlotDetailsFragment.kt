@@ -12,14 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-/**
- * A simple [Fragment] subclass.
- * Use the [TimeSlotDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
     val vm by activityViewModels<TimeSlotViewModel>()
 

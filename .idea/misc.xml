@@ -19,7 +19,7 @@
         <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/menu/image_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/menu/main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/menu/navdrawer_menu.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout-land/activity_edit_profile.xml" value="0.32522522522522523" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout-land/activity_edit_profile.xml" value="0.18" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout-land/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout-land/activity_show_profile.xml" value="0.22994652406417113" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/activity_edit_profile.xml" value="0.22" />
@@ -27,6 +27,8 @@
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/activity_show_profile.xml" value="0.18" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_date_picker.xml" value="0.1" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_date_picker2.xml" value="0.15598290598290598" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_home.xml" value="0.1675213675213675" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_time_picker.xml" value="0.11581196581196582" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_time_slot_details.xml" value="0.2" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_time_slot_edit.xml" value="0.16" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/time_slot_edit_fragment.xml" value="0.1" />
