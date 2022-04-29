@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -20,7 +21,7 @@ import androidx.navigation.ui.NavigationUI
  * create an instance of this fragment.
  */
 class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
-    val vm by viewModels<TimeSlotEditViewModel>()
+    val vm by activityViewModels<TimeSlotViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

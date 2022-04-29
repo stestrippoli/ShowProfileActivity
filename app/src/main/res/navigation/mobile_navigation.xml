@@ -3,23 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@id/timeSlotDetailsFragment">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/timeSlotDetailsFragment"
         android:name="com.example.showprofileactivity.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_time_slot_details" />
+    <activity
+        android:id="@+id/showProfileActivity"
+        android:name="com.example.showprofileactivity.ShowProfileActivity"
+        android:label="activity_edit_profile"
+        tools:layout="@layout/activity_edit_profile" />
 
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.showprofileactivity.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.showprofileactivity.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
 </navigation>
