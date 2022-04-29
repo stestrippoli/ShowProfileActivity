@@ -56,3 +56,4 @@ class MainActivity : AppCompatActivity() {
         return NavigationUI.navigateUp(navController, binding.drawerLayout)
     }
 }
+
