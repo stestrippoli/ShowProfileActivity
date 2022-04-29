@@ -77,6 +77,26 @@
                 android:textSize="30sp" />
 
             <TextView
+                android:id="@+id/labelEmail_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelEmail"
+                android:textColor="#A6A6A6"
+                android:textSize="22sp" />
+
+            <EditText
+                android:id="@+id/email_e"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="8dp"
+                android:autofillHints="emailAddress"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="26sp" />
+
+            <TextView
                 android:id="@+id/labelLocation_e"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,26 +135,6 @@
                 android:inputType="text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="30sp" />
-
-            <TextView
-                android:id="@+id/labelEmail_e"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/labelEmail"
-                android:textColor="#A6A6A6"
-                android:textSize="22sp" />
-
-            <EditText
-                android:id="@+id/email_e"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_marginBottom="8dp"
-                android:autofillHints="emailAddress"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textSize="26sp" />
 
             <TextView
                 android:id="@+id/labelDescription_e"

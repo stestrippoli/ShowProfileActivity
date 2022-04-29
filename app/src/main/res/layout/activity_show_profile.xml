@@ -58,23 +58,24 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/labelLocation"
+                android:id="@+id/labelNickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/labelLocation"
+                android:text="@string/labelUsername"
                 android:textColor="#A6A6A6"
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/locationLabel"
+                android:id="@+id/nickname"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:text="@string/location"
+                android:text="@string/username"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="30sp"
-                tools:layout_editor_absoluteX="68dp"
-                tools:layout_editor_absoluteY="451dp" />
+                tools:layout_editor_absoluteX="44dp"
+                tools:layout_editor_absoluteY="501dp" />
 
             <TextView
                 android:id="@+id/labelEmail"
@@ -97,24 +98,23 @@
                 tools:layout_editor_absoluteY="341dp" />
 
             <TextView
-                android:id="@+id/labelNickname"
+                android:id="@+id/labelLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/labelUsername"
+                android:text="@string/labelLocation"
                 android:textColor="#A6A6A6"
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/nickname"
-
+                android:id="@+id/locationLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:text="@string/username"
+                android:text="@string/location"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="30sp"
-                tools:layout_editor_absoluteX="44dp"
-                tools:layout_editor_absoluteY="501dp" />
+                tools:layout_editor_absoluteX="68dp"
+                tools:layout_editor_absoluteY="451dp" />
 
             <TextView
                 android:id="@+id/labelSkills"
