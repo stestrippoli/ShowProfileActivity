@@ -7,10 +7,10 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_baseline_home_24"
-            android:title="@string/menu_home" />
+            android:title="Home" />
         <item
-            android:id="@+id/nav_Profile"
+            android:id="@+id/nav_profile"
             android:icon="@drawable/ic_baseline_person_outline_24"
-            android:title="Profile"/>
+            android:title="Profile" />
     </group>
 </menu>
