@@ -9,10 +9,21 @@
         android:id="@+id/nav_timeSlotDetailsFragment"
         android:name="com.example.showprofileactivity.TimeSlotDetailsFragment"
         android:label="Time Slot Details"
-        tools:layout="@layout/fragment_time_slot_details" />
+        tools:layout="@layout/fragment_time_slot_details" >
+        <action
+            android:id="@+id/action_nav_timeSlotDetailsFragment_to_timeSlotEditFragment2"
+            app:destination="@id/timeSlotEditFragment2" />
+        <action
+            android:id="@+id/action_nav_timeSlotDetailsFragment_to_nav_showProfileActivity"
+            app:destination="@id/nav_showProfileActivity" />
+    </fragment>
     <activity
         android:id="@+id/nav_showProfileActivity"
         android:name="com.example.showprofileactivity.ShowProfileActivity"
         android:label="Profile"
         tools:layout="@layout/activity_show_profile" />
+    <fragment
+        android:id="@+id/timeSlotEditFragment2"
+        android:name="com.example.showprofileactivity.TimeSlotEditFragment"
+        android:label="TimeSlotEditFragment" />
 </navigation>
