@@ -27,7 +27,7 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        createViewModel()
+
 
         activity?.onBackPressedDispatcher?.addCallback(this, object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
@@ -47,8 +47,8 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
                     timeslot.put("description", description?.text)
                     timeslot.put("location", location?.text)
                     timeslot.put("duration", duration?.text)
-                    timeslot.put("date", "${date?.dayOfMonth}-${date?.month?.plus(1)}-${date?.year}")
-                    timeslot.put("time","${time?.hour}:${time?.minute}" )
+                    timeslot.put("date", "${format(date!!.dayOfMonth)}-${format(date.month)}-${format(date.year)}")
+                    timeslot.put("time","${format(time!!.hour)}:${format(time.minute)}" )
                     putString("timeslot", timeslot.toString())
                     apply()
                 }
@@ -86,29 +86,18 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
         }
         val datepicker = view?.findViewById<DatePicker>(R.id.date_e)
         val date = vm.date.value
-        datepicker?.updateDate(date!!.split("-").get(2).toInt(),date!!.split("-").get(1).toInt(),date!!.split("-")?.get(0).toInt())
+        datepicker?.updateDate(date!!.split("-")[2].toInt(),
+            date.split("-")[1].toInt(), date.split("-")[0].toInt())
 
         val timepicker = view?.findViewById<TimePicker>(R.id.time_e)
         val time = vm.time.value
-        timepicker?.minute = time!!.split(":").get(1).toInt()
-        timepicker?.hour = time!!.split(":").get(0).toInt()
+        timepicker?.minute = time!!.split(":")[1].toInt()
+        timepicker?.hour = time.split(":")[0].toInt()
 
 
     }
 
-    private fun createViewModel(){
-        val sharedPref =requireActivity().getPreferences(Context.MODE_PRIVATE) ?: return
-        val myJSON = JSONObject(
-            sharedPref.getString("timeslot",
-                """{"title":"Default title","description":"Default description","location":"Default location","duration":"Default duration","date":"12-12-2001","time":"12:00"}"""        ))
 
-        vm.setTitle(myJSON.getString("title"))
-        vm.setDesc(myJSON.getString("description"))
-        vm.setDuration(myJSON.getString("duration"))
-        vm.setLocation(myJSON.getString("location"))
-        vm.setDate(myJSON.getString("date"))
-        vm.setTime(myJSON.getString("time"))
-    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onDestroyView() {
@@ -124,11 +113,21 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
             vm.setDesc(description.text)
             vm.setDuration(duration.text)
             vm.setLocation(location.text)
-            vm.setDate("${date?.dayOfMonth}-${date?.month}-${date?.year}")
-            vm.setTime("${time?.hour}:${time?.minute}")
+            vm.setDate("${format(date.dayOfMonth)}-${format(date.month)}-${format(date.year)}")
+            vm.setTime("${format(time.hour)}:${format(time.minute)}")
         }
 
         super.onDestroyView()
+
+    }
+
+    private fun format(ex: Int ): CharSequence{
+        //funzione per non perdere gli zeri
+        if(ex < 10){
+            return "0$ex"
+        }
+        else
+            return "$ex"
 
     }
 }

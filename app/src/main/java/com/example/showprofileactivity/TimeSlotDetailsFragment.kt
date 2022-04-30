@@ -33,30 +33,37 @@ class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         populateBoxes()
+
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater:MenuInflater){
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.fragment_menu, menu)
+        inflater.inflate(R.menu.fragment_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item!!,
-            requireView().findNavController())
+        return NavigationUI.onNavDestinationSelected(
+            item,
+            requireView().findNavController()
+        )
                 || super.onOptionsItemSelected(item)
     }
 
-    private fun populateBoxes(){
+    private fun populateBoxes() {
         val title = view?.findViewById<TextView>(R.id.title)
         val description = view?.findViewById<TextView>(R.id.description)
         val date = view?.findViewById<TextView>(R.id.date)
         val time = view?.findViewById<TextView>(R.id.time)
         val duration = view?.findViewById<TextView>(R.id.duration)
         val location = view?.findViewById<TextView>(R.id.location)
-        val sharedPref =requireActivity().getPreferences(Context.MODE_PRIVATE) ?: return
+        val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE) ?: return
         val myJSON = JSONObject(
-            sharedPref.getString("timeslot",
-                """{"title":"Default title","description":"Default description","location":"Default location","duration":"Default duration","date":"12-12-2001","time":"12:00"}"""        ))
+            sharedPref.getString(
+                "timeslot",
+                """{"title":"Default title","description":"Default description","location":"Default location","duration":"Default duration","date":"12-12-2001","time":"12:00"}"""
+            )
+        )
 
         title?.text = myJSON.getString("title")
         description?.text = myJSON.getString("description")
@@ -65,9 +72,13 @@ class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
         date?.text = myJSON.getString("date")
         time?.text = myJSON.getString("time")
 
-
+        vm.setTitle(myJSON.getString("title"))
+        vm.setDesc(myJSON.getString("description"))
+        vm.setDuration(myJSON.getString("duration"))
+        vm.setLocation(myJSON.getString("location"))
+        vm.setDate(myJSON.getString("date"))
+        vm.setTime(myJSON.getString("time"))
 
     }
-
-
 }
+
