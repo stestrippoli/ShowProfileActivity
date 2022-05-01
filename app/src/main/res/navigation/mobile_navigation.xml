@@ -11,7 +11,7 @@
         android:label="Time Slot Details"
         tools:layout="@layout/fragment_time_slot_details" >
         <action
-            android:id="@+id/action_nav_timeSlotDetailsFragment_to_timeSlotEditFragment2"
+            android:id="@+id/action_toEdit"
             app:destination="@id/timeSlotEditFragment2" />
     </fragment>
     <activity
