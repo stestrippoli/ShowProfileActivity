@@ -9,8 +9,9 @@
             android:icon="@drawable/ic_baseline_home_24"
             android:title="Home" />
         <item
-            android:id="@+id/nav_profile"
+            android:id="@+id/action_profile"
             android:icon="@drawable/ic_baseline_person_outline_24"
-            android:title="Profile" />
+            android:title="Profile"
+            />
     </group>
 </menu>

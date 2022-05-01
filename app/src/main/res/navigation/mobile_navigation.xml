@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_timeSlotDetailsFragment">
+    app:startDestination="@id/itemFragment">
 
     <fragment
         android:id="@+id/nav_timeSlotDetailsFragment"
@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_nav_timeSlotDetailsFragment_to_timeSlotEditFragment2"
             app:destination="@id/timeSlotEditFragment2" />
-        <action
-            android:id="@+id/action_nav_timeSlotDetailsFragment_to_nav_showProfileActivity"
-            app:destination="@id/nav_showProfileActivity" />
     </fragment>
     <activity
         android:id="@+id/nav_showProfileActivity"
@@ -26,4 +23,19 @@
         android:id="@+id/timeSlotEditFragment2"
         android:name="com.example.showprofileactivity.TimeSlotEditFragment"
         android:label="TimeSlotEditFragment" />
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="com.example.showprofileactivity.TimeSlotFragment"
+        android:label="fragment_item_list"
+        tools:layout="@layout/fragment_item_list" >
+        <action
+            android:id="@+id/action_itemFragment_to_nav_timeSlotDetailsFragment"
+            app:destination="@id/nav_timeSlotDetailsFragment" />
+        <action
+            android:id="@+id/action_profile"
+            app:destination="@id/nav_showProfileActivity" />
+        <action
+            android:id="@+id/action_addnewfragment"
+            app:destination="@id/timeSlotEditFragment2" />
+    </fragment>
 </navigation>

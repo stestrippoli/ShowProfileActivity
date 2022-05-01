@@ -1,14 +1,17 @@
 package com.example.showprofileactivity
 
+import android.content.Context
 import android.os.Bundle
-import android.view.Menu
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.showprofileactivity.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
+import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,28 +20,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        /*binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }*/
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        /* appBarConfiguration = AppBarConfiguration(
+        appBarConfiguration = AppBarConfiguration(
             setOf(
-                /*R.id.nav_home, */R.id.timeSlotDetailsFragment, R.id.showProfileActivity
+                R.id.nav_home, R.id.action_profile
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        */
+
         navView.setupWithNavController(navController)
 
 
@@ -54,9 +53,6 @@ class MainActivity : AppCompatActivity() {
         return NavigationUI.navigateUp(navController, binding.drawerLayout)
         return true
     }
-
-
-
 
 }
 
