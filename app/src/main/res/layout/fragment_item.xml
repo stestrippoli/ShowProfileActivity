@@ -6,48 +6,55 @@
     android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_outer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="196dp"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:id="@+id/card_view_outer"
         app:cardElevation="3dp">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="167dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/card_title"
+                android:layout_width="133dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="@dimen/text_margin"
+                android:text="@string/title_activity_main"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/card_title"
-                    android:layout_width="133dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/text_margin"
-                    android:text="@string/title_activity_main"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            <TextView
+                android:id="@+id/card_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/text_margin"
 
-                <TextView
-                    android:id="@+id/card_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/text_margin"
+                android:text="@string/description"
+                android:textAppearance="?attr/textAppearanceListItem" />
 
-                    android:text="@string/description"
-                    android:textAppearance="?attr/textAppearanceListItem" />
+            <TextView
+                android:id="@+id/card_date"
+                android:layout_width="121dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Date"
+                android:textAppearance="?attr/textAppearanceListItem" />
 
-                <TextView
-                    android:id="@+id/card_date"
-                    android:layout_width="121dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Date"
-                    android:textAppearance="?attr/textAppearanceListItem" />
+            <Button
+                android:id="@+id/edit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit" />
 
-            </LinearLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

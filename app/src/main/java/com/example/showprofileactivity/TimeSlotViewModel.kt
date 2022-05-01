@@ -11,6 +11,7 @@ import java.util.*
 
 
 class TimeSlotViewModel: ViewModel() {
+        val id = MutableLiveData<Int>()
         val title = MutableLiveData<CharSequence>()
         val description = MutableLiveData<CharSequence>()
         val date = MutableLiveData<CharSequence>()
@@ -18,9 +19,11 @@ class TimeSlotViewModel: ViewModel() {
         val duration = MutableLiveData<CharSequence>()
         val location = MutableLiveData<CharSequence>()
 
+    fun setId(idd : Int) {
+        id.value = idd
+    }
     fun setTitle(newtitle : CharSequence) {
         title.value = newtitle
-        println("new title"+title.value)
     }
 
     fun setDesc(newdesc: CharSequence){

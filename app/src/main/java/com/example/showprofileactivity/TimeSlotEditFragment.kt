@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -42,6 +43,8 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
 
                 val sharedPref = activity!!.getPreferences(Context.MODE_PRIVATE)
                 with (sharedPref.edit()) {
+                    val list = JSONArray(sharedPref.getString("list", "[]"))
+
                     val timeslot = JSONObject()
                     timeslot.put("title",  titlebox?.text)
                     timeslot.put("description", description?.text)
@@ -49,7 +52,9 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
                     timeslot.put("duration", duration?.text)
                     timeslot.put("date", "${format(date!!.dayOfMonth)}-${format(date.month)}-${format(date.year)}")
                     timeslot.put("time","${format(time!!.hour)}:${format(time.minute)}" )
-                    putString("timeslot", timeslot.toString())
+
+                    list.put(vm.id.value!!, timeslot)
+                    putString("list", list.toString())
                     apply()
                 }
                 requireView().findNavController().navigateUp()

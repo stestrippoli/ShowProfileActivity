@@ -10,7 +10,6 @@ import androidx.navigation.ui.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.showprofileactivity.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
 import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
+
 
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
@@ -54,5 +54,56 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+/*
+     fun getAdvertList(): List<TimeSlot> {
+         val list = ArrayList<TimeSlot>()
+         val sharedPref = this.getPreferences(Context.MODE_PRIVATE)
+         val jsonArray = JSONArray(
+             //sharedPref.getString("list", "")
+
+             """[
+   {
+      "id":"1",
+      "data":{
+         "title":"Adv 1",
+         "description":"Default description",
+         "location":"Default location",
+         "duration":"Default duration",
+         "date":"12-12-2001",
+         "time":"12:00"
+      }
+   },
+   {
+      "id":"2",
+      "data":{
+         "title":"Adv 2",
+         "description":"Default description",
+         "location":"Default location",
+         "duration":"Default duration",
+         "date":"12-12-2001",
+         "time":"12:00"
+      }
+   }
+]"""
+         )
+         for (i in 0 until jsonArray.length()) {
+             // ID
+             val id = jsonArray.getJSONObject(i).getString("id")
+             val title = jsonArray.getJSONObject(i).getString("title")
+             val description = jsonArray.getJSONObject(i).getString("description")
+             val location = jsonArray.getJSONObject(i).getString("location")
+             val duration = jsonArray.getJSONObject(i).getString("duration")
+             val date = jsonArray.getJSONObject(i).getString("date")
+             val time = jsonArray.getJSONObject(i).getString("time")
+             // Save data using your Model
+             val advert = TimeSlot(title, description, location, duration, date, time)
+             list.add(advert)
+
+         }
+
+
+
+     }
+*/
 }
 

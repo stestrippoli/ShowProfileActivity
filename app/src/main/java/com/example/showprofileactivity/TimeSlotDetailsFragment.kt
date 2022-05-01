@@ -58,20 +58,14 @@ class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
         val duration = view?.findViewById<TextView>(R.id.duration)
         val location = view?.findViewById<TextView>(R.id.location)
         val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE) ?: return
-        val myJSON = JSONObject(
-            sharedPref.getString(
-                "timeslot",
-                """{"title":"Default title","description":"Default description","location":"Default location","duration":"Default duration","date":"12-12-2001","time":"12:00"}"""
-            )
-        )
-
+        val myJSON = JSONObject(this.arguments?.getString("item"))
         title?.text = myJSON.getString("title")
         description?.text = myJSON.getString("description")
         duration?.text = myJSON.getString("duration")
         location?.text = myJSON.getString("location")
         date?.text = myJSON.getString("date")
         time?.text = myJSON.getString("time")
-
+        vm.setId(myJSON.getString("id").toInt())
         vm.setTitle(myJSON.getString("title"))
         vm.setDesc(myJSON.getString("description"))
         vm.setDuration(myJSON.getString("duration"))

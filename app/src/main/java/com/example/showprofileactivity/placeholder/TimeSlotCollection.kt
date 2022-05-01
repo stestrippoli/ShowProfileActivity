@@ -1,5 +1,6 @@
 package com.example.showprofileactivity.placeholder
 
+import org.json.JSONObject
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -33,13 +34,11 @@ object TimeSlotCollection {
         ITEM_MAP[(ITEM_MAP.size+1)] = item
     }
 
-    private fun makeDetails(position: Int): String {
-        val builder = StringBuilder()
-        builder.append("Details about Item: ").append(position)
-        for (i in 0..position - 1) {
-            builder.append("\nMore details information here.")
-        }
-        return builder.toString()
+    fun clear(){
+        ITEMS.clear()
+        ITEM_MAP.clear()
     }
+
+
 
 }

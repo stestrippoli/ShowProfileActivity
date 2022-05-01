@@ -19,9 +19,10 @@ import org.json.JSONArray
 class TimeSlotFragment : Fragment() {
 
     private var columnCount = 1
-
+    private val objects = TimeSlotCollection
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
 
     }
@@ -32,7 +33,6 @@ class TimeSlotFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
-        val objects = TimeSlotCollection
         fillItems(objects)
 
 
@@ -48,40 +48,21 @@ class TimeSlotFragment : Fragment() {
         }
         return view
     }
+
+
+    override fun onDestroyView() {
+        objects.clear()
+        super.onDestroyView()
+    }
     private fun fillItems(objects: TimeSlotCollection){
 
             val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
             val jsonArray = JSONArray(
-                //sharedPref.getString("list", "")
+                sharedPref.getString("list", "[]")
 
-                """[
-   {
-      "id":"1",
-   
-         "title":"Adv 1",
-         "description":"Default description",
-         "location":"Default location",
-         "duration":"Default duration",
-         "date":"12-12-2001",
-         "time":"12:00"
-      
-   },
-   {
-      "id":"2",
-     
-         "title":"Adv 2",
-         "description":"Default description",
-         "location":"Default location",
-         "duration":"Default duration",
-         "date":"12-12-2001",
-         "time":"12:00"
-      
-   }
-]"""
             )
             for (i in 0 until jsonArray.length()) {
                 // ID
-                val id = jsonArray.getJSONObject(i).getString("id")
                 val title = jsonArray.getJSONObject(i).getString("title")
                 val description = jsonArray.getJSONObject(i).getString("description")
                 val location = jsonArray.getJSONObject(i).getString("location")
@@ -91,7 +72,7 @@ class TimeSlotFragment : Fragment() {
                 // Save data using your Model
                 val advert = TimeSlot(title, description, location, duration, date, time)
                 objects.addItem(advert)
-                println("item $advert added")
+
             }
 
         }
