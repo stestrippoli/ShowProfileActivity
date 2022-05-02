@@ -33,12 +33,20 @@
             app:destination="@id/nav_timeSlotDetailsFragment" />
         <action
             android:id="@+id/action_profile"
-            app:destination="@id/nav_showProfileActivity" />
+            app:destination="@id/nav_showProfileActivity"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_addnewfragment"
             app:destination="@id/timeSlotEditFragment2" />
         <action
             android:id="@+id/action_toEditFragment"
-            app:destination="@id/timeSlotEditFragment2" />
+            app:destination="@id/timeSlotEditFragment2"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
 </navigation>
