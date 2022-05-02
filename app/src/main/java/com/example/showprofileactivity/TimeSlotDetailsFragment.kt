@@ -1,21 +1,23 @@
 package com.example.showprofileactivity
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -29,6 +31,16 @@ class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_time_slot_details, container, false)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                requireView().findNavController().navigateUp()
+            }
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

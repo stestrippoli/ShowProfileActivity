@@ -14,11 +14,14 @@
             android:id="@+id/action_toEdit"
             app:destination="@id/timeSlotEditFragment2" />
     </fragment>
-    <activity
-        android:id="@+id/nav_showProfileActivity"
-        android:name="com.example.showprofileactivity.ShowProfileActivity"
-        android:label="Profile"
-        tools:layout="@layout/activity_show_profile" />
+    <fragment
+        android:id="@+id/fragment_show_profile2"
+        android:name="com.example.showprofileactivity.ShowProfileFragment"
+        android:label="ShowProfileFragment" />
+    <fragment
+        android:id="@+id/fragment_edit_profile"
+        android:name="com.example.showprofileactivity.EditProfileFragment"
+        android:label="ShowProfileFragment" />
     <fragment
         android:id="@+id/timeSlotEditFragment2"
         android:name="com.example.showprofileactivity.TimeSlotEditFragment"
@@ -33,7 +36,7 @@
             app:destination="@id/nav_timeSlotDetailsFragment" />
         <action
             android:id="@+id/action_profile"
-            app:destination="@id/nav_showProfileActivity"
+            app:destination="@id/fragment_show_profile2"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
@@ -44,6 +47,13 @@
         <action
             android:id="@+id/action_toEditFragment"
             app:destination="@id/timeSlotEditFragment2"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_toEditProfileFragment"
+            app:destination="@id/fragment_edit_profile"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
