@@ -37,5 +37,8 @@
         <action
             android:id="@+id/action_addnewfragment"
             app:destination="@id/timeSlotEditFragment2" />
+        <action
+            android:id="@+id/action_toEditFragment"
+            app:destination="@id/timeSlotEditFragment2" />
     </fragment>
 </navigation>

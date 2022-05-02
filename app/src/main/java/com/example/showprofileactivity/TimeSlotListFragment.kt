@@ -5,12 +5,14 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.showprofileactivity.placeholder.TimeSlot
+import com.example.showprofileactivity.placeholder.TimeSlotCollection
 
 
 class TimeSlotListFragment(
@@ -19,15 +21,9 @@ class TimeSlotListFragment(
 ) : RecyclerView.Adapter<TimeSlotListFragment.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        val v = LayoutInflater.from(parent.context)
-
+       val v = LayoutInflater.from(parent.context)
             .inflate(
-                if(itemCount>0) {
-                    R.layout.fragment_item
-                } else {
-                    R.layout.empty_fragment
-                },
+               R.layout.fragment_item,
                 parent,
                 false
             )
@@ -44,11 +40,16 @@ class TimeSlotListFragment(
         holder.card_date.text = item.date
         
         holder.itemView.setOnClickListener{v:View ->
-            println("cliccato item"+item.title)
             val b = bundleOf("item" to item.itemToJSON(position).toString())
-
             v.findNavController().navigate(R.id.nav_timeSlotDetailsFragment, b)
         }
+
+        val btn = holder.itemView.findViewById<Button>(R.id.edit_btn)
+        btn.setOnClickListener{
+            val b = bundleOf("item" to item.itemToJSON(position).toString())
+            it.findNavController().navigate(R.id.action_toEditFragment, b )
+        }
+
     }
 
     override fun getItemCount(): Int = values.size

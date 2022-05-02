@@ -28,8 +28,7 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
+        populateBoxes()
         activity?.onBackPressedDispatcher?.addCallback(this, object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
              //Update shared preference for permanent data
@@ -40,17 +39,15 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
                 val time = view?.findViewById<TimePicker>(R.id.time_e)
                 val duration = view?.findViewById<EditText>(R.id.duration_e)
 
-
                 val sharedPref = activity!!.getPreferences(Context.MODE_PRIVATE)
                 with (sharedPref.edit()) {
                     val list = JSONArray(sharedPref.getString("list", "[]"))
-
                     val timeslot = JSONObject()
                     timeslot.put("title",  titlebox?.text)
                     timeslot.put("description", description?.text)
                     timeslot.put("location", location?.text)
                     timeslot.put("duration", duration?.text)
-                    timeslot.put("date", "${format(date!!.dayOfMonth)}-${format(date.month)}-${format(date.year)}")
+                    timeslot.put("date", "${format(date!!.dayOfMonth)}-${format(date.month+1)}-${format(date.year)}")
                     timeslot.put("time","${format(time!!.hour)}:${format(time.minute)}" )
 
                     list.put(vm.id.value!!, timeslot)
@@ -61,7 +58,6 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
 
             }
         })
-
     }
 
 
@@ -71,7 +67,7 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        populateBoxes()
         val title = view.findViewById<EditText>(R.id.title_e)
         vm.title.observe(this.viewLifecycleOwner){
             title.setText(it)
@@ -92,7 +88,7 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
         val datepicker = view?.findViewById<DatePicker>(R.id.date_e)
         val date = vm.date.value
         datepicker?.updateDate(date!!.split("-")[2].toInt(),
-            date.split("-")[1].toInt(), date.split("-")[0].toInt())
+            date.split("-")[1].toInt()-1, date.split("-")[0].toInt())
 
         val timepicker = view?.findViewById<TimePicker>(R.id.time_e)
         val time = vm.time.value
@@ -118,11 +114,23 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
             vm.setDesc(description.text)
             vm.setDuration(duration.text)
             vm.setLocation(location.text)
-            vm.setDate("${format(date.dayOfMonth)}-${format(date.month)}-${format(date.year)}")
+            vm.setDate("${format(date.dayOfMonth)}-${format(date.month+1)}-${format(date.year)}")
             vm.setTime("${format(time.hour)}:${format(time.minute)}")
         }
 
         super.onDestroyView()
+
+    }
+
+    private fun populateBoxes() {
+        val myJSON = JSONObject(this.arguments?.getString("item"))
+        vm.setId(myJSON.getString("id").toInt())
+        vm.setTitle(myJSON.getString("title"))
+        vm.setDesc(myJSON.getString("description"))
+        vm.setDuration(myJSON.getString("duration"))
+        vm.setLocation(myJSON.getString("location"))
+        vm.setDate(myJSON.getString("date"))
+        vm.setTime(myJSON.getString("time"))
 
     }
 

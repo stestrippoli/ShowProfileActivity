@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -42,12 +43,11 @@ class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
         inflater.inflate(R.menu.fragment_menu, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(
-            item,
-            requireView().findNavController()
-        )
-                || super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(sd: MenuItem): Boolean {
+        val myJSON = JSONObject(this.arguments?.getString("item"))
+        val  b = bundleOf("item" to myJSON.toString())
+        this.view?.findNavController()?.navigate(R.id.action_toEditFragment, b)
+        return super.onOptionsItemSelected(sd)
     }
 
     private fun populateBoxes() {
