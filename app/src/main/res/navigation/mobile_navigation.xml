@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_time_slot_details" >
         <action
             android:id="@+id/action_toEdit"
-            app:destination="@id/timeSlotEditFragment2" />
+            app:destination="@id/timeSlotEditFragment2"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/timeSlotEditFragment2"
@@ -25,7 +29,11 @@
         tools:layout="@layout/fragment_item_list" >
         <action
             android:id="@+id/action_itemFragment_to_nav_timeSlotDetailsFragment"
-            app:destination="@id/nav_timeSlotDetailsFragment" />
+            app:destination="@id/nav_timeSlotDetailsFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_addnewfragment"
             app:destination="@id/timeSlotEditFragment2" />
@@ -38,7 +46,11 @@
             app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_itemFragment_to_showProfileFragment"
-            app:destination="@id/showProfileFragment" />
+            app:destination="@id/showProfileFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/showProfileFragment"
@@ -47,7 +59,11 @@
         tools:layout="@layout/fragment_show_profile" >
         <action
             android:id="@+id/action_toEditProfileFragment"
-            app:destination="@id/editProfileFragment" />
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"

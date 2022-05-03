@@ -66,6 +66,8 @@
         <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/layout/activity_edit_profile.xml" value="0.2755208333333333" />
         <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/layout/activity_show_profile.xml" value="0.3625" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_show_profile.xml" value="0.19610507246376813" />
       </map>
     </option>
   </component>
