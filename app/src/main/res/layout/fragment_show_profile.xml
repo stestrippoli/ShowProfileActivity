@@ -23,7 +23,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/fullname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -50,7 +50,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name">
+        app:layout_constraintTop_toBottomOf="@+id/fullname">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,7 +106,7 @@
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/locationLabel"
+                android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
@@ -137,7 +137,7 @@
                 tools:layout_editor_absoluteY="501dp" />
 
             <TextView
-                android:id="@+id/labelSkills2"
+                android:id="@+id/labelDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/labelDescription"
@@ -145,8 +145,7 @@
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/descriptionLabel"
-
+                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"

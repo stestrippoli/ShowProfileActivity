@@ -12,7 +12,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".TimeSlotFragment"
+        tools:context=".timeslots.TimeSlotFragment"
         tools:listitem="@layout/fragment_item">
 
     </androidx.recyclerview.widget.RecyclerView>

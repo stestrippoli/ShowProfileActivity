@@ -1,4 +1,4 @@
-package com.example.showprofileactivity
+package com.example.showprofileactivity.timeslots
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData

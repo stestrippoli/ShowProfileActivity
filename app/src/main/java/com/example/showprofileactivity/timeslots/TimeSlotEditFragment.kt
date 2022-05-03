@@ -1,4 +1,4 @@
-package com.example.showprofileactivity
+package com.example.showprofileactivity.timeslots
 
 import android.content.Context
 import android.os.Build
@@ -9,12 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.showprofileactivity.R
 import org.json.JSONArray
 import org.json.JSONObject
 
 
-class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
+class TimeSlotEditFragment : Fragment(R.layout.fragment_time_slot_edit) {
     val vm by activityViewModels<TimeSlotViewModel>()
 
     override fun onCreateView(
@@ -22,7 +23,7 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.time_slot_edit_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_time_slot_edit, container, false)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -53,8 +54,9 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
                     putString("list", list.toString())
                     apply()
                 }
+                findNavController().popBackStack()
+                this.remove()
 
-                requireView().findNavController().navigateUp()
 
             }
         })
@@ -107,7 +109,6 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onDestroyView() {
-        println("dest")
         updatevm()
         super.onDestroyView()
 

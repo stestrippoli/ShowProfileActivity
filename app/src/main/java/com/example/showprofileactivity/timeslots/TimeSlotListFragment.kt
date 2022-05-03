@@ -1,19 +1,14 @@
-package com.example.showprofileactivity
+package com.example.showprofileactivity.timeslots
 
-import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import com.example.showprofileactivity.R
 import com.example.showprofileactivity.placeholder.TimeSlot
-import com.example.showprofileactivity.placeholder.TimeSlotCollection
 
 
 class TimeSlotListFragment(
@@ -23,7 +18,7 @@ class TimeSlotListFragment(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
        val v = LayoutInflater.from(parent.context)
             .inflate(
-               R.layout.fragment_item,
+                R.layout.fragment_item,
                 parent,
                 false
             )
@@ -56,7 +51,7 @@ class TimeSlotListFragment(
             vm.setDesc(item.description)
             vm.setLocation(item.location)
             vm.setDuration(item.duration)
-            it.findNavController().navigate(R.id.action_toEditFragment )
+            it.findNavController().navigate(R.id.action_toEditFragment)
         }
 
     }

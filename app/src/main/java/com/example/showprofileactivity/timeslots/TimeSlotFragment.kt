@@ -1,4 +1,4 @@
-package com.example.showprofileactivity
+package com.example.showprofileactivity.timeslots
 
 import android.content.Context
 import android.os.Bundle
@@ -9,12 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
+import com.example.showprofileactivity.R
 import com.example.showprofileactivity.placeholder.TimeSlot
 import com.example.showprofileactivity.placeholder.TimeSlotCollection
 import com.google.android.material.floatingactionbutton.FloatingActionButton

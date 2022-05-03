@@ -1,0 +1,89 @@
+package com.example.showprofileactivity.profile
+
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.view.*
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.example.showprofileactivity.R
+import org.json.JSONObject
+
+
+class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
+
+
+    private val sharedViewModel : SharedViewModel by activityViewModels()
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        setHasOptionsMenu(true)
+        setViewModel()
+
+        return inflater.inflate(R.layout.fragment_show_profile, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val namebox = requireView().findViewById<TextView>(R.id.fullname)
+
+        sharedViewModel.fullname.observe(viewLifecycleOwner) { fullname ->
+            namebox.text = fullname
+        }
+        sharedViewModel.nickname.observe(viewLifecycleOwner) { nickname ->
+            requireView().findViewById<TextView>(R.id.nickname).text = nickname
+        }
+        sharedViewModel.email.observe(viewLifecycleOwner) { email ->
+            requireView().findViewById<TextView>(R.id.email).text = email
+        }
+        sharedViewModel.location.observe(viewLifecycleOwner) { location ->
+            requireView().findViewById<TextView>(R.id.location).text = location
+        }
+        sharedViewModel.skills.observe(viewLifecycleOwner) { skills ->
+            requireView().findViewById<TextView>(R.id.skills).text = skills
+        }
+        sharedViewModel.description.observe(viewLifecycleOwner) { description ->
+            requireView().findViewById<TextView>(R.id.description).text = description
+        }
+        sharedViewModel.picture.observe(viewLifecycleOwner) { picture ->
+            requireView().findViewById<ImageView>(R.id.profilepic).setImageURI(picture.toString().toUri())
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.custom_menu, menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onContextItemSelected(item)
+        findNavController().navigate(R.id.action_toEditProfileFragment)
+        return true
+    }
+
+    private fun setViewModel(){
+       val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val myJSON = JSONObject(
+            sharedPref.getString("profile",
+                """{"fullname":"Default Name","nickname":"Default nickname","email":"default@email.com","location":"Default location","skills":"Skill1 | Skill2 | Skill3","description": "Default description","img": "android.resource://com.example.showprofileactivity/${R.drawable.propic}"}""")
+        )
+        sharedViewModel.saveFullname(myJSON.getString("fullname").toString())
+        sharedViewModel.saveNickname(myJSON.getString("nickname").toString())
+        sharedViewModel.saveEmail(myJSON.getString("email").toString())
+        sharedViewModel.saveLocation(myJSON.getString("location").toString())
+        sharedViewModel.saveSkills(myJSON.getString("skills").toString())
+        sharedViewModel.saveDescription(myJSON.getString("description").toString())
+        sharedViewModel.savePicture( myJSON.getString("img").toString())
+
+
+    }
+
+}

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_timeSlotDetailsFragment"
-        android:name="com.example.showprofileactivity.TimeSlotDetailsFragment"
+        android:name="com.example.showprofileactivity.timeslots.TimeSlotDetailsFragment"
         android:label="Time Slot Details"
         tools:layout="@layout/fragment_time_slot_details" >
         <action
@@ -16,11 +16,11 @@
     </fragment>
     <fragment
         android:id="@+id/timeSlotEditFragment2"
-        android:name="com.example.showprofileactivity.TimeSlotEditFragment"
+        android:name="com.example.showprofileactivity.timeslots.TimeSlotEditFragment"
         android:label="TimeSlotEditFragment" />
     <fragment
         android:id="@+id/itemFragment"
-        android:name="com.example.showprofileactivity.TimeSlotFragment"
+        android:name="com.example.showprofileactivity.timeslots.TimeSlotFragment"
         android:label="fragment_item_list"
         tools:layout="@layout/fragment_item_list" >
         <action
@@ -42,15 +42,15 @@
     </fragment>
     <fragment
         android:id="@+id/showProfileFragment"
-        android:name="com.example.showprofileactivity.ShowProfileFragment"
-        android:label="fragment_show_profile2"
-        tools:layout="@layout/fragment_show_profile2" >
+        android:name="com.example.showprofileactivity.profile.ShowProfileFragment"
+        android:label="fragment_show_profile"
+        tools:layout="@layout/fragment_show_profile" >
         <action
             android:id="@+id/action_toEditProfileFragment"
             app:destination="@id/editProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.showprofileactivity.EditProfileFragment"
+        android:name="com.example.showprofileactivity.profile.EditProfileFragment"
         android:label="EditProfileFragment" />
 </navigation>

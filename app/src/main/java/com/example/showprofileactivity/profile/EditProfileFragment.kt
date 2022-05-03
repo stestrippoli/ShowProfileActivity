@@ -1,16 +1,14 @@
-package com.example.showprofileactivity
+package com.example.showprofileactivity.profile
 
-import android.content.Context
-import android.view.MenuInflater
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ImageButton
 import android.widget.TextView
-import org.json.JSONObject
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
@@ -22,56 +20,86 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
+import com.example.showprofileactivity.R
+import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class EditProfileFragment : Fragment() {
+class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private val sharedViewModel : SharedViewModel by activityViewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
+      return inflater.inflate(R.layout.fragment_edit_profile, container, false)
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val btn = view?.findViewById<ImageButton>(R.id.propic_e)
 
         btn!!.setOnClickListener {
             btn.performLongClick()
         }
 
+        currentPhotoPath = sharedViewModel.picture.value.toString()
         sharedViewModel.fullname.observe(viewLifecycleOwner) { fullname ->
-            requireView().findViewById<TextView>(R.id.name_e).text = fullname
+            requireView().findViewById<EditText>(R.id.name_e).setText(fullname)
         }
         sharedViewModel.nickname.observe(viewLifecycleOwner) { nickname ->
-            requireView().findViewById<TextView>(R.id.nickname_e).text = nickname
+            requireView().findViewById<EditText>(R.id.nickname_e).setText(nickname)
         }
         sharedViewModel.email.observe(viewLifecycleOwner) { email ->
-            requireView().findViewById<TextView>(R.id.email_e).text = email
+            requireView().findViewById<EditText>(R.id.email_e).setText(email)
         }
         sharedViewModel.location.observe(viewLifecycleOwner) { location ->
-            requireView().findViewById<TextView>(R.id.location_e).text = location
+            requireView().findViewById<EditText>(R.id.location_e).setText(location)
         }
         sharedViewModel.skills.observe(viewLifecycleOwner) { skills ->
-            requireView().findViewById<TextView>(R.id.skills_e).text = skills.replace(" | ", ", ")
+            requireView().findViewById<EditText>(R.id.skills_e).setText(skills.toString().replace(" | ", ", "))
         }
         sharedViewModel.description.observe(viewLifecycleOwner) { description ->
-            requireView().findViewById<TextView>(R.id.name_e).text = description
-        }
-        sharedViewModel.picture.observe(viewLifecycleOwner) { picture ->
-            requireView().findViewById<ImageView>(R.id.profilepic).setImageURI(picture.toUri())
+            requireView().findViewById<EditText>(R.id.description_e).setText(description)
         }
 
+        sharedViewModel.picture.observe(viewLifecycleOwner) { picture ->
+            requireView().findViewById<ImageButton>(R.id.propic_e).setImageURI(picture.toString().toUri())
+        }
+
+
+
         registerForContextMenu(btn)
-        return inflater.inflate(R.layout.fragment_edit_profile, container, false)
+
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
+                with (sharedPref.edit()) {
+                    val profile = JSONObject()
+                    profile.put("fullname", sharedViewModel.fullname.value)
+                    profile.put("nickname", sharedViewModel.nickname.value)
+                    profile.put("email", sharedViewModel.email.value)
+                    profile.put("location", sharedViewModel.location.value)
+                    profile.put("skills", sharedViewModel.skills.value)
+                    profile.put("description", sharedViewModel.description.value)
+                    profile.put("img", sharedViewModel.picture.value)
+                    putString("profile", profile.toString())
+                    apply()
+                }
+                findNavController().popBackStack()
+            }
+        })
     }
+
 
 
     /*private fun populate(){
@@ -120,19 +148,6 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                sharedViewModel.saveFullname(requireView().findViewById<TextView>(R.id.name_e).text as String)
-                sharedViewModel.saveEmail(requireView().findViewById<TextView>(R.id.email_e).text as String)
-                sharedViewModel.saveLocation(requireView().findViewById<TextView>(R.id.location_e).text as String)
-                val skillslist = requireView().findViewById<TextView>(R.id.skills_e).text as String
-                sharedViewModel.saveSkills(skillslist.replace(" | ", ", "))
-                sharedViewModel.saveDescription(requireView().findViewById<TextView>(R.id.name_e).text as String)
-                sharedViewModel.savePicture(currentPhotoPath)
-            }
-        })
-    }
 
     private fun openGalleryForImage() {
         val intent = Intent()
@@ -205,6 +220,7 @@ class EditProfileFragment : Fragment() {
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
+            sharedViewModel.savePicture(currentPhotoPath)
 
         }
     }
@@ -216,5 +232,21 @@ class EditProfileFragment : Fragment() {
             val imgbox = view?.findViewById<ImageButton>(R.id.propic_e)
             imgbox!!.setImageURI(currentPhotoPath.toUri())
         }
+    }
+
+    override fun onDestroyView() {
+        updatevm()
+        super.onDestroyView()
+
+    }
+
+    fun updatevm() {
+        sharedViewModel.saveFullname(requireView().findViewById<EditText>(R.id.name_e).text)
+        sharedViewModel.saveEmail(requireView().findViewById<EditText>(R.id.email_e).text)
+        sharedViewModel.saveLocation(requireView().findViewById<EditText>(R.id.location_e).text)
+        val skillslist = requireView().findViewById<EditText>(R.id.skills_e).text.toString()
+        sharedViewModel.saveSkills(skillslist.replace(" | ", ", "))
+        sharedViewModel.saveDescription(requireView().findViewById<EditText>(R.id.description_e).text)
+        sharedViewModel.savePicture(currentPhotoPath)
     }
 }
