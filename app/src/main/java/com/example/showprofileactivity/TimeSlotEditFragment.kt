@@ -28,7 +28,6 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        populateBoxes()
         activity?.onBackPressedDispatcher?.addCallback(this, object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
              //Update shared preference for permanent data
@@ -54,6 +53,7 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
                     putString("list", list.toString())
                     apply()
                 }
+
                 requireView().findNavController().navigateUp()
 
             }
@@ -67,7 +67,6 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        populateBoxes()
         val title = view.findViewById<EditText>(R.id.title_e)
         vm.title.observe(this.viewLifecycleOwner){
             title.setText(it)
@@ -86,54 +85,51 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
             duration.setText(it)
         }
         val datepicker = view?.findViewById<DatePicker>(R.id.date_e)
-        val date = vm.date.value
-        datepicker?.updateDate(date!!.split("-")[2].toInt(),
-            date.split("-")[1].toInt()-1, date.split("-")[0].toInt())
-
-        val timepicker = view?.findViewById<TimePicker>(R.id.time_e)
-        val time = vm.time.value
-        timepicker?.minute = time!!.split(":")[1].toInt()
-        timepicker?.hour = time.split(":")[0].toInt()
+        vm.date.observe(this.viewLifecycleOwner) {
+            val date = vm.date.value
+            datepicker?.updateDate(
+                date!!.split("-")[2].toInt(),
+                date.split("-")[1].toInt() - 1, date.split("-")[0].toInt()
+            )
+        }
+        val timepicker = view.findViewById<TimePicker>(R.id.time_e)
+        vm.time.observe(this.viewLifecycleOwner){
+            val time = vm.time.value
+            timepicker?.minute = time!!.split(":")[1].toInt()
+            timepicker?.hour = time.split(":")[0].toInt()
+        }
 
 
     }
+
 
 
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onDestroyView() {
-        val titlebox = view?.findViewById<EditText>(R.id.title_e)
-        val description = view?.findViewById<EditText>(R.id.description_e)
-        val location = view?.findViewById<EditText>(R.id.location_e)
-        val date = view?.findViewById<DatePicker>(R.id.date_e)
-        val time = view?.findViewById<TimePicker>(R.id.time_e)
-        val duration = view?.findViewById<EditText>(R.id.duration_e)
-
-        if (titlebox != null&&description!=null&&location!=null&&date!=null&&time!=null&&duration!=null) {
-            vm.setTitle(titlebox.text)
-            vm.setDesc(description.text)
-            vm.setDuration(duration.text)
-            vm.setLocation(location.text)
-            vm.setDate("${format(date.dayOfMonth)}-${format(date.month+1)}-${format(date.year)}")
-            vm.setTime("${format(time.hour)}:${format(time.minute)}")
-        }
-
+        println("dest")
+        updatevm()
         super.onDestroyView()
 
     }
 
-    private fun populateBoxes() {
-        val myJSON = JSONObject(this.arguments?.getString("item"))
-        vm.setId(myJSON.getString("id").toInt())
-        vm.setTitle(myJSON.getString("title"))
-        vm.setDesc(myJSON.getString("description"))
-        vm.setDuration(myJSON.getString("duration"))
-        vm.setLocation(myJSON.getString("location"))
-        vm.setDate(myJSON.getString("date"))
-        vm.setTime(myJSON.getString("time"))
 
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun updatevm(){
+        val titlebox = requireView().findViewById<EditText>(R.id.title_e)
+        val description = requireView().findViewById<EditText>(R.id.description_e)
+        val location = requireView().findViewById<EditText>(R.id.location_e)
+        val date = requireView().findViewById<DatePicker>(R.id.date_e)
+        val time = requireView().findViewById<TimePicker>(R.id.time_e)
+        val duration = requireView().findViewById<EditText>(R.id.duration_e)
+
+        vm.setTitle(titlebox.text)
+        vm.setDesc(description.text)
+        vm.setDuration(duration.text)
+        vm.setLocation(location.text)
+        vm.setDate("${format(date.dayOfMonth)}-${format(date.month+1)}-${format(date.year)}")
+        vm.setTime("${format(time.hour)}:${format(time.minute)}")
     }
-
     private fun format(ex: Int ): CharSequence{
         //funzione per non perdere gli zeri
         if(ex < 10){
@@ -144,4 +140,3 @@ class TimeSlotEditFragment : Fragment(R.layout.time_slot_edit_fragment) {
 
     }
 }
-

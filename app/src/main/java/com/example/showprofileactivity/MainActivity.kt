@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.action_profile
+                R.id.nav_home, R.id.action_itemFragment_to_showProfileFragment
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment_content_main)
         return NavigationUI.navigateUp(navController, binding.drawerLayout)
-        return true
+
     }
 
 }

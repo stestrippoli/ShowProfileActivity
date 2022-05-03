@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.showprofileactivity.placeholder.TimeSlot
@@ -26,39 +27,44 @@ class TimeSlotFragment : Fragment() {
 
     private var columnCount = 1
     private val objects = TimeSlotCollection
-
+    private val vm by activityViewModels<TimeSlotViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
         fillItems(objects)
-
         val adapterview = view.findViewById<RecyclerView>(R.id.list)
         val emptyView = view.findViewById<TextView>(R.id.empty_view)
-
         if (adapterview is RecyclerView) {
             if (objects.count()==0) {
-                adapterview.setVisibility(View.GONE);
-                emptyView.setVisibility(View.VISIBLE);
+                adapterview.setVisibility(View.GONE)
+                emptyView.setVisibility(View.VISIBLE)
             }
             else {
-                adapterview.setVisibility(View.VISIBLE);
-                emptyView.setVisibility(View.GONE);
+                adapterview.setVisibility(View.VISIBLE)
+                emptyView.setVisibility(View.GONE)
             }
             with(adapterview) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = TimeSlotListFragment(objects.ITEMS)
+                adapter = TimeSlotListFragment(objects.ITEMS, vm)
             }
         }
+
         val addbtn = view.findViewById<FloatingActionButton>(R.id.addbtn)
         addbtn.setOnClickListener {
-            val empty = TimeSlotCollection.emptyTimeSlot.itemToJSON(objects.count())
-            val b = bundleOf("item" to empty.toString())
-            it.findNavController().navigate(R.id.action_toEditFragment, b )
+            val empty = TimeSlotCollection.emptyTimeSlot
+            vm.setId(objects.count())
+            vm.setDate(empty.date)
+            vm.setTime(empty.time)
+            vm.setTitle(empty.title)
+            vm.setDesc(empty.description)
+            vm.setLocation(empty.location)
+            vm.setDuration(empty.duration)
+            it.findNavController().navigate(R.id.action_toEditFragment)
         }
         return view
     }

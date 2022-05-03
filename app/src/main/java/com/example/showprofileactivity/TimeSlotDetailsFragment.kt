@@ -45,7 +45,33 @@ class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        populateBoxes()
+        val title = view.findViewById<TextView>(R.id.title)
+        vm.title.observe(this.viewLifecycleOwner){
+            title.setText(it)
+        }
+        val description = view.findViewById<TextView>(R.id.description)
+        vm.description.observe(this.viewLifecycleOwner){
+            description.setText(it)
+        }
+
+        val location = view.findViewById<TextView>(R.id.location)
+        vm.location.observe(this.viewLifecycleOwner){
+            location.setText(it)
+        }
+
+        val duration = view.findViewById<TextView>(R.id.duration)
+        vm.duration.observe(this.viewLifecycleOwner){
+            duration.setText(it)
+        }
+        val date = view.findViewById<TextView>(R.id.date)
+        vm.date.observe(this.viewLifecycleOwner){
+            date.setText(it)
+        }
+        val time = view.findViewById<TextView>(R.id.time)
+        vm.time.observe(this.viewLifecycleOwner){
+            time.setText(it)
+        }
+
 
 
     }
@@ -55,36 +81,12 @@ class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
         inflater.inflate(R.menu.fragment_menu, menu)
     }
 
-    override fun onOptionsItemSelected(sd: MenuItem): Boolean {
-        val myJSON = JSONObject(this.arguments?.getString("item"))
-        val  b = bundleOf("item" to myJSON.toString())
-        this.view?.findNavController()?.navigate(R.id.action_toEditFragment, b)
-        return super.onOptionsItemSelected(sd)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
+        view?.findNavController()?.navigate(R.id.action_toEdit)
+        return true
     }
 
-    private fun populateBoxes() {
-        val title = view?.findViewById<TextView>(R.id.title)
-        val description = view?.findViewById<TextView>(R.id.description)
-        val date = view?.findViewById<TextView>(R.id.date)
-        val time = view?.findViewById<TextView>(R.id.time)
-        val duration = view?.findViewById<TextView>(R.id.duration)
-        val location = view?.findViewById<TextView>(R.id.location)
-        val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE) ?: return
-        val myJSON = JSONObject(this.arguments?.getString("item"))
-        title?.text = myJSON.getString("title")
-        description?.text = myJSON.getString("description")
-        duration?.text = myJSON.getString("duration")
-        location?.text = myJSON.getString("location")
-        date?.text = myJSON.getString("date")
-        time?.text = myJSON.getString("time")
-        vm.setId(myJSON.getString("id").toInt())
-        vm.setTitle(myJSON.getString("title"))
-        vm.setDesc(myJSON.getString("description"))
-        vm.setDuration(myJSON.getString("duration"))
-        vm.setLocation(myJSON.getString("location"))
-        vm.setDate(myJSON.getString("date"))
-        vm.setTime(myJSON.getString("time"))
 
-    }
 }
 
