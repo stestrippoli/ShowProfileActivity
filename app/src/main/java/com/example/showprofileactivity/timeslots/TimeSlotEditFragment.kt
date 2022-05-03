@@ -8,6 +8,8 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.showprofileactivity.R
@@ -54,8 +56,7 @@ class TimeSlotEditFragment : Fragment(R.layout.fragment_time_slot_edit) {
                     putString("list", list.toString())
                     apply()
                 }
-                findNavController().popBackStack()
-                this.remove()
+                requireActivity().supportFragmentManager.popBackStack()
 
 
             }
