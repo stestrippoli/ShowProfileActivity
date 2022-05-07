@@ -9,7 +9,7 @@
         android:id="@+id/nav_timeSlotDetailsFragment"
         android:name="com.example.showprofileactivity.timeslots.TimeSlotDetailsFragment"
         android:label="Time Slot Details"
-        tools:layout="@layout/fragment_time_slot_details" >
+        tools:layout="@layout/fragment_time_slot_details">
         <action
             android:id="@+id/action_toEdit"
             app:destination="@id/timeSlotEditFragment2"
@@ -21,11 +21,11 @@
     <fragment
         android:id="@+id/timeSlotEditFragment2"
         android:name="com.example.showprofileactivity.timeslots.TimeSlotEditFragment"
-        android:label="TimeSlotEditFragment" />
+        android:label="TEdit Profile" />
     <fragment
         android:id="@+id/itemFragment"
         android:name="com.example.showprofileactivity.timeslots.TimeSlotFragment"
-        android:label="fragment_item_list"
+        android:label="Fragment list"
         tools:layout="@layout/fragment_item_list" >
         <action
             android:id="@+id/action_itemFragment_to_nav_timeSlotDetailsFragment"
@@ -44,18 +44,11 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
-        <action
-            android:id="@+id/action_itemFragment_to_showProfileFragment"
-            app:destination="@id/showProfileFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/showProfileFragment"
         android:name="com.example.showprofileactivity.profile.ShowProfileFragment"
-        android:label="fragment_show_profile"
+        android:label="Your Profile"
         tools:layout="@layout/fragment_show_profile" >
         <action
             android:id="@+id/action_toEditProfileFragment"
@@ -68,5 +61,5 @@
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.showprofileactivity.profile.EditProfileFragment"
-        android:label="EditProfileFragment" />
+        android:label="Edit Profile" />
 </navigation>

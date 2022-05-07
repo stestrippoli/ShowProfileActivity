@@ -5,11 +5,11 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_host_fragment_content_main"
+            android:id="@+id/itemFragment"
             android:icon="@drawable/ic_baseline_home_24"
             android:title="@string/home" />
         <item
-            android:id="@+id/action_itemFragment_to_showProfileFragment"
+            android:id="@+id/showProfileFragment"
             android:icon="@drawable/ic_baseline_person_outline_24"
             android:title="@string/profile"
             />

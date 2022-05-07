@@ -64,8 +64,13 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         inflater.inflate(R.menu.custom_menu, menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        super.onContextItemSelected(item)
-        findNavController().navigate(R.id.action_toEditProfileFragment)
+        return when (item.itemId) {
+            R.id.modifybtn -> {
+                findNavController().navigate(R.id.action_toEditProfileFragment)
+                true
+            }
+            else -> {super.onContextItemSelected(item)}
+        }
         return true
     }
 
