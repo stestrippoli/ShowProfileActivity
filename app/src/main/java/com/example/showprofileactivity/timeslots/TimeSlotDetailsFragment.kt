@@ -12,6 +12,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.showprofileactivity.R
 
 
@@ -76,8 +77,13 @@ class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        super.onOptionsItemSelected(item)
-        view?.findNavController()?.navigate(R.id.action_toEdit)
+        return when (item.itemId) {
+            R.id.action_toEdit -> {
+                view?.findNavController()?.navigate(R.id.action_toEdit)
+                true
+            }
+            else -> {super.onOptionsItemSelected(item)}
+        }
         return true
     }
 

@@ -37,7 +37,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.android.showprofileactivity"
+            android:authorities="com.g41.android.timebankingapplication"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data

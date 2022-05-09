@@ -21,7 +21,11 @@
     <fragment
         android:id="@+id/timeSlotEditFragment2"
         android:name="com.example.showprofileactivity.timeslots.TimeSlotEditFragment"
-        android:label="TEdit Profile" />
+        android:label="Edit item" >
+        <action
+            android:id="@+id/action_editItem_to_home"
+            app:destination="@id/itemFragment" />
+    </fragment>
     <fragment
         android:id="@+id/itemFragment"
         android:name="com.example.showprofileactivity.timeslots.TimeSlotFragment"

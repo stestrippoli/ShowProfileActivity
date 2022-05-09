@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "695828131634",
+    "project_id": "time-banking-application-952e4",
+    "storage_bucket": "time-banking-application-952e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695828131634:android:62ff9788dc6ca4ae49712b",
+        "android_client_info": {
+          "package_name": "com.g41.timebankingapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695828131634-j3gs3lioa1g888jtp97sg0o3f66b54kc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqc1skiJN5QrGui2ORZJxwcWMC40f3xyA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695828131634-j3gs3lioa1g888jtp97sg0o3f66b54kc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

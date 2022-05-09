@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.showprofileactivity.R
 import org.json.JSONArray
@@ -56,9 +57,7 @@ class TimeSlotEditFragment : Fragment(R.layout.fragment_time_slot_edit) {
                     putString("list", list.toString())
                     apply()
                 }
-                requireActivity().supportFragmentManager.popBackStack()
-
-
+                findNavController().navigate(R.id.action_editItem_to_home)
             }
         })
     }
