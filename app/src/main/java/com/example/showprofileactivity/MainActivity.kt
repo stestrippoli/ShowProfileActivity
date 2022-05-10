@@ -1,20 +1,12 @@
 package com.example.showprofileactivity
 
-import android.content.Context
 import android.os.Bundle
-import android.widget.Button
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.navigation.ui.*
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.showprofileactivity.databinding.ActivityMainBinding
-import com.example.showprofileactivity.placeholder.TimeSlotCollection
-import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
 

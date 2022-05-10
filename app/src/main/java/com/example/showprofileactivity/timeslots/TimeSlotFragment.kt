@@ -13,8 +13,8 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.showprofileactivity.R
-import com.example.showprofileactivity.placeholder.TimeSlot
-import com.example.showprofileactivity.placeholder.TimeSlotCollection
+import com.example.showprofileactivity.timeslots.placeholder.TimeSlot
+import com.example.showprofileactivity.timeslots.placeholder.TimeSlotCollection
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.json.JSONArray
 

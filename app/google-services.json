@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:695828131634:android:62ff9788dc6ca4ae49712b",
+        "mobilesdk_app_id": "1:695828131634:android:b21fcf0013f7567149712b",
         "android_client_info": {
-          "package_name": "com.g41.timebankingapplication"
+          "package_name": "com.example.showprofileactivity"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "695828131634-q6dhgk352bpedntiuhuc11lnrgjfdp9g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.showprofileactivity",
+            "certificate_hash": "a1a098a1dc70471e2a5a6dadc240c5bb187300e8"
+          }
+        },
         {
           "client_id": "695828131634-j3gs3lioa1g888jtp97sg0o3f66b54kc.apps.googleusercontent.com",
           "client_type": 3
