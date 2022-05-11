@@ -39,17 +39,7 @@ class ServiceFragment : Fragment() {
             services.ITEMS.clear()
             services.ITEMS.addAll(it)
         }
-        val db = Firebase.firestore
-        db.collection("services")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d(TAG, "${document.id} => ${document.data}")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-            }
+
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {

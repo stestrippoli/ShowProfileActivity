@@ -95,7 +95,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                     putString("profile", profile.toString())
                     apply()
                 }
-                requireActivity().supportFragmentManager.popBackStack()
+                findNavController().navigateUp()
             }
         })
     }

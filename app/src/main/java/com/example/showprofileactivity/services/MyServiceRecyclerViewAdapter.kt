@@ -21,18 +21,21 @@ class MyServiceRecyclerViewAdapter(
 ) : RecyclerView.Adapter<MyServiceRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
         val v = LayoutInflater.from(parent.context)
             .inflate(
                 R.layout.fragment_service,
                 parent,
                 false
             )
+        println("viewcreata")
         return ViewHolder(v)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.service_name.text = item.name
+
+        val item = vm.services.value?.get(position)
+        holder.service_name.text = item?.name
 
         holder.itemView.setOnClickListener{v:View ->
             /*

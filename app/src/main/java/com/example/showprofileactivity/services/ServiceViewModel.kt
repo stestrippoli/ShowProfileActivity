@@ -21,6 +21,7 @@ class ServiceViewModel: ViewModel() {
             _services.value = if (e!=null)
                 emptyList()
             else r?.mapNotNull { d -> d.toService()  }
+            println("caricati")
         }
     }
     override fun onCleared() { super.onCleared(); l.remove(); }
