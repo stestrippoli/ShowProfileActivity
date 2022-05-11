@@ -3,7 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
 }
-
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.android.application'
 android {
     compileSdk 32
     buildFeatures {
@@ -11,8 +12,7 @@ android {
         dataBinding true
     }
     defaultConfig {
-        applicationId "com.g41.timebankingapplication"
-        //applicationId "com.example.showprofileactivity"
+        applicationId "com.example.showprofileactivity"
         minSdk 21
         targetSdk 32
         versionCode 1
@@ -38,7 +38,6 @@ android {
 
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:30.0.0')
-
     // When using the BoM, you don't specify versions in Firebase library dependencies
 
     // Declare the dependency for the Firebase SDK for Google Analytics
@@ -54,6 +53,7 @@ dependencies {
 
     // Feature module Support
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.4.2")
+    implementation 'com.google.firebase:firebase-firestore:21.4.0'
 
     // Testing Navigation
     androidTestImplementation("androidx.navigation:navigation-testing:2.4.2")

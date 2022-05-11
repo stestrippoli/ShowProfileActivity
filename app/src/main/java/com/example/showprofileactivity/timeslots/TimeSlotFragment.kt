@@ -26,6 +26,7 @@ class TimeSlotFragment : Fragment() {
     private var columnCount = 1
     private val objects = TimeSlotCollection
     private val vm by activityViewModels<TimeSlotViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,6 +73,7 @@ class TimeSlotFragment : Fragment() {
         objects.clear()
         super.onDestroyView()
     }
+
     private fun fillItems(objects: TimeSlotCollection){
             val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
             val jsonArray = JSONArray(

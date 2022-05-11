@@ -13,7 +13,7 @@ object ServiceCollection {
 
 
     val ITEMS: MutableList<Service> = ArrayList()
-    val ITEM_MAP: MutableMap<Int, Service> = HashMap()
+    val ITEM_MAP: MutableMap<String, Service> = HashMap()
 
     private val COUNT = 25
 
@@ -25,7 +25,8 @@ object ServiceCollection {
 
 }
 
-class Service(id: Int, name: String) {
+class Service(id: String, name: String, users: List<String>) {
     val id = id
     val name = name
+    val users = users
 }

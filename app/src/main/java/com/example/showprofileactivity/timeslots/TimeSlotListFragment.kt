@@ -14,6 +14,7 @@ import com.example.showprofileactivity.timeslots.placeholder.TimeSlot
 class TimeSlotListFragment(
     private var values: MutableList<TimeSlot>,
     private var vm: TimeSlotViewModel
+
 ) : RecyclerView.Adapter<TimeSlotListFragment.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
        val v = LayoutInflater.from(parent.context)

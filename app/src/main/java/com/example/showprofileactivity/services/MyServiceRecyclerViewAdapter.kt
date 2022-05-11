@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.showprofileactivity.R
+import com.example.showprofileactivity.services.ServiceViewModel
 import com.example.showprofileactivity.services.placeholder.Service
 import com.example.showprofileactivity.services.placeholder.ServiceCollection
 import com.example.showprofileactivity.timeslots.placeholder.TimeSlot
@@ -15,12 +17,13 @@ import com.example.showprofileactivity.timeslots.placeholder.TimeSlot
 
 class MyServiceRecyclerViewAdapter(
     private var values: MutableList<Service>,
+    private val vm : ServiceViewModel
 ) : RecyclerView.Adapter<MyServiceRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context)
             .inflate(
-                R.layout.fragment_item,
+                R.layout.fragment_service,
                 parent,
                 false
             )
@@ -41,8 +44,10 @@ class MyServiceRecyclerViewAdapter(
             vm.setLocation(item.location)
             vm.setDuration(item.duration)
 
-             */
+
             v.findNavController().navigate(R.id.nav_timeSlotDetailsFragment)
+
+             */
         }
     }
 
@@ -50,6 +55,7 @@ class MyServiceRecyclerViewAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val service_name: TextView
+
 
 
         init {
