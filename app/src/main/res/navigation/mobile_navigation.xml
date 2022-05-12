@@ -71,4 +71,22 @@
         android:name="com.example.showprofileactivity.services.ServiceFragment"
         android:label="fragment_service_list"
         tools:layout="@layout/fragment_service_list" />
+    <fragment
+        android:id="@+id/offerDetailFragment"
+        android:name="com.example.showprofileactivity.offers.OfferDetailFragment"
+        android:label="Offer Details"
+        tools:layout="@layout/fragment_offer_detail" />
+    <fragment
+        android:id="@+id/offersFragment"
+        android:name="com.example.showprofileactivity.offers.OffersFragment"
+        android:label="Offers"
+        tools:layout="@layout/fragment_offers_list">
+        <action
+            android:id="@+id/action_toOfferDetailFragment"
+            app:destination="@id/offerDetailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
 </navigation>

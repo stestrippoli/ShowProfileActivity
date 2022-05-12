@@ -3,6 +3,7 @@ package com.example.showprofileactivity.services
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.showprofileactivity.offers.placeholder.Offer
 import com.example.showprofileactivity.services.placeholder.Service
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -11,20 +12,29 @@ import java.util.*
 
 
 class ServiceViewModel: ViewModel() {
-        private val _services = MutableLiveData<List<Service>>()
-        val services: LiveData<List<Service>> = _services
-        private val l: ListenerRegistration
+    private val _services = MutableLiveData<List<Service>>()
+    val services: LiveData<List<Service>> = _services
+    private val lS: ListenerRegistration
+    private val _offers = MutableLiveData<List<Offer>>()
+    val offers: LiveData<List<Offer>> = _offers
+    private val lO: ListenerRegistration
 
     init {
-        l = FirebaseFirestore.getInstance().collection("services")
+        lS = FirebaseFirestore.getInstance().collection("services")
         .addSnapshotListener{ r,e ->
             _services.value = if (e!=null)
                 emptyList()
             else r?.mapNotNull { d -> d.toService()  }
             println("caricati")
         }
+        lO = FirebaseFirestore.getInstance().collection("offers")
+            .addSnapshotListener{ r, e ->
+                _offers.value = if (e!=null)
+                    emptyList()
+                else r?.mapNotNull { d -> d.toOffer() }
+            }
     }
-    override fun onCleared() { super.onCleared(); l.remove(); }
+    override fun onCleared() { super.onCleared(); lS.remove(); }
 
 
     fun DocumentSnapshot.toService(): Service? {
@@ -38,8 +48,19 @@ class ServiceViewModel: ViewModel() {
             null
         }
     }
-
-
-
-
+    private fun DocumentSnapshot.toOffer(): Offer? {
+        return try {
+            val title = get("title") as String
+            val description = get("description") as String
+            val location = get("location") as String
+            val hours = get("hours") as Long
+            val creator = get("creator") as String
+            val skill = get("skill") as String
+            Offer(title, description, location, hours, creator, skill)
+        }
+        catch (e: Exception){
+            e.printStackTrace()
+            null
+        }
+    }
 }

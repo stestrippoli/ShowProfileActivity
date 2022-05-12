@@ -1,24 +1,22 @@
-package com.example.showprofileactivity.timeslots
+package com.example.showprofileactivity.services
 
+import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.showprofileactivity.R
-import com.example.showprofileactivity.services.ServiceViewModel
 import com.example.showprofileactivity.services.placeholder.Service
-import com.example.showprofileactivity.services.placeholder.ServiceCollection
-import com.example.showprofileactivity.timeslots.placeholder.TimeSlot
-
+import org.json.JSONObject
 
 class MyServiceRecyclerViewAdapter(
     private var values: MutableList<Service>,
     private val vm : ServiceViewModel
 ) : RecyclerView.Adapter<MyServiceRecyclerViewAdapter.ViewHolder>() {
+
+    private var context: Context? = null;
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -29,6 +27,7 @@ class MyServiceRecyclerViewAdapter(
                 false
             )
         println("viewcreata")
+        context = parent.context
         return ViewHolder(v)
     }
 
@@ -51,6 +50,11 @@ class MyServiceRecyclerViewAdapter(
             v.findNavController().navigate(R.id.nav_timeSlotDetailsFragment)
 
              */
+            with(holder.itemView.context.getSharedPreferences("skill_offers", Context.MODE_PRIVATE).edit()) {
+                putString("skillName", item?.name)
+                apply()
+            }
+            v.findNavController().navigate(R.id.offersFragment)
         }
     }
 
