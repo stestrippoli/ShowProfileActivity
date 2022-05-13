@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:695828131634:android:62ff9788dc6ca4ae49712b",
+        "mobilesdk_app_id": "1:695828131634:android:5a89b1c3f05b439349712b",
         "android_client_info": {
-          "package_name": "com.g41.timebankingapplication"
+          "package_name": "com.example.showprofileactivity"
         }
       },
       "oauth_client": [

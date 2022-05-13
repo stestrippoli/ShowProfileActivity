@@ -8,10 +8,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.showprofileactivity.R
 import org.json.JSONArray

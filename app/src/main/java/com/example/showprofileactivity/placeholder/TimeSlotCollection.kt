@@ -1,6 +1,5 @@
 package com.example.showprofileactivity.placeholder
 
-import org.json.JSONObject
 import java.util.ArrayList
 import java.util.HashMap
 

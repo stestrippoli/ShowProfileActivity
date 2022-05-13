@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ImageButton
-import android.widget.TextView
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -23,8 +22,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import com.example.showprofileactivity.R
 import org.json.JSONObject
 import java.io.File

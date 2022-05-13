@@ -11,8 +11,8 @@ android {
         dataBinding true
     }
     defaultConfig {
-        applicationId "com.g41.timebankingapplication"
-        //applicationId "com.example.showprofileactivity"
+        //applicationId "com.g41.timebankingapplication"
+        applicationId "com.example.showprofileactivity"
         minSdk 21
         targetSdk 32
         versionCode 1

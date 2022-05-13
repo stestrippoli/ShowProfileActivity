@@ -68,9 +68,11 @@
         <entry key="app/src/main/res/layout-land/fragment_show_profile.xml" value="0.18474426807760141" />
         <entry key="app/src/main/res/layout-land/fragment_time_slot_details.xml" value="0.34171075837742504" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_intro.xml" value="0.3677536231884058" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19630192502532928" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/layout/fragment_item.xml" value="0.17864583333333334" />
         <entry key="app/src/main/res/layout/fragment_item_list.xml" value="0.3677536231884058" />
         <entry key="app/src/main/res/layout/fragment_show_profile.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_time_slot_details.xml" value="0.19630192502532928" />
