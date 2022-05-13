@@ -42,5 +42,7 @@
     <string name="profile">Profile</string>
     <string name="service_name">Service name</string>
     <string name="no_offers_available">Currently there are no offers for this particular skill. Please check again later.</string>
+    <string name="clientId">695828131634-j3gs3lioa1g888jtp97sg0o3f66b54kc.apps.googleusercontent.com</string>
+
 
 </resources>
