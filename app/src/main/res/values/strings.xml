@@ -42,5 +42,8 @@
     <string name="profile">Profile</string>
     <string name="service_name">Service name</string>
     <string name="no_offers_available">Currently there are no offers for this particular skill. Please check again later.</string>
+    <string name="search_bar">search_bar</string>
+    <string name="button1">Button</string>
+    <string name="button">Button</string>
 
 </resources>

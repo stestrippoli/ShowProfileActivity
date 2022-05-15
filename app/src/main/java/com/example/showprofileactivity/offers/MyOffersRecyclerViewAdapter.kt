@@ -3,22 +3,38 @@ package com.example.showprofileactivity.offers
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import com.example.showprofileactivity.databinding.FragmentOffersBinding
 import com.example.showprofileactivity.offers.placeholder.Offer
+import android.view.*
+import com.example.showprofileactivity.offers.placeholder.OffersCollection
+import java.util.*
 
-class MyOffersRecyclerViewAdapter(private val values: List<Offer>,
+class MyOffersRecyclerViewAdapter(private var values: List<Offer>,
     private val itemClickListener: ItemClickListener)
-    : RecyclerView.Adapter<MyOffersRecyclerViewAdapter.ViewHolder>() {
+    : RecyclerView.Adapter<MyOffersRecyclerViewAdapter.ViewHolder>(){
 
     interface ItemClickListener {
         fun onItemClick(position: Int)
     }
+    /*
+    private var offersFiltered: List<Offer> = ArrayList()
+
+    init {
+        offersFiltered = values
+    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
     return ViewHolder(FragmentOffersBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
+    }
+
+    fun setFilteredList(newList: List<Offer>) {
+        values = newList
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
