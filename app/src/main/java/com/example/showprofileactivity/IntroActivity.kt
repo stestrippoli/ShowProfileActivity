@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -31,7 +32,6 @@ class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
-        Log.d("debug", "prova")
         // Initialize Firebase Auth
         auth = Firebase.auth
 
@@ -51,8 +51,6 @@ class IntroActivity : AppCompatActivity() {
             // Automatically sign in when exactly one credential is retrieved.
             .setAutoSelectEnabled(true)
             .build()
-
-        /*oneTapClient = Identity.getSignInClient(this)
         signUpRequest = BeginSignInRequest.builder()
             .setGoogleIdTokenRequestOptions(
                 BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
@@ -62,7 +60,8 @@ class IntroActivity : AppCompatActivity() {
                     // Show all accounts on the device.
                     .setFilterByAuthorizedAccounts(false)
                     .build())
-            .build()*/
+            .build()
+
         findViewById<SignInButton>(R.id.sign_in_button).setOnClickListener{signin()}
 
     }
@@ -82,24 +81,24 @@ class IntroActivity : AppCompatActivity() {
                 // No saved credentials found. Launch the One Tap sign-up flow, or
                 // do nothing and continue presenting the signed-out UI.
                 Log.d(TAG, e.localizedMessage)
+                Log.d("Debug", "errorissimo")
+                oneTapClient.beginSignIn(signUpRequest)
+                    .addOnSuccessListener(this) { result ->
+                        try {
+                            startIntentSenderForResult(
+                                result.pendingIntent.intentSender, REQ_ONE_TAP,
+                                null, 0, 0, 0)
+                        } catch (e: IntentSender.SendIntentException) {
+                            Log.e(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
+                        }
+                    }
+                    .addOnFailureListener(this) { e ->
+                        // No Google Accounts found. Just continue presenting the signed-out UI.
+                        Log.d(TAG, e.localizedMessage)
+                        Log.d("debug", "Errorissimo part 2")
+                    }
             }
-        /*oneTapClient.beginSignIn(signUpRequest)
-            .addOnSuccessListener(this) { result ->
-                try {
-                    startIntentSenderForResult(
-                        result.pendingIntent.intentSender, REQ_ONE_TAP,
-                        null, 0, 0, 0)
-                    Log.d("debug", "funziona")
-                } catch (e: IntentSender.SendIntentException) {
-                    Log.e(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
-                    Log.d("debug", "errore")
-                }
-            }
-            .addOnFailureListener(this) { e ->
-                // No Google Accounts found. Just continue presenting the signed-out UI.
-                Log.d(TAG, e.localizedMessage)
-                Log.d("debug", "Errorissimo")
-            }*/
+
     }
 
     override fun onStart() {
@@ -124,6 +123,7 @@ class IntroActivity : AppCompatActivity() {
                             // Got an ID token from Google. Use it to authenticate
                             // with your backend.
                             Log.d(TAG, "Got ID token.")
+                            findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.itemFragment)
                         }
                         password != null -> {
                             // Got a saved username and password. Use them to authenticate
@@ -136,7 +136,21 @@ class IntroActivity : AppCompatActivity() {
                         }
                     }
                 } catch (e: ApiException) {
-
+                    when (e.statusCode) {
+                        CommonStatusCodes.CANCELED -> {
+                            Log.d(TAG, "One-tap dialog was closed.")
+                            // Don't re-prompt the user.
+                            showOneTapUI = false
+                        }
+                        CommonStatusCodes.NETWORK_ERROR -> {
+                            Log.d(TAG, "One-tap encountered a network error.")
+                            // Try again or just ignore.
+                        }
+                        else -> {
+                            Log.d(TAG, "Couldn't get credential from result." +
+                                    " (${e.localizedMessage})")
+                        }
+                    }
                 }
             }
         }

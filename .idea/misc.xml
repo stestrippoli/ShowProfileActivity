@@ -72,6 +72,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19630192502532928" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/layout/empty_fragment.xml" value="0.19630192502532928" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.17864583333333334" />
         <entry key="app/src/main/res/layout/fragment_item_list.xml" value="0.3677536231884058" />
         <entry key="app/src/main/res/layout/fragment_show_profile.xml" value="0.19610507246376813" />
