@@ -46,13 +46,13 @@ class IntroActivity : AppCompatActivity() {
                     // Your server's client ID, not your Android client ID.
                     .setServerClientId(getString(R.string.clientId))
                     // Only show accounts previously used to sign in.
-                    .setFilterByAuthorizedAccounts(true)
+                    .setFilterByAuthorizedAccounts(false)
                     .build())
             // Automatically sign in when exactly one credential is retrieved.
             .setAutoSelectEnabled(true)
             .build()
 
-        /*oneTapClient = Identity.getSignInClient(this)
+        oneTapClient = Identity.getSignInClient(this)
         signUpRequest = BeginSignInRequest.builder()
             .setGoogleIdTokenRequestOptions(
                 BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
@@ -62,7 +62,7 @@ class IntroActivity : AppCompatActivity() {
                     // Show all accounts on the device.
                     .setFilterByAuthorizedAccounts(false)
                     .build())
-            .build()*/
+            .build()
         findViewById<SignInButton>(R.id.sign_in_button).setOnClickListener{signin()}
 
     }
@@ -83,7 +83,7 @@ class IntroActivity : AppCompatActivity() {
                 // do nothing and continue presenting the signed-out UI.
                 Log.d(TAG, e.localizedMessage)
             }
-        /*oneTapClient.beginSignIn(signUpRequest)
+        oneTapClient.beginSignIn(signUpRequest)
             .addOnSuccessListener(this) { result ->
                 try {
                     startIntentSenderForResult(
@@ -99,7 +99,7 @@ class IntroActivity : AppCompatActivity() {
                 // No Google Accounts found. Just continue presenting the signed-out UI.
                 Log.d(TAG, e.localizedMessage)
                 Log.d("debug", "Errorissimo")
-            }*/
+            }
     }
 
     override fun onStart() {
