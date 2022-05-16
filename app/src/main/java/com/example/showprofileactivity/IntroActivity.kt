@@ -1,12 +1,15 @@
 package com.example.showprofileactivity
 
+import android.app.ProgressDialog.show
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.IntentSender
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
@@ -18,6 +21,8 @@ import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 
@@ -27,7 +32,12 @@ class IntroActivity : AppCompatActivity() {
     private lateinit var signUpRequest: BeginSignInRequest
     private val REQ_ONE_TAP = 2  // Can be any integer unique to the Activity
     private var showOneTapUI = true
+    private var signed = false
     private lateinit var auth: FirebaseAuth
+    private val db: FirebaseFirestore
+    init {
+        db = FirebaseFirestore.getInstance()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +83,7 @@ class IntroActivity : AppCompatActivity() {
                     startIntentSenderForResult(
                         result.pendingIntent.intentSender, REQ_ONE_TAP,
                         null, 0, 0, 0, null)
+                    signed = true
                 } catch (e: IntentSender.SendIntentException) {
                     Log.e(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
                 }
@@ -81,13 +92,13 @@ class IntroActivity : AppCompatActivity() {
                 // No saved credentials found. Launch the One Tap sign-up flow, or
                 // do nothing and continue presenting the signed-out UI.
                 Log.d(TAG, e.localizedMessage)
-                Log.d("Debug", "errorissimo")
                 oneTapClient.beginSignIn(signUpRequest)
                     .addOnSuccessListener(this) { result ->
                         try {
                             startIntentSenderForResult(
                                 result.pendingIntent.intentSender, REQ_ONE_TAP,
                                 null, 0, 0, 0)
+                            signed = false
                         } catch (e: IntentSender.SendIntentException) {
                             Log.e(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
                         }
@@ -95,7 +106,6 @@ class IntroActivity : AppCompatActivity() {
                     .addOnFailureListener(this) { e ->
                         // No Google Accounts found. Just continue presenting the signed-out UI.
                         Log.d(TAG, e.localizedMessage)
-                        Log.d("debug", "Errorissimo part 2")
                     }
             }
 
@@ -106,6 +116,7 @@ class IntroActivity : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         //updateUI(currentUser)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -123,7 +134,35 @@ class IntroActivity : AppCompatActivity() {
                             // Got an ID token from Google. Use it to authenticate
                             // with your backend.
                             Log.d(TAG, "Got ID token.")
-                            findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.itemFragment)
+                            if(signed === false) {
+                                val u = User(credential.givenName+" "+credential.familyName, username, username, null, null, null, null)
+                                db
+                                    .collection("users")
+                                    .document(username)
+                                    .set(u)
+                                    .addOnSuccessListener { Log.d("Firebase", "User added") }
+                                    .addOnFailureListener{ Log.d("Firebase", "Failed to add user") }
+                            }
+                            else{
+                                db
+                                    .collection("users")
+                                    .document(username)
+                                    .get()
+                                    .addOnSuccessListener {
+                                            res ->
+                                        val user = res.toUser()
+                                        //use it as needed
+
+                                    }
+                                    .addOnFailureListener {
+                                        Toast
+                                            .makeText(this, "Error", Toast.LENGTH_LONG)
+                                            .show()
+                                    }
+                            }
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            //findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.itemFragment)
                         }
                         password != null -> {
                             // Got a saved username and password. Use them to authenticate
@@ -156,4 +195,19 @@ class IntroActivity : AppCompatActivity() {
         }
     }
 
+    fun DocumentSnapshot.toUser(): User? {
+        return try{
+
+            val name = get("name") as String?
+            val username = get("username") as String?
+            val location = get("location") as String?
+            val skills = get("skills") as String?
+            val description = get("description") as String?
+            val picture = get("picture") as Uri?
+            User(name, username, username, location, skills, description, picture)
+        } catch(e:Exception){
+            e.printStackTrace()
+            null
+        }
+    }
 }
