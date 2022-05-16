@@ -1,6 +1,7 @@
 package com.example.showprofileactivity.profile
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -10,13 +11,21 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.showprofileactivity.R
+import com.example.showprofileactivity.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONObject
 
 
 class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
 
-
     private val sharedViewModel : SharedViewModel by activityViewModels()
+    private lateinit var auth: FirebaseAuth
+    private val db: FirebaseFirestore
+    //val lateinit user:User
+    init {
+        db = FirebaseFirestore.getInstance()
+    }
 
 
     override fun onCreateView(
@@ -77,6 +86,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             sharedPref.getString("profile",
                 """{"fullname":"Default Name","nickname":"Default nickname","email":"default@email.com","location":"Default location","skills":"Skill1 | Skill2 | Skill3","description": "Default description","img": "android.resource://com.example.showprofileactivity/${R.drawable.propic}"}""")
         )
+
         sharedViewModel.saveFullname(myJSON.getString("fullname").toString())
         sharedViewModel.saveNickname(myJSON.getString("nickname").toString())
         sharedViewModel.saveEmail(myJSON.getString("email").toString())
@@ -85,6 +95,15 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         sharedViewModel.saveDescription(myJSON.getString("description").toString())
         sharedViewModel.savePicture( myJSON.getString("img").toString())
 
+        /*val (name, username, email, location, skills, description, picture) = user
+
+        sharedViewModel.saveFullname(name as String)
+        sharedViewModel.saveNickname(username as String)
+        sharedViewModel.saveEmail(email as String)
+        sharedViewModel.saveLocation(location as String)
+        sharedViewModel.saveSkills(skills as String)
+        sharedViewModel.saveDescription(description as String)
+        sharedViewModel.savePicture(picture as String)*/
 
     }
 
