@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/introActivity">
+    app:startDestination="@id/itemFragment">
 
     <fragment
         android:id="@+id/nav_timeSlotDetailsFragment"
@@ -70,12 +70,20 @@
         android:id="@+id/serviceFragment"
         android:name="com.example.showprofileactivity.services.ServiceFragment"
         android:label="fragment_service_list"
-        tools:layout="@layout/fragment_service_list" />
+        tools:layout="@layout/fragment_service_list" >
+        <action
+            android:id="@+id/action_serviceFragment_to_offersFragment"
+            app:destination="@id/offersFragment" />
+    </fragment>
     <fragment
         android:id="@+id/offerDetailFragment"
         android:name="com.example.showprofileactivity.offers.OfferDetailFragment"
         android:label="Offer Details"
-        tools:layout="@layout/fragment_offer_detail" />
+        tools:layout="@layout/fragment_offer_detail" >
+        <action
+            android:id="@+id/action_showprofileoffer"
+            app:destination="@id/showProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/offersFragment"
         android:name="com.example.showprofileactivity.offers.OffersFragment"
@@ -89,9 +97,4 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
     </fragment>
-    <activity
-        android:id="@+id/introActivity"
-        android:name="com.example.showprofileactivity.IntroActivity"
-        android:label="activity_intro"
-        tools:layout="@layout/activity_intro" />
 </navigation>

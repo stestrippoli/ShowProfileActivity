@@ -25,18 +25,19 @@
 
         <activity
             android:name="com.example.showprofileactivity.MainActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="Time Banking"
             android:theme="@style/Theme.ShowProfileActivity.NoActionBar">
+
+        </activity>
+        <activity
+            android:name="com.example.showprofileactivity.IntroActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.example.showprofileactivity.IntroActivity"
-            android:exported="true">
         </activity>
 
         <provider

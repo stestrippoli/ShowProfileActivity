@@ -162,12 +162,19 @@ class IntroActivity : AppCompatActivity() {
                             }
                             val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
-                            //findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.itemFragment)
+                            finish()
+
+
                         }
                         password != null -> {
                             // Got a saved username and password. Use them to authenticate
                             // with your backend.
                             Log.d(TAG, "Got password.")
+                        }
+                        username != null -> {
+                            // Got a saved username and password. Use them to authenticate
+                            // with your backend.
+                            Log.d(TAG, "Got username.")
                         }
                         else -> {
                             // Shouldn't happen.
