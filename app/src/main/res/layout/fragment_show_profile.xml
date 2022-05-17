@@ -8,9 +8,18 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profileLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         app:layout_constraintDimensionRatio="v,2:3"
         tools:context=".MainActivity">
 
@@ -165,6 +174,7 @@
 
             </LinearLayout>
         </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation"
@@ -172,5 +182,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start|left"
         app:menu="@menu/activity_main_drawer"
-        app:headerLayout="@layout/nav_header_main"/>
+        app:headerLayout="@layout/nav_header_main">
+
+    </com.google.android.material.navigation.NavigationView>
+
 </androidx.drawerlayout.widget.DrawerLayout>

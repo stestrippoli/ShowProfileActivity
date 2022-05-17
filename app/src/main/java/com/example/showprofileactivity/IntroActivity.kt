@@ -19,6 +19,7 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -35,6 +36,7 @@ class IntroActivity : AppCompatActivity() {
     private var signed = false
     private lateinit var auth: FirebaseAuth
     private val db: FirebaseFirestore
+    var currentUser: FirebaseUser? = null
     init {
         db = FirebaseFirestore.getInstance()
     }
@@ -43,7 +45,6 @@ class IntroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
         // Initialize Firebase Auth
-        auth = Firebase.auth
 
         oneTapClient = Identity.getSignInClient(this)
         signInRequest = BeginSignInRequest.builder()
@@ -113,9 +114,11 @@ class IntroActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        auth = Firebase.auth
         // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
+        currentUser = auth.currentUser
         //updateUI(currentUser)
+        println("debug "+currentUser)
 
     }
 
@@ -160,11 +163,10 @@ class IntroActivity : AppCompatActivity() {
                                             .show()
                                     }
                             }
+                            println("debug2 "+currentUser)
                             val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
                             finish()
-
-
                         }
                         password != null -> {
                             // Got a saved username and password. Use them to authenticate

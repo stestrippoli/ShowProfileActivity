@@ -1,6 +1,7 @@
 package com.example.showprofileactivity
 
 import android.os.Bundle
+import android.widget.Button
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.drawerlayout.widget.DrawerLayout
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(
             this, navController, binding.drawerLayout
         )
+        //findViewById<Button>(R.id.logout).setOnClickListener{ signOut() }
     }
 
 
