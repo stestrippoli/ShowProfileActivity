@@ -56,7 +56,8 @@ class ServiceViewModel: ViewModel() {
             val hours = get("hours") as Long
             val creator = get("creator") as String
             val skill = get("skill") as String
-            Offer(title, description, location, hours, creator, skill)
+            val email = get("email") as String
+            Offer(title, description, location, hours, creator, skill, email)
         }
         catch (e: Exception){
             e.printStackTrace()

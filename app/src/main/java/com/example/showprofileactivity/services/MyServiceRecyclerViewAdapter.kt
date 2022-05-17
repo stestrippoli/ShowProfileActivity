@@ -26,7 +26,6 @@ class MyServiceRecyclerViewAdapter(
                 parent,
                 false
             )
-        println("viewcreata")
         context = parent.context
         return ViewHolder(v)
     }
@@ -35,7 +34,6 @@ class MyServiceRecyclerViewAdapter(
 
         val item = vm.services.value?.get(position)
         holder.service_name.text = item?.name
-
         holder.itemView.setOnClickListener{v:View ->
             /*
             vm.setId(position)

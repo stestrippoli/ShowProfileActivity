@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.example.showprofileactivity.databinding.FragmentOffersBinding
 import com.example.showprofileactivity.offers.placeholder.Offer
 import android.view.*
+import androidx.cardview.widget.CardView
 import com.example.showprofileactivity.offers.placeholder.OffersCollection
 import java.util.*
 
@@ -19,12 +20,7 @@ class MyOffersRecyclerViewAdapter(private var values: List<Offer>,
     interface ItemClickListener {
         fun onItemClick(position: Int)
     }
-    /*
-    private var offersFiltered: List<Offer> = ArrayList()
 
-    init {
-        offersFiltered = values
-    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -46,7 +42,7 @@ class MyOffersRecyclerViewAdapter(private var values: List<Offer>,
         val hoursText = item.hours.toString() + "\nhours"
         holder.hours.text = hoursText
 
-        holder.itemView.setOnClickListener {
+        holder.card.setOnClickListener {
             itemClickListener.onItemClick(position)
         }
 
@@ -59,6 +55,7 @@ class MyOffersRecyclerViewAdapter(private var values: List<Offer>,
         val description: TextView = binding.cardDescription
         val creator: TextView = binding.cardCreator
         val hours: TextView = binding.cardHours
+        val card: CardView = binding.cardViewOuter
 
         override fun toString(): String {
             return super.toString() + " '" + title.text + " [" + creator.text + "]'"

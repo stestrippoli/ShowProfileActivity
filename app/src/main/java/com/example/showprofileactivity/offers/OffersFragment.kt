@@ -147,6 +147,7 @@ class OffersFragment : Fragment(){
         vmOffer.setHours(offers.ITEMS[position].hours!!)
         vmOffer.setCreator(offers.ITEMS[position].creator!!)
         vmOffer.setSkill(offers.ITEMS[position].skill!!)
+        vmOffer.setEmail(offers.ITEMS[position].email!!)
         view?.findNavController()?.navigate(R.id.action_toOfferDetailFragment)
     }
 

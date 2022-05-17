@@ -29,8 +29,8 @@
     <string name="empty_add">Add new timeslot</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Time Banking</string>
-    <string name="nav_header_subtitle">Choose an action</string>
+    <string name="nav_header_title">Your Name</string>
+    <string name="nav_header_subtitle">Your Email</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="menu_home">Home</string>
@@ -47,6 +47,13 @@
     <string name="button1">Button</string>
     <string name="button">Button</string>
     <string name="clientId">695828131634-j3gs3lioa1g888jtp97sg0o3f66b54kc.apps.googleusercontent.com</string>
+    <string name="click_on_creator_to_show_details">"""Click on creator's name to show details"""</string>
+    <string name="duration">Duration</string>
+    <string name="offer_location">Location</string>
+    <string name="creator">Creator</string>
+    <string name="skill_cooking">Skill: Cooking</string>
+    <string name="title">Title</string>
+    <string name="offer_description">Description</string>
 
 
 </resources>

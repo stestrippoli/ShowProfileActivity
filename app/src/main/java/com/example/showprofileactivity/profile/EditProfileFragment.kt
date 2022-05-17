@@ -26,8 +26,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.showprofileactivity.R
 import com.example.showprofileactivity.User
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONObject
 import java.io.File
@@ -38,7 +36,7 @@ import java.util.*
 
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
-    private val sharedViewModel : SharedViewModel by activityViewModels()
+    private val profileViewModel : ProfileViewModel by activityViewModels()
 
     private val db: FirebaseFirestore
     init {
@@ -59,27 +57,27 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             btn.performLongClick()
         }
 
-        currentPhotoPath = sharedViewModel.picture.value.toString()
-        sharedViewModel.fullname.observe(viewLifecycleOwner) { fullname ->
+        currentPhotoPath = profileViewModel.picture.value.toString()
+        profileViewModel.fullname.observe(viewLifecycleOwner) { fullname ->
             requireView().findViewById<EditText>(R.id.name_e).setText(fullname)
         }
-        sharedViewModel.nickname.observe(viewLifecycleOwner) { nickname ->
+        profileViewModel.nickname.observe(viewLifecycleOwner) { nickname ->
             requireView().findViewById<EditText>(R.id.nickname_e).setText(nickname)
         }
-        sharedViewModel.email.observe(viewLifecycleOwner) { email ->
+        profileViewModel.email.observe(viewLifecycleOwner) { email ->
             requireView().findViewById<EditText>(R.id.email_e).setText(email)
         }
-        sharedViewModel.location.observe(viewLifecycleOwner) { location ->
+        profileViewModel.location.observe(viewLifecycleOwner) { location ->
             requireView().findViewById<EditText>(R.id.location_e).setText(location)
         }
-        sharedViewModel.skills.observe(viewLifecycleOwner) { skills ->
+        profileViewModel.skills.observe(viewLifecycleOwner) { skills ->
             requireView().findViewById<EditText>(R.id.skills_e).setText(skills.toString().replace(" | ", ", "))
         }
-        sharedViewModel.description.observe(viewLifecycleOwner) { description ->
+        profileViewModel.description.observe(viewLifecycleOwner) { description ->
             requireView().findViewById<EditText>(R.id.description_e).setText(description)
         }
 
-        sharedViewModel.picture.observe(viewLifecycleOwner) { picture ->
+        profileViewModel.picture.observe(viewLifecycleOwner) { picture ->
             requireView().findViewById<ImageButton>(R.id.propic_e).setImageURI(picture.toString().toUri())
         }
 
@@ -108,7 +106,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 val skillsbox = view.findViewById<EditText>(R.id.skills_e).text.toString()
                 val descbox = view.findViewById<EditText>(R.id.description_e).text.toString()
                 db.collection("users")
-                    .document(sharedViewModel.email.value.toString())
+                    .document(profileViewModel.email.value.toString())
                     .set(User(namebox, nicknamebox, locationbox, skillsbox, descbox))
                     .addOnSuccessListener { Log.d("Firebase", "User profile successfully modified.") }
                     .addOnFailureListener{ Log.d("Firebase", "Failed to modify user profile.") }
@@ -237,7 +235,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
-            sharedViewModel.savePicture(currentPhotoPath)
+            profileViewModel.savePicture(currentPhotoPath)
 
         }
     }
@@ -258,12 +256,12 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     }
 
     fun updatevm() {
-        sharedViewModel.saveFullname(requireView().findViewById<EditText>(R.id.name_e).text)
-        sharedViewModel.saveEmail(requireView().findViewById<EditText>(R.id.email_e).text)
-        sharedViewModel.saveLocation(requireView().findViewById<EditText>(R.id.location_e).text)
+        profileViewModel.saveFullname(requireView().findViewById<EditText>(R.id.name_e).text)
+        profileViewModel.saveEmail(requireView().findViewById<EditText>(R.id.email_e).text)
+        profileViewModel.saveLocation(requireView().findViewById<EditText>(R.id.location_e).text)
         val skillslist = requireView().findViewById<EditText>(R.id.skills_e).text.toString()
-        sharedViewModel.saveSkills(skillslist.replace(" | ", ", "))
-        sharedViewModel.saveDescription(requireView().findViewById<EditText>(R.id.description_e).text)
-        sharedViewModel.savePicture(currentPhotoPath)
+        profileViewModel.saveSkills(skillslist.replace(" | ", ", "))
+        profileViewModel.saveDescription(requireView().findViewById<EditText>(R.id.description_e).text)
+        profileViewModel.savePicture(currentPhotoPath)
     }
 }

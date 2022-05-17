@@ -1,7 +1,6 @@
 package com.example.showprofileactivity.profile
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -23,7 +22,7 @@ import org.json.JSONObject
 
 class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
 
-    private val sharedViewModel : SharedViewModel by activityViewModels()
+    private val profileViewModel : ProfileViewModel by activityViewModels()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     lateinit var email: String
     var user: User? = null
@@ -33,13 +32,22 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var editmode: Boolean
         setHasOptionsMenu(true)
-        email = FirebaseAuth.getInstance().currentUser?.email!!
+        if(arguments==null) {
+            email = FirebaseAuth.getInstance().currentUser?.email!!
+            editmode = true
+        }
+        else{
+            email = requireArguments().getString("email").toString()
+            editmode = false
+
+        }
         db.collection("users").document(email).get()
             .addOnSuccessListener { res ->
                 user = res.toUser()!!
-                mainMenu?.findItem(R.id.modifybtn)?.isVisible = true
                 setViewModel()
+                mainMenu?.findItem(R.id.modifybtn)?.isVisible = editmode
                 requireView().findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
                 requireView().findViewById<ConstraintLayout>(R.id.profileLayout).visibility = View.VISIBLE
             }
@@ -57,25 +65,25 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         super.onViewCreated(view, savedInstanceState)
         val namebox = requireView().findViewById<TextView>(R.id.fullname)
 
-        sharedViewModel.fullname.observe(viewLifecycleOwner) { fullname ->
+        profileViewModel.fullname.observe(viewLifecycleOwner) { fullname ->
             namebox.text = fullname
         }
-        sharedViewModel.nickname.observe(viewLifecycleOwner) { nickname ->
+        profileViewModel.nickname.observe(viewLifecycleOwner) { nickname ->
             requireView().findViewById<TextView>(R.id.nickname).text = nickname
         }
-        sharedViewModel.email.observe(viewLifecycleOwner) { email ->
+        profileViewModel.email.observe(viewLifecycleOwner) { email ->
             requireView().findViewById<TextView>(R.id.email).text = email
         }
-        sharedViewModel.location.observe(viewLifecycleOwner) { location ->
+        profileViewModel.location.observe(viewLifecycleOwner) { location ->
             requireView().findViewById<TextView>(R.id.location).text = location
         }
-        sharedViewModel.skills.observe(viewLifecycleOwner) { skills ->
+        profileViewModel.skills.observe(viewLifecycleOwner) { skills ->
             requireView().findViewById<TextView>(R.id.skills).text = skills
         }
-        sharedViewModel.description.observe(viewLifecycleOwner) { description ->
+        profileViewModel.description.observe(viewLifecycleOwner) { description ->
             requireView().findViewById<TextView>(R.id.description).text = description
         }
-        sharedViewModel.picture.observe(viewLifecycleOwner) { picture ->
+        profileViewModel.picture.observe(viewLifecycleOwner) { picture ->
             requireView().findViewById<ImageView>(R.id.profilepic).setImageURI(picture.toString().toUri())
         }
     }
@@ -113,13 +121,13 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
 
         val (fullname, username, location, services, description) = user!!
 
-        sharedViewModel.saveFullname(fullname)
-        sharedViewModel.saveNickname(username?:"Your Username" as String)
-        sharedViewModel.saveLocation(location?:"Your Location" as String)
-        sharedViewModel.saveSkills(services?:"" as String)
-        sharedViewModel.saveDescription(description?:"Your Description" as String)
-        sharedViewModel.saveEmail(email)
-        sharedViewModel.savePicture( myJSON.getString("img").toString())
+        profileViewModel.saveFullname(fullname)
+        profileViewModel.saveNickname(username?:"Your Username" as String)
+        profileViewModel.saveLocation(location?:"Your Location" as String)
+        profileViewModel.saveSkills(services?:"" as String)
+        profileViewModel.saveDescription(description?:"Your Description" as String)
+        profileViewModel.saveEmail(email)
+        profileViewModel.savePicture( myJSON.getString("img").toString())
 
     }
 

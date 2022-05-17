@@ -10,8 +10,12 @@ class OffersViewModel: ViewModel() {
     val location = MutableLiveData<String>()
     val hours = MutableLiveData<Long>()
     val creator = MutableLiveData<String>()
+    val email = MutableLiveData<String>()
     val skill = MutableLiveData<String>()
 
+    fun setEmail(email: String) {
+        this.email.value = email
+    }
     fun setTitle(title: String) {
         this.title.value = title
     }

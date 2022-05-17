@@ -2,7 +2,9 @@ package com.example.showprofileactivity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.drawerlayout.widget.DrawerLayout
@@ -47,8 +49,20 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, IntroActivity::class.java))
             finish()
         }
-    }
+        setDrawer(intent, navView.getHeaderView(0))
 
+    }
+    fun setDrawer(i : Intent, drawerLayout: View){
+
+        if(intent.hasExtra("user")) {
+            val b = intent.getBundleExtra("user")
+            val name = b?.getString("fullname")
+            val email = b?.getString("email")
+            drawerLayout.findViewById<TextView>(R.id.drawer_fullname).text = name
+            drawerLayout.findViewById<TextView>(R.id.drawer_email).text = email
+
+        }
+    }
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment_content_main)
         return NavigationUI.navigateUp(navController, binding.drawerLayout)

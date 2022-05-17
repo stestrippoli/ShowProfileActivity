@@ -82,7 +82,12 @@ class IntroActivity : AppCompatActivity() {
                         }
 
                     Toast.makeText(this, "Successfully logged in as " + account.displayName, Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, MainActivity::class.java))
+                    var b = Bundle()
+                    b.putString("fullname", account.displayName)
+                    b.putString("email", account.email)
+                    var i = Intent(this, MainActivity::class.java)
+                    i.putExtra("user", b)
+                    startActivity(i)
                     finish()
                 }
                 else Toast.makeText(this, "Failed to sign in, please retry.", Toast.LENGTH_SHORT).show()

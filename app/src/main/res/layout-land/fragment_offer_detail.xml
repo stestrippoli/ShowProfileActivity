@@ -94,7 +94,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="@string/duration"
+                        android:text="Duration"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
                 </LinearLayout>
 
@@ -117,7 +117,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="@string/offer_location"
+                        android:text="Location"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
                 </LinearLayout>
             </LinearLayout>
@@ -128,7 +128,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:text="@string/creator"
+                android:text="Creator"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <TextView
@@ -138,9 +138,8 @@
                 android:layout_marginTop="1dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="@string/creator"
+                android:text="Creator"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
             <TextView
                 android:id="@+id/details"
                 android:layout_width="match_parent"

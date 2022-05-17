@@ -81,7 +81,7 @@
         android:label="Offer Details"
         tools:layout="@layout/fragment_offer_detail" >
         <action
-            android:id="@+id/action_showprofileoffer"
+            android:id="@+id/action_showoffercreator"
             app:destination="@id/showProfileFragment" />
     </fragment>
     <fragment
