@@ -1,5 +1,6 @@
 package com.example.showprofileactivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import com.google.android.material.navigation.NavigationView
@@ -8,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.*
 import com.example.showprofileactivity.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,9 +42,12 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(
             this, navController, binding.drawerLayout
         )
-        //findViewById<Button>(R.id.logout).setOnClickListener{ signOut() }
+        findViewById<Button>(R.id.logout).setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this, IntroActivity::class.java))
+            finish()
+        }
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment_content_main)

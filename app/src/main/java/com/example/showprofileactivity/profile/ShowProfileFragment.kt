@@ -24,48 +24,33 @@ import org.json.JSONObject
 class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
 
     private val sharedViewModel : SharedViewModel by activityViewModels()
-    private lateinit var auth: FirebaseAuth
-    private val db: FirebaseFirestore
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     lateinit var email: String
     var user: User? = null
     private var mainMenu: Menu? = null
-    init {
-        db = FirebaseFirestore.getInstance()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        db
-            .collection("users")
-            .document(email)
-            .get()
-            .addOnSuccessListener {
-                    res ->
+        email = FirebaseAuth.getInstance().currentUser?.email!!
+        db.collection("users").document(email).get()
+            .addOnSuccessListener { res ->
                 user = res.toUser()!!
-                //use it as needed
                 mainMenu?.findItem(R.id.modifybtn)?.isVisible = true
                 setViewModel()
                 requireView().findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
                 requireView().findViewById<ConstraintLayout>(R.id.profileLayout).visibility = View.VISIBLE
-
             }
             .addOnFailureListener {
                 println("Debug: errore")
                 Toast
-                    .makeText(getContext(), "Error", Toast.LENGTH_LONG)
+                    .makeText(context, "Error", Toast.LENGTH_LONG)
                     .show()
             }
 
         return inflater.inflate(R.layout.fragment_show_profile, container, false)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val args = arguments
-        email = args!!.getString("email", "")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -109,7 +94,6 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             }
             else -> {super.onContextItemSelected(item)}
         }
-        return true
     }
 
     private fun setViewModel(){
@@ -127,28 +111,27 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         sharedViewModel.saveDescription(myJSON.getString("description").toString())
         sharedViewModel.savePicture( myJSON.getString("img").toString())*/
 
-        val (name, username, email, location, skills, description, picture) = user!!
+        val (fullname, username, location, services, description) = user!!
 
-        sharedViewModel.saveFullname(name?:"" as String)
-        sharedViewModel.saveNickname(username?:"" as String)
-        sharedViewModel.saveEmail(email?:"" as String)
-        sharedViewModel.saveLocation(location?:"" as String)
-        sharedViewModel.saveSkills(skills?:"" as String)
-        sharedViewModel.saveDescription(description?:"" as String)
-        sharedViewModel.savePicture((picture?:myJSON.getString("img").toString()) as String)
+        sharedViewModel.saveFullname(fullname)
+        sharedViewModel.saveNickname(username?:"Your Username" as String)
+        sharedViewModel.saveLocation(location?:"Your Location" as String)
+        sharedViewModel.saveSkills(services?:"" as String)
+        sharedViewModel.saveDescription(description?:"Your Description" as String)
+        sharedViewModel.saveEmail(email)
+        //sharedViewModel.savePicture( myJSON.getString("img").toString())
 
     }
 
     fun DocumentSnapshot.toUser(): User? {
         return try{
 
-            val name = get("name") as String?
+            val fullname = get("fullname") as String
             val username = get("username") as String?
             val location = get("location") as String?
-            val skills = get("skills") as String?
+            val services = get("services") as String?
             val description = get("description") as String?
-            val picture = get("picture") as Uri?
-            User(name, username, username, location, skills, description, picture)
+            User(fullname, username, location, services, description)
         } catch(e:Exception){
             e.printStackTrace()
             null

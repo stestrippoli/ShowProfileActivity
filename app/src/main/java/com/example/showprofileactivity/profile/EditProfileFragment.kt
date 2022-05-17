@@ -93,23 +93,25 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
                 with (sharedPref.edit()) {
                     val profile = JSONObject()
-                    profile.put("fullname", sharedViewModel.fullname.value)
-                    profile.put("nickname", sharedViewModel.nickname.value)
-                    profile.put("email", sharedViewModel.email.value)
-                    profile.put("location", sharedViewModel.location.value)
-                    profile.put("skills", sharedViewModel.skills.value)
-                    profile.put("description", sharedViewModel.description.value)
-                    profile.put("img", sharedViewModel.picture.value)
+                    profile.put("nickname", requireView().findViewById<EditText>(R.id.nickname_e).text)
+                    profile.put("location", requireView().findViewById<EditText>(R.id.location_e).text)
+                    profile.put("skills", requireView().findViewById<EditText>(R.id.skills_e).text)
+                    profile.put("description", requireView().findViewById<EditText>(R.id.description_e).text)
+                    //profile.put("img", sharedViewModel.picture.value)
                     putString("profile", profile.toString())
                     apply()
                 }
-                val u = User(sharedViewModel.fullname.value.toString(), sharedViewModel.nickname.value.toString(), sharedViewModel.email.value.toString(), sharedViewModel.location.value.toString(), sharedViewModel.skills.value.toString(), sharedViewModel.description.value.toString(), sharedViewModel.picture.value)
-                db
-                    .collection("users")
-                    .document()
-                    .set(u)
-                    .addOnSuccessListener { Log.d("Firebase", "User added") }
-                    .addOnFailureListener{ Log.d("Firebase", "Failed to add user") }
+
+                val namebox = view.findViewById<EditText>(R.id.name_e).text.toString()
+                val nicknamebox = view.findViewById<EditText>(R.id.nickname_e).text.toString()
+                val locationbox = view.findViewById<EditText>(R.id.location_e).text.toString()
+                val skillsbox = view.findViewById<EditText>(R.id.skills_e).text.toString()
+                val descbox = view.findViewById<EditText>(R.id.description_e).text.toString()
+                db.collection("users")
+                    .document(sharedViewModel.email.value.toString())
+                    .set(User(namebox, nicknamebox, locationbox, skillsbox, descbox))
+                    .addOnSuccessListener { Log.d("Firebase", "User profile successfully modified.") }
+                    .addOnFailureListener{ Log.d("Firebase", "Failed to modify user profile.") }
                 findNavController().navigateUp()
             }
         })

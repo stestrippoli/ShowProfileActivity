@@ -40,6 +40,7 @@
     <string name="add_new_timeslots">Add new timeslots</string>
     <string name="home">Home</string>
     <string name="profile">Profile</string>
+    <string name="timeslots">Timeslots</string>
     <string name="service_name">Service name</string>
     <string name="no_offers_available">Currently there are no offers for this particular skill. Please check again later.</string>
     <string name="search_bar">search_bar</string>

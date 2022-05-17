@@ -5,13 +5,18 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/itemFragment"
+            android:id="@+id/serviceFragment"
             android:icon="@drawable/ic_baseline_home_24"
-            android:title="@string/home" />
+            android:title="@string/home"
+            />
         <item
             android:id="@+id/showProfileFragment"
             android:icon="@drawable/ic_baseline_person_outline_24"
             android:title="@string/profile"
             />
+        <item
+            android:id="@+id/itemFragment"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/timeslots" />
     </group>
 </menu>
