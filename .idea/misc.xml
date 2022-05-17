@@ -75,8 +75,12 @@
         <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/drawable/ic_launcher_background.xml" value="0.332" />
         <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/layout-land/activity_edit_profile.xml" value="0.30687830687830686" />
         <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/layout-land/activity_show_profile.xml" value="0.30687830687830686" />
+        <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/layout-land/fragment_offer_detail.xml" value="0.30687830687830686" />
+        <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/layout-land/fragment_show_profile.xml" value="0.140625" />
         <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/layout/activity_edit_profile.xml" value="0.2755208333333333" />
         <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/layout/activity_show_profile.xml" value="0.3625" />
+        <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/layout/fragment_offer_detail.xml" value="0.5" />
+        <entry key="..\:/Users/work/Documents/GitHub/Time-Banking-Application/app/src/main/res/layout/fragment_show_profile.xml" value="0.12228260869565218" />
         <entry key="app/src/main/res/layout-land/fragment_show_profile.xml" value="0.18474426807760141" />
         <entry key="app/src/main/res/layout-land/fragment_time_slot_details.xml" value="0.34171075837742504" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.19610507246376813" />

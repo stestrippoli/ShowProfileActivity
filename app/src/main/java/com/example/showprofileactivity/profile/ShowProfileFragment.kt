@@ -63,10 +63,9 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val namebox = requireView().findViewById<TextView>(R.id.fullname)
 
         profileViewModel.fullname.observe(viewLifecycleOwner) { fullname ->
-            namebox.text = fullname
+            requireView().findViewById<TextView>(R.id.fullname).text = fullname
         }
         profileViewModel.nickname.observe(viewLifecycleOwner) { nickname ->
             requireView().findViewById<TextView>(R.id.nickname).text = nickname
@@ -127,8 +126,8 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         profileViewModel.saveSkills(services?:"" as String)
         profileViewModel.saveDescription(description?:"Your Description" as String)
         profileViewModel.saveEmail(email)
-        profileViewModel.savePicture( myJSON.getString("img").toString())
-
+        if(myJSON.has("img"))
+            profileViewModel.savePicture(myJSON.getString("img"))
     }
 
     fun DocumentSnapshot.toUser(): User? {
