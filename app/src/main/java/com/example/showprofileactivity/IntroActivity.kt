@@ -212,7 +212,7 @@ class IntroActivity : AppCompatActivity() {
             val location = get("location") as String?
             val skills = get("skills") as String?
             val description = get("description") as String?
-            val picture = get("picture") as Uri?
+            val picture = get("picture") as CharSequence?
             User(name, username, username, location, skills, description, picture)
         } catch(e:Exception){
             e.printStackTrace()

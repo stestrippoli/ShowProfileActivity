@@ -9,5 +9,5 @@ data class User(
     var location:String?,
     var skills:String?,
     var descritpion:String?,
-    var picture:Uri?
+    var picture:CharSequence?
 )

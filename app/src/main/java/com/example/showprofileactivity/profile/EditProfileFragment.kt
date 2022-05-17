@@ -12,6 +12,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
@@ -24,6 +25,10 @@ import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.showprofileactivity.R
+import com.example.showprofileactivity.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
@@ -34,6 +39,11 @@ import java.util.*
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private val sharedViewModel : SharedViewModel by activityViewModels()
+
+    private val db: FirebaseFirestore
+    init {
+        db = FirebaseFirestore.getInstance()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,6 +103,13 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                     putString("profile", profile.toString())
                     apply()
                 }
+                val u = User(sharedViewModel.fullname.value.toString(), sharedViewModel.nickname.value.toString(), sharedViewModel.email.value.toString(), sharedViewModel.location.value.toString(), sharedViewModel.skills.value.toString(), sharedViewModel.description.value.toString(), sharedViewModel.picture.value)
+                db
+                    .collection("users")
+                    .document()
+                    .set(u)
+                    .addOnSuccessListener { Log.d("Firebase", "User added") }
+                    .addOnFailureListener{ Log.d("Firebase", "Failed to add user") }
                 findNavController().navigateUp()
             }
         })
