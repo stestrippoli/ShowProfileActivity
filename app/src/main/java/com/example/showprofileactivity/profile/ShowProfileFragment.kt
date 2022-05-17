@@ -119,7 +119,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         sharedViewModel.saveSkills(services?:"" as String)
         sharedViewModel.saveDescription(description?:"Your Description" as String)
         sharedViewModel.saveEmail(email)
-        //sharedViewModel.savePicture( myJSON.getString("img").toString())
+        sharedViewModel.savePicture( myJSON.getString("img").toString())
 
     }
 
