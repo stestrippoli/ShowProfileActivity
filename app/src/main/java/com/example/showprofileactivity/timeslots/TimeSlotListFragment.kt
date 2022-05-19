@@ -8,11 +8,14 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.findNavController
 import com.example.showprofileactivity.R
+import com.example.showprofileactivity.offers.OffersViewModel
+import com.example.showprofileactivity.offers.placeholder.Offer
+import com.example.showprofileactivity.services.ServiceViewModel
 import com.example.showprofileactivity.timeslots.placeholder.TimeSlot
 
 
 class TimeSlotListFragment(
-    private var values: MutableList<TimeSlot>,
+    private var values: MutableList<Offer>,
     private var vm: TimeSlotViewModel
 
 ) : RecyclerView.Adapter<TimeSlotListFragment.ViewHolder>() {
@@ -31,27 +34,32 @@ class TimeSlotListFragment(
         holder.card_title.text = item.title
         holder.card_description.text = item.description
         holder.card_date.text = item.date
-
         holder.itemView.setOnClickListener{v:View ->
-            vm.setId(position)
-            vm.setDate(item.date)
-            vm.setTime(item.time)
-            vm.setTitle(item.title)
-            vm.setDesc(item.description)
-            vm.setLocation(item.location)
-            vm.setDuration(item.duration)
+            vm.setId(item.id)
+            vm.setCreator(item.creator.toString())
+            vm.setEmail(item.email.toString())
+            vm.setSkill(item.skill.toString())
+            vm.setDate(item.date.toString())
+            vm.setTime(item.time.toString())
+            vm.setTitle(item.title.toString())
+            vm.setDesc(item.description.toString())
+            vm.setLocation(item.location.toString())
+            vm.setDuration(item.hours.toString())
             v.findNavController().navigate(R.id.nav_timeSlotDetailsFragment)
         }
 
         val btn = holder.itemView.findViewById<Button>(R.id.edit_btn)
         btn.setOnClickListener{
-            vm.setId(position)
-            vm.setDate(item.date)
-            vm.setTime(item.time)
-            vm.setTitle(item.title)
-            vm.setDesc(item.description)
-            vm.setLocation(item.location)
-            vm.setDuration(item.duration)
+            vm.setId(item.id)
+            vm.setCreator(item.creator.toString())
+            vm.setEmail(item.email.toString())
+            vm.setSkill(item.skill.toString())
+            vm.setDate(item.date.toString())
+            vm.setTime(item.time.toString())
+            vm.setTitle(item.title.toString())
+            vm.setDesc(item.description.toString())
+            vm.setLocation(item.location.toString())
+            vm.setDuration(item.hours.toString())
             it.findNavController().navigate(R.id.action_toEditFragment)
         }
 

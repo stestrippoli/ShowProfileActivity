@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-
+    private lateinit var user: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
             val b = intent.getBundleExtra("user")
             val name = b?.getString("fullname")
             val email = b?.getString("email")
+            user = email!!
             drawerLayout.findViewById<TextView>(R.id.drawer_fullname).text = name
             drawerLayout.findViewById<TextView>(R.id.drawer_email).text = email
 

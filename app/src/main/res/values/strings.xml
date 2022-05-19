@@ -11,7 +11,9 @@
     <string name="labelLocation">Location</string>
     <string name="labelUsername">Username</string>
     <string name="labelEmail">Email</string>
+    <string name="labelSkill">Skill</string>
     <string name="labelSkills">Skills</string>
+
     <string name="labelDescription">Description</string>
     <string name="labelDate">Date</string>
     <string name="labelTime">Time</string>
@@ -40,7 +42,7 @@
     <string name="add_new_timeslots">Add new timeslots</string>
     <string name="home">Home</string>
     <string name="profile">Profile</string>
-    <string name="timeslots">Timeslots</string>
+    <string name="timeslots">Your offers</string>
     <string name="service_name">Service name</string>
     <string name="no_offers_available">Currently there are no offers for this particular skill. Please check again later.</string>
     <string name="search_bar">search_bar</string>
@@ -54,6 +56,7 @@
     <string name="skill_cooking">Skill: Cooking</string>
     <string name="title">Title</string>
     <string name="offer_description">Description</string>
+    <string name="skill">Skill</string>
 
 
 </resources>

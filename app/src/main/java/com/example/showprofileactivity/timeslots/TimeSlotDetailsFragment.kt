@@ -47,6 +47,10 @@ class TimeSlotDetailsFragment : Fragment(R.layout.fragment_time_slot_details) {
         vm.description.observe(this.viewLifecycleOwner){
             description.setText(it)
         }
+        val skill = view.findViewById<TextView>(R.id.skill)
+        vm.skill.observe(this.viewLifecycleOwner){
+            skill.setText(it)
+        }
 
         val location = view.findViewById<TextView>(R.id.location)
         vm.location.observe(this.viewLifecycleOwner){

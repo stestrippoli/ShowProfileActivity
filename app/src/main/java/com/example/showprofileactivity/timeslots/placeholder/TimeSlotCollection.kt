@@ -12,7 +12,7 @@ object TimeSlotCollection {
 
     val COUNT = ITEMS.size
 
-    val emptyTimeSlot = TimeSlot("Insert your title here", "Insert desc", "Insert Location", "Insert duration", "01-01-2000", "12:00")
+    val emptyTimeSlot = TimeSlot("o","", "", "", "",  "","", "","01-01-2000", "12:00")
     init {
         // Add some sample items.
 
