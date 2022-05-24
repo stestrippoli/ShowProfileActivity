@@ -41,13 +41,13 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         else{
             email = requireArguments().getString("email").toString()
             editmode = false
-
         }
         db.collection("users").document(email).get()
             .addOnSuccessListener { res ->
                 user = res.toUser()!!
                 setViewModel()
                 mainMenu?.findItem(R.id.modifybtn)?.isVisible = editmode
+                mainMenu?.findItem(R.id.to_chat)?.isVisible = !editmode
                 requireView().findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
                 requireView().findViewById<ConstraintLayout>(R.id.profileLayout).visibility = View.VISIBLE
             }
@@ -97,6 +97,11 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         return when (item.itemId) {
             R.id.modifybtn -> {
                 findNavController().navigate(R.id.action_toEditProfileFragment)
+                true
+            }
+            R.id.to_chat ->
+            {
+                findNavController().navigate(R.id.action_showProfileFragment_to_fragment_chat)
                 true
             }
             else -> {super.onContextItemSelected(item)}

@@ -2,6 +2,8 @@ package com.example.showprofileactivity.offers
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
@@ -40,15 +42,24 @@ class OfferDetailFragment : Fragment() {
             val hoursString = it.toString() + " hours"
             duration.text = hoursString
         }
+
+        val o = Bundle()
         val creator = view.findViewById<TextView>(R.id.creator)
         vm.creator.observe(this.viewLifecycleOwner) {
             creator.text = it
+            o.putString("uName", creator.text.toString())
+        }
+        vm.id.observe(this.viewLifecycleOwner) {
+            o.putString("oid", it)
         }
         creator.setOnClickListener {
             val b = Bundle()
             b.putString("email", vm.email.value)
             findNavController().navigate(R.id.action_showoffercreator, b)
         }
+        val button = view.findViewById<ImageButton>(R.id.chat_button)
+        o.putString("uMail", vm.email.value)
+        button.setOnClickListener { findNavController().navigate(R.id.action_offerDetailFragment_to_fragment_chat, o) }
     }
 
 }

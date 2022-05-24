@@ -25,7 +25,6 @@ class ServiceViewModel: ViewModel() {
             _services.value = if (e!=null)
                 emptyList()
             else r?.mapNotNull { d -> d.toService()  }
-            println("caricati")
         }
         lO = FirebaseFirestore.getInstance().collection("offers")
             .addSnapshotListener{ r, e ->
@@ -57,7 +56,8 @@ class ServiceViewModel: ViewModel() {
             val creator = get("creator") as String
             val skill = get("skill") as String
             val email = get("email") as String
-            Offer(title, description, location, hours, creator, skill, email)
+            val id = get("id") as String
+            Offer(title, description, location, hours, creator, skill, email, id)
         }
         catch (e: Exception){
             e.printStackTrace()

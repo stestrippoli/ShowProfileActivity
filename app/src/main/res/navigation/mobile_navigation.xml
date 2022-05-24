@@ -61,6 +61,9 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_showProfileFragment_to_fragment_chat"
+            app:destination="@id/fragment_chat" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -83,6 +86,9 @@
         <action
             android:id="@+id/action_showoffercreator"
             app:destination="@id/showProfileFragment" />
+        <action
+            android:id="@+id/action_offerDetailFragment_to_fragment_chat"
+            app:destination="@id/fragment_chat" />
     </fragment>
     <fragment
         android:id="@+id/offersFragment"
@@ -96,5 +102,11 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_chat"
+        android:name="com.example.showprofileactivity.profile.ChatFragment"
+        android:label="User Chat"
+        tools:layout="@layout/fragment_chat" >
     </fragment>
 </navigation>

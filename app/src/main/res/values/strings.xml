@@ -54,6 +54,7 @@
     <string name="skill_cooking">Skill: Cooking</string>
     <string name="title">Title</string>
     <string name="offer_description">Description</string>
+    <string name="chat_with_user">Chat with User</string>
 
 
 </resources>
