@@ -56,7 +56,7 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
                 requireView().findViewById<ProgressBar>(R.id.chatProgressBar).visibility = View.GONE
                 requireView().findViewById<RecyclerView>(R.id.rv_chat).visibility = View.VISIBLE
             }
-
+        _messages.value= emptyList()
         return inflater.inflate(R.layout.fragment_chat, container, false)
     }
 
@@ -64,8 +64,9 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
         super.onViewCreated(view, savedInstanceState)
         val rv = requireView().findViewById<RecyclerView>(R.id.rv_chat)
         rv.layoutManager = LinearLayoutManager(context)
+        println("prova")
         println(messages.value)
-        val adapter = MessageAdapter(messages.value?: emptyList())
+        val adapter = MessageAdapter(messages.value!!)
         rv.adapter = adapter
         //rv.scrollToPosition(messages.value!!.size)
         val send = requireView().findViewById<Button>(R.id.button_chat_send)
@@ -77,12 +78,11 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
             var m = Message(text, user, false, currentTime, currentDate)
             var t1 = messages.value?.toMutableList()
             t1?.add(m)
-            println(t1)
 
             db.collection("chats")
                 .document("$oid"+"_"+"$user")
                 .set(mapOf("messages" to t1))
-                .addOnSuccessListener { Log.d("Firebase", "Chat successfully updated."); rv.adapter?.notifyDataSetChanged()}
+                .addOnSuccessListener { Log.d("Firebase", "Chat successfully updated."); rv.adapter?.notifyDataSetChanged() }
                 .addOnFailureListener{ Log.d("Firebase", "Failed to update chat.") }
         }
     }
