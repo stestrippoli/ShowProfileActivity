@@ -2,28 +2,15 @@ package com.example.showprofileactivity.timeslots.placeholder
 
 import org.json.JSONObject
 
-class TimeSlot(newtitle:String, description : String, location: String, duration : String ,date : String,time : String) {
+class TimeSlot(var id :String, var title:String,
+               var description : String,
+               var location: String,
+               var duration : String,
+               var creator : String,
+               var skill : String,
+               var email : String,
+               var date : String,
+               var time : String) {
 
-    var title = newtitle
-    var description = description
-    var location = location
-    var duration = duration
-    var date = date
-    var time = time
 
-    fun itemToJSON(id: Int): JSONObject {
-        return JSONObject("""
-        {
-            "id":"$id",
-            "title":"${title}",
-            "description":"${description}",
-            "location":"${location}",
-            "duration":"${duration}",
-            "date":"${date}",
-            "time":"${time}"
-
-        }
-        """
-        )
-    }
 }

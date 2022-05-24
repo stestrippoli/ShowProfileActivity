@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,17 +14,15 @@
         android:orientation="vertical"
         tools:context=".timeslots.TimeSlotDetailsFragment">
 
-        <!-- TODO: Update blank fragment layout -->
 
         <EditText
             android:id="@+id/title_e"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="3dp"
-
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:text="Title"
+            android:hint="@string/labelFullname"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <TextView
@@ -41,8 +41,18 @@
             android:layout_marginTop="1dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:text="Description"
+            android:hint="@string/description"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/skill"
+            android:text="@string/skill"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/skill_spinner"
+            android:layout_margin="5dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,7 +122,8 @@
             android:layout_marginTop="1dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:text="Duration"
+            android:hint="Duration"
+            android:inputType="number"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
@@ -129,9 +140,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="1dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:text="@string/labelLocation"
+            android:hint="@string/labelLocation"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     </LinearLayout>

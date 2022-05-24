@@ -116,29 +116,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     }
 
 
-
-    /*private fun populate(){
-        val namebox = view?.findViewById<TextView>(R.id.name_e)
-        val nicknamebox = view?.findViewById<TextView>(R.id.nickname_e)
-        val emailbox = view?.findViewById<TextView>(R.id.email_e)
-        val locationbox = view?.findViewById<TextView>(R.id.location_e)
-        val skillsbox = view?.findViewById<TextView>(R.id.skills_e)
-        val descbox = view?.findViewById<TextView>(R.id.description_e)
-        val sharedPref =this.activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        val myJSON = JSONObject(
-            sharedPref.getString("profile",
-                """{"fullname":"Default Name","nickname":"Default nickname","email":"default@email.com","location":"Default location","skills":"Skill1 | Skill2 | Skill3","description": "Default description","img": "android.resource://com.example.showprofileactivity/${android.R.drawable.picture_frame}"}""")
-        )
-
-        namebox!!.text = myJSON.getString("fullname")
-        locationbox!!.text = myJSON.getString("location")
-        emailbox!!.text = myJSON.getString("email")
-        nicknamebox!!.text = myJSON.getString("email")
-        skillsbox!!.text = myJSON.getString("nickname").replace(" | ", ", ")
-        descbox!!.text = myJSON.getString("description")
-        currentPhotoPath = myJSON.getString("img").toString()
-    }*/
-
     override fun onCreateContextMenu(
         menu: ContextMenu,
         v: View,
