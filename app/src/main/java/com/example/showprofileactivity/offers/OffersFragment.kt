@@ -149,6 +149,8 @@ class OffersFragment : Fragment(){
         vmOffer.setSkill(offers.ITEMS[position].skill!!)
         vmOffer.setEmail(offers.ITEMS[position].email!!)
         vmOffer.setId(offers.ITEMS[position].id!!)
+        vmOffer.setAccepted(offers.ITEMS[position].accepted!!)
+        vmOffer.setAcceptedUser(offers.ITEMS[position].acceptedUser!!)
         view?.findNavController()?.navigate(R.id.action_toOfferDetailFragment)
     }
 
