@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.showprofileactivity.Message
@@ -32,6 +33,9 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
     val messages: LiveData<List<Message>> = _messages
     lateinit var oid:String
     lateinit var user:String
+    lateinit var creator:String
+    lateinit var uName:String
+    private var mainMenu: Menu? = null
 
     init {
         db =  FirebaseFirestore.getInstance()
@@ -41,10 +45,17 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = requireArguments().getString("uName").toString()
+        setHasOptionsMenu(true)
         oid = requireArguments().getString("oid").toString()
         user =(requireActivity()!!.intent.extras!!.get("user") as Bundle).getString("email") as String
+        creator = requireArguments().getString("cMail").toString()
+        val c = creator == user
+        mainMenu?.findItem(R.id.accept_request)?.isVisible = c
+        mainMenu?.findItem(R.id.reject_request)?.isVisible = c
+
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
+        uName = requireArguments().getString("uName").toString()
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = uName
         db.collection("chats").document("$oid"+"_"+"$user")
             .addSnapshotListener{ r, e ->
                 if(e!=null)
@@ -84,6 +95,70 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
                 .set(mapOf("messages" to t1))
                 .addOnSuccessListener { Log.d("Firebase", "Chat successfully updated."); rv.adapter?.notifyDataSetChanged() }
                 .addOnFailureListener{ Log.d("Firebase", "Failed to update chat.") }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        mainMenu = menu
+        inflater.inflate(R.menu.chat_menu, menu)
+        mainMenu?.findItem(R.id.accept_request)?.isVisible = false
+        mainMenu?.findItem(R.id.reject_request)?.isVisible = false
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.accept_request -> {
+                if(!requireArguments().getString("accepted").toBoolean()){
+                    db.collection("users").document(user).get()
+                        .addOnSuccessListener { res ->
+                            val accUser = res.toUser()!!
+                            val credit = requireArguments().getString("hours")!!.toLong()
+                            if(accUser.credit!! < credit){
+                                Toast
+                                    .makeText(context, "Error: $uName has insufficient credit", Toast.LENGTH_LONG)
+                                    .show()
+                            }
+                            else {
+                                db.collection("users").document()
+                            }
+                        }
+                        .addOnFailureListener {
+                            Toast
+                                .makeText(context, "Error", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                }
+                else {
+                    Toast
+                        .makeText(context, "Error: the offer has already been accepted", Toast.LENGTH_LONG)
+                        .show()
+                }
+                findNavController().navigate(R.id.action_toEditProfileFragment)
+                true
+            }
+            R.id.reject_request ->
+            {
+                findNavController().navigate(R.id.action_showProfileFragment_to_fragment_chat)
+                true
+            }
+            else -> {super.onContextItemSelected(item)}
+        }
+    }
+
+    fun DocumentSnapshot.toUser(): User? {
+        return try{
+
+            val fullname = get("fullname") as String
+            val username = get("username") as String?
+            val location = get("location") as String?
+            val services = get("services") as String?
+            val description = get("description") as String?
+            val credit = get("credit") as Long
+            User(fullname, username, location, services, description, credit)
+        } catch(e:Exception){
+            e.printStackTrace()
+            null
         }
     }
 

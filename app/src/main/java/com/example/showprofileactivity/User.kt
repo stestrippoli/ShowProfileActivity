@@ -6,5 +6,6 @@ data class User(
     var username: String?,
     var location: String?,
     var services: String?,
-    var description: String?
+    var description: String?,
+    var credit: Long?
 )

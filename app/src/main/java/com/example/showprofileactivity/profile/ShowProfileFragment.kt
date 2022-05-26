@@ -52,7 +52,6 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
                 requireView().findViewById<ConstraintLayout>(R.id.profileLayout).visibility = View.VISIBLE
             }
             .addOnFailureListener {
-                println("Debug: errore")
                 Toast
                     .makeText(context, "Error", Toast.LENGTH_LONG)
                     .show()
@@ -143,7 +142,8 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             val location = get("location") as String?
             val services = get("services") as String?
             val description = get("description") as String?
-            User(fullname, username, location, services, description)
+            val credit = get("credit") as Long
+            User(fullname, username, location, services, description, credit)
         } catch(e:Exception){
             e.printStackTrace()
             null

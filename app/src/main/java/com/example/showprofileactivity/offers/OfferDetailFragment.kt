@@ -58,7 +58,9 @@ class OfferDetailFragment : Fragment() {
             findNavController().navigate(R.id.action_showoffercreator, b)
         }
         val button = view.findViewById<ImageButton>(R.id.chat_button)
-        o.putString("uMail", vm.email.value)
+        o.putString("cMail", vm.email.value)
+        o.putLong("hours", vm.hours.value!!)
+        o.putBoolean("accepted", vm.accepted.value!!)
         button.setOnClickListener { findNavController().navigate(R.id.action_offerDetailFragment_to_fragment_chat, o) }
     }
 

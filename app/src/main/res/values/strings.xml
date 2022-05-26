@@ -58,6 +58,8 @@
     <string name="offer_description">Description</string>
     <string name="skill">Skill</string>
     <string name="chat_with_user">Chat with User</string>
+    <string name="accept_request">Accept request</string>
+    <string name="reject_request">Reject request</string>
 
 
 </resources>
