@@ -59,7 +59,9 @@ class TimeSlotEditFragment : Fragment(R.layout.fragment_time_slot_edit) {
                         skill,
                         vm.email.value.toString(),
                         "${format(date!!.dayOfMonth)}-${format(date.month + 1)}-${format(date.year)}",
-                        "${format(time!!.hour)}:${format(time.minute)}"
+                        "${format(time!!.hour)}:${format(time.minute)}",
+                        false,
+                        ""
                     )
                     db.collection("offers")
                         .document(o.id)
