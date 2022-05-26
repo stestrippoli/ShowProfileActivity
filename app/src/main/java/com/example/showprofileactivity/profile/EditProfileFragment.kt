@@ -107,7 +107,15 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 val descbox = view.findViewById<EditText>(R.id.description_e).text.toString()
                 db.collection("users")
                     .document(profileViewModel.email.value.toString())
-                    .set(User(namebox, nicknamebox, locationbox, skillsbox, descbox))
+                    .update(
+                        mapOf(
+                            "fullname" to namebox,
+                            "username" to nicknamebox,
+                            "location" to locationbox,
+                            "services" to skillsbox,
+                            "description" to descbox
+                        )
+                    )
                     .addOnSuccessListener { Log.d("Firebase", "User profile successfully modified.") }
                     .addOnFailureListener{ Log.d("Firebase", "Failed to modify user profile.") }
                 findNavController().navigateUp()
