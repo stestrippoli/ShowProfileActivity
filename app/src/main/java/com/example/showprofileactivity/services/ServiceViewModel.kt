@@ -1,14 +1,18 @@
 package com.example.showprofileactivity.services
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.showprofileactivity.User
 import com.example.showprofileactivity.offers.placeholder.Offer
 import com.example.showprofileactivity.services.placeholder.Service
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ServiceViewModel: ViewModel() {
@@ -17,7 +21,10 @@ class ServiceViewModel: ViewModel() {
     private val lS: ListenerRegistration
     private val _offers = MutableLiveData<List<Offer>>()
     val offers: LiveData<List<Offer>> = _offers
+    private val _bookmarks = MutableLiveData<ArrayList<String>>()
+    val bookmarks: LiveData<ArrayList<String>> = _bookmarks
     private val lO: ListenerRegistration
+    private val lB: ListenerRegistration
 
     init {
         lS = FirebaseFirestore.getInstance().collection("services")
@@ -32,8 +39,13 @@ class ServiceViewModel: ViewModel() {
                     emptyList()
                 else r?.mapNotNull { d -> d.toOffer() }
             }
+        lB = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().currentUser?.email!!)
+            .addSnapshotListener{ r, e ->
+                _bookmarks.value = if (e != null) arrayListOf()
+                else r?.data?.get("bookmarks") as ArrayList<String>?
+            }
     }
-    override fun onCleared() { super.onCleared(); lS.remove(); }
+    override fun onCleared() { super.onCleared(); lS.remove(); lO.remove(); lB.remove(); }
 
 
     fun DocumentSnapshot.toService(): Service? {

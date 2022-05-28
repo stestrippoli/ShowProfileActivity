@@ -1,6 +1,7 @@
 package com.example.showprofileactivity.offers
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageButton
@@ -9,10 +10,15 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.showprofileactivity.R
+import com.example.showprofileactivity.services.ServiceViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class OfferDetailFragment : Fragment() {
 
     private val vm by activityViewModels<OffersViewModel>()
+    private val vmComp by activityViewModels<ServiceViewModel>()
+    private var marked: Boolean = false;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +67,34 @@ class OfferDetailFragment : Fragment() {
         o.putString("cMail", vm.email.value)
         o.putLong("hours", vm.hours.value!!)
         o.putBoolean("accepted", vm.accepted.value!!)
+
         button.setOnClickListener { findNavController().navigate(R.id.action_offerDetailFragment_to_fragment_chat, o) }
+
+        val markButton = view.findViewById<Button>(R.id.button)
+        if(vmComp.bookmarks.value!!.contains(vm.id.value)) marked = true
+        if(marked) markButton.text = getString(R.string.rem_bookmark)
+        else markButton.text = getString(R.string.add_bookmark)
+        markButton.setOnClickListener {
+            val newList = handleBookmark(markButton)
+            FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().currentUser?.email!!)
+                .update("bookmarks", newList)
+                .addOnSuccessListener { Log.d("Firebase", "Bookmarks successfully saved.") }
+                .addOnFailureListener{ Log.d("Firebase", "Failed to save bookmarks.") }
+        }
     }
 
+    private fun handleBookmark(markButton: Button): ArrayList<String> {
+        val newList = ArrayList(vmComp.bookmarks.value)
+        if(marked) {
+            newList.remove(vm.id.value)
+            marked = false
+            markButton.text = getString(R.string.add_bookmark)
+        }
+        else {
+            newList.add(vm.id.value)
+            marked = true
+            markButton.text = getString(R.string.rem_bookmark)
+        }
+        return newList
+    }
 }

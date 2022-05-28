@@ -70,8 +70,6 @@ class IntroActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val account: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-
-                    var dbUser: Map<String, Any>
                     db.collection("users").document(account?.email!!)
                         .get().addOnSuccessListener { document ->
                             if(document.data == null)
