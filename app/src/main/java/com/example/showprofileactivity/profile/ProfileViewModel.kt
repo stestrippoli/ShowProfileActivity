@@ -10,6 +10,8 @@ class ProfileViewModel: ViewModel() {
     val fullname: LiveData<CharSequence> = _fullname
     private var _location = MutableLiveData<CharSequence>()
     val location: LiveData<CharSequence> = _location
+    private var _rating = MutableLiveData<CharSequence>()
+    val rating: LiveData<CharSequence> = _rating
     private var _email = MutableLiveData<CharSequence>()
     val email: LiveData<CharSequence> = _email
     private var _nickname = MutableLiveData<CharSequence>()
@@ -26,6 +28,9 @@ class ProfileViewModel: ViewModel() {
     }
     fun saveLocation(newLocation: CharSequence) {
         _location.value = newLocation
+    }
+    fun saveRating(newRating: CharSequence) {
+        _rating.value = newRating
     }
     fun saveEmail(newEmail: CharSequence) {
         _email.value = newEmail
