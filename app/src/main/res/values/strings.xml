@@ -10,6 +10,7 @@
     <string name="labelFullname">Full Name</string>
     <string name="labelLocation">Location</string>
     <string name="labelUsername">Username</string>
+    <string name="labelRating">Rating</string>
     <string name="labelEmail">Email</string>
     <string name="labelSkill">Skill</string>
     <string name="labelSkills">Skills</string>
@@ -57,6 +58,10 @@
     <string name="title">Title</string>
     <string name="offer_description">Description</string>
     <string name="skill">Skill</string>
+    <string name="rating">user_rating</string>
+    <string name="rateMessage">Rate the user</string>
+    <string name="rateSubmitButton">Submit</string>
+    <string name="TextViewQl">Valor</string>
 
 
 </resources>
