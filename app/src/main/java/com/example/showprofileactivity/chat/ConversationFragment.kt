@@ -33,77 +33,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.processNextEventInCurrentThread
 
-fun DocumentSnapshot.toConversation(): Conversation? {
-
-    return try {
-        val offer = getOffer(this.id.split("#")[0])
-        val user = getUser(this.id.split("#")[1])
-
-        Conversation(this.id.split("#")[1], this.id.split("#")[0], this.toObject(Chat::class.java)!!.messages )
-
-    }
-    catch (e: Exception){
-        e.printStackTrace()
-        null
-    }
-}
-fun getOffer(oid: String) : Offer?{
-    var offer : Offer? = null
-    FirebaseFirestore.getInstance().collection("offers")
-        .document(oid)
-        .get()
-        .addOnSuccessListener { r ->
-                offer = r?.toOffer()
-        }
-    return offer
-
-}
-
-fun getUser(email: String): User?{
-    var user: User? = null
-    FirebaseFirestore.getInstance().collection("users").document(email).get()
-        .addOnSuccessListener { r ->
-              user = r?.toUser()
-            }
-    return user
-
-}
-
-private fun DocumentSnapshot.toOffer(): Offer? {
-    return try {
-        val title = get("title") as String
-        val description = get("description") as String
-        val location = get("location") as String
-        val hours = get("hours") as Long
-        val creator = get("creator") as String
-        val skill = get("skill") as String
-        val email = get("email") as String
-        val date = get("date") as String
-        val time = get("time") as String
-        val accepted = get("accepted") as Boolean
-        val acceptedUser = get("acceptedUser") as String
-        Offer(id, title, description, location, hours, creator, skill, email, date, time, accepted, acceptedUser)
-    }
-    catch (e: Exception){
-        e.printStackTrace()
-        null
-    }
-}
-fun DocumentSnapshot.toUser(): User? {
-    return try{
-
-        val fullname = get("fullname") as String
-        val username = get("username") as String?
-        val location = get("location") as String?
-        val services = get("services") as String?
-        val description = get("description") as String?
-        val credit = get("credit") as Long
-        User(fullname, username, location, services, description, credit)
-    } catch(e:Exception){
-        e.printStackTrace()
-        null
-    }
-}
 
 class ConversationFragment : Fragment() {
     private val _conversations = MutableLiveData<List<Conversation>>()
@@ -139,15 +68,87 @@ class ConversationFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val user = requireActivity().intent.getBundleExtra("user")?.getString("email")
+
         val vieww = requireView().findViewById<RecyclerView>(R.id.list)
             with(vieww) {
-                println(vm.conversation.value?.size)
                 layoutManager = LinearLayoutManager(context)
                 vm.conversation.observe(viewLifecycleOwner) {
-                    adapter = MyConversationRecyclerViewAdapter(it)
+                    adapter = MyConversationRecyclerViewAdapter(it,user!!)
+
                     adapter?.notifyDataSetChanged()
                 }
 
             }
     }
+    fun DocumentSnapshot.toConversation(): Conversation? {
+
+        return try {
+            val offer = getOffer(this.id.split("#")[0])
+            val user = getUser(this.id.split("#")[1])
+
+            Conversation(this.id.split("#")[1], this.id.split("#")[0], this.toObject(Chat::class.java)!!.messages )
+
+        }
+        catch (e: Exception){
+            e.printStackTrace()
+            null
+        }
+    }
+    fun getOffer(oid: String) : Offer?{
+        var offer : Offer? = null
+        FirebaseFirestore.getInstance().collection("offers")
+            .document(oid)
+            .get()
+            .addOnSuccessListener { r ->
+                offer = r?.toOffer()
+            }
+        return offer
+
+    }
+    fun getUser(email: String): User?{
+        var user: User? = null
+        FirebaseFirestore.getInstance().collection("users").document(email).get()
+            .addOnSuccessListener { r ->
+                user = r?.toUser()
+            }
+        return user
+
+    }
+    private fun DocumentSnapshot.toOffer(): Offer? {
+        return try {
+            val title = get("title") as String
+            val description = get("description") as String
+            val location = get("location") as String
+            val hours = get("hours") as Long
+            val creator = get("creator") as String
+            val skill = get("skill") as String
+            val email = get("email") as String
+            val date = get("date") as String
+            val time = get("time") as String
+            val accepted = get("accepted") as Boolean
+            val acceptedUser = get("acceptedUser") as String
+            Offer(id, title, description, location, hours, creator, skill, email, date, time, accepted, acceptedUser)
+        }
+        catch (e: Exception){
+            e.printStackTrace()
+            null
+        }
+    }
+    fun DocumentSnapshot.toUser(): User? {
+        return try{
+
+            val fullname = get("fullname") as String
+            val username = get("username") as String?
+            val location = get("location") as String?
+            val services = get("services") as String?
+            val description = get("description") as String?
+            val credit = get("credit") as Long
+            User(fullname, username, location, services, description, credit)
+        } catch(e:Exception){
+            e.printStackTrace()
+            null
+        }
+    }
+
 }
