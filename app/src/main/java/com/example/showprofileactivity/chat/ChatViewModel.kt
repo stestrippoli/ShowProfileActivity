@@ -14,32 +14,12 @@ import com.google.firebase.firestore.ListenerRegistration
 import java.util.*
 
 
-class ChatViewModel(b:Bundle?): ViewModel() {
+class ChatViewModel: ViewModel() {
     private val _messages = MutableLiveData<List<Message>>()
-    val offers: LiveData<List<Message>> = _messages
-    private val lm: ListenerRegistration
-    var oid:String = b!!.get("oid") as String
-    var user:String = b!!.get("user") as String
+    val messages: LiveData<List<Message>> = _messages
+    //private val lm: ListenerRegistration
 
-    init {
-        lm = FirebaseFirestore.getInstance().collection("chats").document("$oid"+"_"+"$user")
-            .addSnapshotListener{ r, e ->
-                _messages.value = if (e!=null)
-                    emptyList()
-                else r?.data?.get("messages") as List<Message>
-            }
+    fun saveMessages(messages: List<Message>){
+        _messages.value = messages
     }
-    override fun onCleared() { super.onCleared(); lm.remove(); }
-
-
-    /*fun DocumentSnapshot.toChat(): Chat? {
-        return try {
-            val messages = get("messages") as List<Message>
-            Chat(messages)
-        }
-        catch (e: Exception){
-            e.printStackTrace()
-            null
-        }
-    }*/
 }

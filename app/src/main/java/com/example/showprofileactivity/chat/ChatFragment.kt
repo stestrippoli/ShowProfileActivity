@@ -18,23 +18,27 @@ import com.example.showprofileactivity.MessageAdapter
 import com.example.showprofileactivity.R
 import com.example.showprofileactivity.User
 import com.example.showprofileactivity.chat.ChatViewModel
+import com.example.showprofileactivity.offers.placeholder.Chat
 import com.example.showprofileactivity.offers.placeholder.Offer
 import com.example.showprofileactivity.services.ServiceViewModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 
 class ChatFragment : Fragment(R.layout.fragment_chat) {
     private val db: FirebaseFirestore
-    //private val vm by activityViewModels<ChatViewModel>()
+    private val vm  by activityViewModels<ChatViewModel>()
     private val _messages = MutableLiveData<List<Message>>()
     val messages: LiveData<List<Message>> = _messages
-    lateinit var oid:String
-    lateinit var user:String
-    lateinit var creator:String
-    lateinit var uName:String
+    lateinit var oid:String //offer's id
+    lateinit var user:String    //email of the user currently using the app
+    lateinit var otherUser:String    //email of the user interested in the offer (not the creator)
+    lateinit var creator:String //email of the creator of the related offer
+    lateinit var uName:String   //name of the person the user is messaging with
     private var mainMenu: Menu? = null
 
     init {
@@ -56,18 +60,20 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
         uName = requireArguments().getString("uName").toString()
         (requireActivity() as AppCompatActivity).supportActionBar?.title = uName
+
         db.collection("chats").document("$oid"+"_"+"$user")
             .addSnapshotListener{ r, e ->
                 if(e!=null)
                     _messages.value= emptyList()
                 else if(r?.data?.get("messages")!=null)
-                    _messages.value = r?.data?.get("messages") as List<Message>
+                    _messages.value = r.toObject(Chat::class.java)!!.messages
                 else
                     _messages.value = emptyList()
+                setViewModel()
                 requireView().findViewById<ProgressBar>(R.id.chatProgressBar).visibility = View.GONE
                 requireView().findViewById<RecyclerView>(R.id.rv_chat).visibility = View.VISIBLE
             }
-        _messages.value= emptyList()
+        _messages.value = emptyList()
         return inflater.inflate(R.layout.fragment_chat, container, false)
     }
 
@@ -75,18 +81,23 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
         super.onViewCreated(view, savedInstanceState)
         val rv = requireView().findViewById<RecyclerView>(R.id.rv_chat)
         rv.layoutManager = LinearLayoutManager(context)
-        println("prova")
-        println(messages.value)
-        val adapter = MessageAdapter(messages.value!!)
-        rv.adapter = adapter
-        //rv.scrollToPosition(messages.value!!.size)
+
+
+        vm.messages.observe(viewLifecycleOwner) { mList ->
+            var adapter = MessageAdapter(mList, user)
+            rv.adapter = adapter
+            rv.adapter?.notifyDataSetChanged()
+            rv.scrollToPosition(mList.size-1)
+        }
+
         val send = requireView().findViewById<Button>(R.id.button_chat_send)
         send.setOnClickListener{
             val text = requireView().findViewById<EditText>(R.id.edit_chat_message).text.toString()
             requireView().findViewById<EditText>(R.id.edit_chat_message).text.clear()
             val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
             val currentTime = SimpleDateFormat("hh:mm").format(Date())
-            var m = Message(text, user, false, currentTime, currentDate)
+            var c = creator == user
+            var m = Message(text, user, c, currentTime, currentDate)
             var t1 = messages.value?.toMutableList()
             t1?.add(m)
 
@@ -120,7 +131,49 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
                                     .show()
                             }
                             else {
-                                db.collection("users").document()
+                                db.collection("users").document(otherUser).get()
+                                    .addOnSuccessListener {
+                                            res ->
+                                        val u1 = res.toUser()!!
+                                        db.collection("users").document(otherUser).update(mapOf(
+                                            "credit" to ((u1.credit as Long) - credit)
+                                        ))
+                                            .addOnSuccessListener {
+                                                db.collection("users").document(user).get()
+                                                    .addOnSuccessListener {
+                                                            res ->
+                                                        val u2 = res.toUser()!!
+                                                        db.collection("users").document(user).update(mapOf(
+                                                            "credit" to ((u2.credit as Long) + credit)
+                                                            ))
+                                                            .addOnSuccessListener {
+                                                                Toast
+                                                                    .makeText(context, "Credit transfered successfully!", Toast.LENGTH_LONG)
+                                                                    .show()
+                                                            }
+                                                            .addOnFailureListener{
+                                                                Toast
+                                                                    .makeText(context, "Error: can't transfer credit", Toast.LENGTH_LONG)
+                                                                    .show()
+                                                            }
+                                                    }
+                                                    .addOnFailureListener{
+                                                        Toast
+                                                            .makeText(context, "Error: can't retreive needed info", Toast.LENGTH_LONG)
+                                                            .show()
+                                                    }
+                                        }
+                                            .addOnFailureListener{
+                                                Toast
+                                                    .makeText(context, "Error: can't transfer credit", Toast.LENGTH_LONG)
+                                                    .show()
+                                            }
+                                    }
+                                    .addOnFailureListener{
+                                        Toast
+                                            .makeText(context, "Error: can't find the other user", Toast.LENGTH_LONG)
+                                            .show()
+                                    }
                             }
                         }
                         .addOnFailureListener {
@@ -162,7 +215,11 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
         }
     }
 
-    /*private fun DocumentSnapshot.toMessage(): Message? {
+    private fun setViewModel(){
+        vm.saveMessages(_messages.value!!)
+    }
+
+    private fun DocumentSnapshot.toMessage(): Message? {
         return try {
             val text = get("text") as String
             val user = get("user") as String
@@ -175,6 +232,6 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
             e.printStackTrace()
             null
         }
-    }*/
+    }
 
 }
