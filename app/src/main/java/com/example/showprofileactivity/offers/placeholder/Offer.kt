@@ -10,4 +10,6 @@ data class Offer(
                  var skill: String?,
                  var email : String?,
                  var date : String?,
-                 var time : String?)
+                 var time : String?,
+                 var accepted: Boolean?,
+                 var acceptedUser: String?)

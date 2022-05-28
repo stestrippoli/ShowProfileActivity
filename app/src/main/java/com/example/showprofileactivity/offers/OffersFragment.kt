@@ -21,7 +21,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class OffersFragment : Fragment(){
+class OffersFragment() : Fragment(){
 
     private var columnCount = 1
     private val offers = OffersCollection
@@ -42,7 +42,7 @@ class OffersFragment : Fragment(){
         offers.clear()
         //offersFiltered.clear()
         for (offer in vm.offers.value!!)
-            if (offer.skill == relatedSkill) {
+            if (offer.skill == relatedSkill && offer.accepted == false) {
                 offers.addItem(offer)
             }
 
@@ -148,6 +148,9 @@ class OffersFragment : Fragment(){
         vmOffer.setCreator(offers.ITEMS[position].creator!!)
         vmOffer.setSkill(offers.ITEMS[position].skill!!)
         vmOffer.setEmail(offers.ITEMS[position].email!!)
+        vmOffer.setId(offers.ITEMS[position].id)
+        vmOffer.setAccepted(offers.ITEMS[position].accepted!!)
+        vmOffer.setAcceptedUser(offers.ITEMS[position].acceptedUser!!)
         view?.findNavController()?.navigate(R.id.action_toOfferDetailFragment)
     }
 

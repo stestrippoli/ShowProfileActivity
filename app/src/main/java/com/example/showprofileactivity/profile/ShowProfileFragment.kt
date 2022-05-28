@@ -43,7 +43,6 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         else{
             email = requireArguments().getString("email").toString()
             editmode = false
-
         }
         /*
         db.collection("users").document(email).field(.get()
@@ -55,11 +54,11 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
                 user = res.toUser()!!
                 setViewModel()
                 mainMenu?.findItem(R.id.modifybtn)?.isVisible = editmode
+                mainMenu?.findItem(R.id.to_chat)?.isVisible = !editmode
                 requireView().findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
                 requireView().findViewById<ConstraintLayout>(R.id.profileLayout).visibility = View.VISIBLE
             }
             .addOnFailureListener {
-                println("Debug: errore")
                 Toast
                     .makeText(context, "Error", Toast.LENGTH_LONG)
                     .show()
@@ -109,6 +108,11 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
                 findNavController().navigate(R.id.action_toEditProfileFragment)
                 true
             }
+            R.id.to_chat ->
+            {
+                findNavController().navigate(R.id.action_showProfileFragment_to_fragment_chat)
+                true
+            }
             else -> {super.onContextItemSelected(item)}
         }
     }
@@ -155,7 +159,8 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             val location = get("location") as String?
             val services = get("services") as String?
             val description = get("description") as String?
-            User(fullname, username, location, services, description)
+            val credit = get("credit") as Long
+            User(fullname, username, location, services, description, credit)
         } catch(e:Exception){
             e.printStackTrace()
             null

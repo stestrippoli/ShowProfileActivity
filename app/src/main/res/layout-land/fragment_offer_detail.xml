@@ -131,17 +131,38 @@
                 android:text="Creator"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
-            <TextView
-                android:id="@+id/creator"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="1dp"
-                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="Creator"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="#2196F3"
-                android:textSize="28sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/creator"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/creator"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="#2196F3"
+                    android:textSize="28sp" />
+
+                <ImageButton
+                    android:id="@+id/chat_button"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:backgroundTint="#FFFFFF"
+                    android:contentDescription="Chat with creator"
+                    android:minHeight="48dp"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_baseline_chat_24"
+                    app:tint="#1E88E5" />
+
+            </LinearLayout>
             <TextView
                 android:id="@+id/details"
                 android:layout_width="match_parent"
@@ -149,6 +170,16 @@
                 android:layout_weight="1"
                 android:text="@string/click_on_creator_to_show_details"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="@string/add_bookmark"
+                app:icon="@android:drawable/btn_star_big_on"
+                app:iconGravity="textStart" />
 
         </LinearLayout>
     </ScrollView>

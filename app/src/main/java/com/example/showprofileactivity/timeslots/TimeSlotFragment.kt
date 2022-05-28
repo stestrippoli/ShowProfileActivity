@@ -34,6 +34,7 @@ class TimeSlotFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
+        objects.clear()
         for (offer in vm.offers.value!!)
             if (offer.email == requireActivity().intent.getBundleExtra("user")?.getString("email")) {
                 objects.addItem(offer)

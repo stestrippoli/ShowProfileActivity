@@ -61,6 +61,9 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_showProfileFragment_to_fragment_chat"
+            app:destination="@id/fragment_chat" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -83,12 +86,47 @@
         <action
             android:id="@+id/action_showoffercreator"
             app:destination="@id/showProfileFragment" />
+        <action
+            android:id="@+id/action_offerDetailFragment_to_fragment_chat"
+            app:destination="@id/fragment_chat" />
     </fragment>
     <fragment
         android:id="@+id/offersFragment"
         android:name="com.example.showprofileactivity.offers.OffersFragment"
         android:label="Offers"
         tools:layout="@layout/fragment_offers_list">
+        <action
+            android:id="@+id/action_toOfferDetailFragment"
+            app:destination="@id/offerDetailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_chat"
+        android:name="com.example.showprofileactivity.profile.ChatFragment"
+        android:label="User Chat"
+        tools:layout="@layout/fragment_chat" >
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_saved_offers"
+        android:name="com.example.showprofileactivity.useroffers.SavedOffersFragment"
+        android:label="Bookmarks"
+        tools:layout="@layout/fragment_saved_offers_list" >
+        <action
+            android:id="@+id/action_toOfferDetailFragment"
+            app:destination="@id/offerDetailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_user_offers"
+        android:name="com.example.showprofileactivity.useroffers.UserOffersFragment"
+        android:label="Your requests"
+        tools:layout="@layout/fragment_user_offers" >
         <action
             android:id="@+id/action_toOfferDetailFragment"
             app:destination="@id/offerDetailFragment"

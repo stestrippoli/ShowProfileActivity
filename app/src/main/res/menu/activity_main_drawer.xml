@@ -11,12 +11,20 @@
             />
         <item
             android:id="@+id/showProfileFragment"
-            android:icon="@drawable/ic_baseline_person_outline_24"
+            android:icon="@drawable/ic_baseline_account_circle_24"
             android:title="@string/profile"
             />
         <item
             android:id="@+id/itemFragment"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/timeslots" />
+        <item
+            android:id="@+id/fragment_saved_offers"
+            android:icon="@android:drawable/star_big_on"
+            android:title="@string/bookmarks" />
+        <item
+            android:id="@+id/fragment_user_offers"
+            android:icon="@drawable/ic_baseline_check_24"
+            android:title="@string/user_offers" />
     </group>
 </menu>
