@@ -18,5 +18,9 @@
             android:id="@+id/itemFragment"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/timeslots" />
+        <item
+            android:id="@+id/conversationFragment2"
+            android:icon="@drawable/ic_baseline_chat_24"
+            android:title="@string/your_chats" />
     </group>
 </menu>

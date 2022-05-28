@@ -61,7 +61,10 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
         uName = requireArguments().getString("uName").toString()
         (requireActivity() as AppCompatActivity).supportActionBar?.title = uName
 
-        db.collection("chats").document("$oid"+"_"+"$user")
+        db.collection("chats")
+            .document(user)
+            .collection("chats")
+            .document("$oid"+"#"+"$creator")
             .addSnapshotListener{ r, e ->
                 if(e!=null)
                     _messages.value= emptyList()
@@ -91,21 +94,44 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
         }
 
         val send = requireView().findViewById<Button>(R.id.button_chat_send)
-        send.setOnClickListener{
-            val text = requireView().findViewById<EditText>(R.id.edit_chat_message).text.toString()
-            requireView().findViewById<EditText>(R.id.edit_chat_message).text.clear()
-            val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
-            val currentTime = SimpleDateFormat("hh:mm").format(Date())
-            var c = creator == user
-            var m = Message(text, user, c, currentTime, currentDate)
-            var t1 = messages.value?.toMutableList()
-            t1?.add(m)
 
-            db.collection("chats")
-                .document("$oid"+"_"+"$user")
-                .set(mapOf("messages" to t1))
-                .addOnSuccessListener { Log.d("Firebase", "Chat successfully updated."); rv.adapter?.notifyDataSetChanged() }
-                .addOnFailureListener{ Log.d("Firebase", "Failed to update chat.") }
+        send.setOnClickListener {
+
+            val text = requireView().findViewById<EditText>(R.id.edit_chat_message).text.toString()
+            if (text != "") {
+                requireView().findViewById<EditText>(R.id.edit_chat_message).text.clear()
+                val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
+                val currentTime = SimpleDateFormat("hh:mm").format(Date())
+                var c = creator == user
+                var m = Message(text, user, c, currentTime, currentDate)
+                var t1 = messages.value?.toMutableList()
+                t1?.add(m)
+
+                db.collection("chats")
+                    .document(user)
+                    .collection("chats")
+                    .document("$oid" + "#" + "$creator")
+                    .set(mapOf("messages" to t1))
+                    .addOnSuccessListener {
+                        Log.d(
+                            "Firebase",
+                            "Chat successfully updated."
+                        ); rv.adapter?.notifyDataSetChanged()
+                    }
+                    .addOnFailureListener { Log.d("Firebase", "Failed to update chat.") }
+                db.collection("chats")
+                    .document(creator)
+                    .collection("chats")
+                    .document("$oid" + "#" + "$user")
+                    .set(mapOf("messages" to t1))
+                    .addOnSuccessListener {
+                        Log.d(
+                            "Firebase",
+                            "Chat successfully updated."
+                        );
+                    }
+                    .addOnFailureListener { Log.d("Firebase", "Failed to update chat.") }
+            }
         }
     }
 

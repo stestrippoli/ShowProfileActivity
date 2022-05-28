@@ -109,4 +109,9 @@
         android:label="User Chat"
         tools:layout="@layout/fragment_chat" >
     </fragment>
+    <fragment
+        android:id="@+id/conversationFragment2"
+        android:name="com.example.showprofileactivity.chat.ConversationFragment"
+        android:label="fragment_conversation_list"
+        tools:layout="@layout/fragment_conversation_list" />
 </navigation>

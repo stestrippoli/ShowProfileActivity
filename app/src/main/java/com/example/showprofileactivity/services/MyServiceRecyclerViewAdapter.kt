@@ -35,19 +35,7 @@ class MyServiceRecyclerViewAdapter(
         val item = vm.services.value?.get(position)
         holder.service_name.text = item?.name
         holder.itemView.setOnClickListener{v:View ->
-            /*
-            vm.setId(position)
-            vm.setDate(item.date)
-            vm.setTime(item.time)
-            vm.setTitle(item.title)
-            vm.setDesc(item.description)
-            vm.setLocation(item.location)
-            vm.setDuration(item.duration)
 
-
-            v.findNavController().navigate(R.id.nav_timeSlotDetailsFragment)
-
-             */
             with(holder.itemView.context.getSharedPreferences("skill_offers", Context.MODE_PRIVATE).edit()) {
                 putString("skillName", item?.name)
                 apply()

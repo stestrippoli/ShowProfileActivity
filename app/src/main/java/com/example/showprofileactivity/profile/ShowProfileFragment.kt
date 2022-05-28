@@ -114,14 +114,6 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
                 """{"fullname":"Default Name","nickname":"Default nickname","email":"default@email.com","location":"Default location","skills":"Skill1 | Skill2 | Skill3","description": "Default description","img": "android.resource://com.example.showprofileactivity/${R.drawable.propic}"}""")
         )
 
-        /*sharedViewModel.saveFullname(myJSON.getString("fullname").toString())
-        sharedViewModel.saveNickname(myJSON.getString("nickname").toString())
-        sharedViewModel.saveEmail(myJSON.getString("email").toString())
-        sharedViewModel.saveLocation(myJSON.getString("location").toString())
-        sharedViewModel.saveSkills(myJSON.getString("skills").toString())
-        sharedViewModel.saveDescription(myJSON.getString("description").toString())
-        sharedViewModel.savePicture( myJSON.getString("img").toString())*/
-
         val (fullname, username, location, services, description) = user!!
 
         profileViewModel.saveFullname(fullname)
@@ -130,6 +122,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         profileViewModel.saveSkills(services?:"" as String)
         profileViewModel.saveDescription(description?:"Your Description" as String)
         profileViewModel.saveEmail(email)
+        //TODO: TOGLIERE IMG
         if(myJSON.has("img"))
             profileViewModel.savePicture(myJSON.getString("img"))
     }

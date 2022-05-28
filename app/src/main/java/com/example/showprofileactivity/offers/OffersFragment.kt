@@ -29,7 +29,6 @@ class OffersFragment : Fragment(){
     private var offersFiltered: List<Offer> = ArrayList()
     private val vm by activityViewModels<ServiceViewModel>()
     private val vmOffer by activityViewModels<OffersViewModel>()
-    //private val searchView = SearchView
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -40,9 +39,8 @@ class OffersFragment : Fragment(){
 
         val relatedSkill = activity?.getSharedPreferences("skill_offers", Context.MODE_PRIVATE)?.getString("skillName", "None")
         offers.clear()
-        //offersFiltered.clear()
         for (offer in vm.offers.value!!)
-            if (offer.skill == relatedSkill) {
+            if (offer.skill == relatedSkill && offer.email != requireActivity().intent.getBundleExtra("user")?.getString("email")) {
                 offers.addItem(offer)
             }
 
