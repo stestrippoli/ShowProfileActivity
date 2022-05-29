@@ -72,8 +72,12 @@
     <string name="user_offers">Your requests</string>
     <string name="tabs_desc">Tabs for offer types.</string>
     <string name="pager_desc">Variable page content.</string>
-    <string name="no_accepted">You didn\'t accept any offer yet.</string>
-    <string name="no_assigned">You didn\'t request any service yet.</string>
+    <string name="no_accepted">You haven\'t accepted any offers yet.</string>
+    <string name="no_assigned">You haven\'t requested any services yet.</string>
+    <string name="rateUserButton">Rate User</string>
+    <string name="completedOffers">Completed Offers</string>
+    <string name="no_completed">You haven\'t completed any offers yet</string>
+    <string name="rateComment">Leave a comment (optional)</string>
 
 
 </resources>

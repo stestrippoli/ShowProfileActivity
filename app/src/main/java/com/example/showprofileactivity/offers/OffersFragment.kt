@@ -151,7 +151,14 @@ class OffersFragment() : Fragment(){
         vmOffer.setId(offers.ITEMS[position].id)
         vmOffer.setAccepted(offers.ITEMS[position].accepted!!)
         vmOffer.setAcceptedUser(offers.ITEMS[position].acceptedUser!!)
-        view?.findNavController()?.navigate(R.id.action_toOfferDetailFragment)
+        vmOffer.setAcceptedUserMail(offers.ITEMS[position].acceptedUserMail!!)
+
+        val o = Bundle()
+        o.putBoolean("rated", true)
+        o.putBoolean("ratedByCreator", true)
+        o.putBoolean("ratedByAccepted", true)
+
+        view?.findNavController()?.navigate(R.id.action_toOfferDetailFragment, o)
     }
 
 }

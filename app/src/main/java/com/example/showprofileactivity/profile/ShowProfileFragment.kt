@@ -44,11 +44,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             email = requireArguments().getString("email").toString()
             editmode = false
         }
-        /*
-        db.collection("users").document(email).field(.get()
-            .addOnSuccessListener { res ->
-                rating = res.toString()
-            }*/
+
         db.collection("users").document(email).get()
             .addOnSuccessListener { res ->
                 user = res.toUser()!!

@@ -89,6 +89,9 @@
         <action
             android:id="@+id/action_offerDetailFragment_to_fragment_chat"
             app:destination="@id/fragment_chat" />
+        <action
+            android:id="@+id/action_offerDetailFragment_to_rateUserFragment"
+            app:destination="@id/rateUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/offersFragment"
@@ -134,5 +137,17 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/completedOffersFragment2"
+        android:name="com.example.showprofileactivity.useroffers.CompletedOffersFragment"
+        android:label="CompletedOffersFragment" />
+    <fragment
+        android:id="@+id/rateUserFragment"
+        android:name="com.example.showprofileactivity.RateUserFragment"
+        android:label="RateUserFragment" >
+        <action
+            android:id="@+id/action_rateUserFragment_to_serviceFragment"
+            app:destination="@id/serviceFragment" />
     </fragment>
 </navigation>

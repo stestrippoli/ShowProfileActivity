@@ -31,7 +31,7 @@ class AssignedOffersFragment : Fragment() {
 
         offers.clear()
         for (offer in vm.offers.value!!)
-            if (offer.accepted == true && offer.acceptedUser == FirebaseAuth.getInstance().currentUser?.displayName)
+            if (offer.accepted == true && offer.acceptedUser == FirebaseAuth.getInstance().currentUser?.displayName && offer.completed == false)
                 offers.addItem(offer)
 
         // Set the adapter
@@ -67,6 +67,10 @@ class AssignedOffersFragment : Fragment() {
         vmOffer.setId(offers.ITEMS[position].id)
         vmOffer.setAccepted(offers.ITEMS[position].accepted!!)
         vmOffer.setAcceptedUser(offers.ITEMS[position].acceptedUser!!)
-        view?.findNavController()?.navigate(R.id.action_toOfferDetailFragment)
+
+        val o = Bundle()
+        o.putBoolean("rated", true)
+
+        view?.findNavController()?.navigate(R.id.action_toOfferDetailFragment, o)
     }
 }

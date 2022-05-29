@@ -12,4 +12,9 @@ data class Offer(
                  var date : String?,
                  var time : String?,
                  var accepted: Boolean?,
-                 var acceptedUser: String?)
+                 var acceptedUser: String?,
+                 var acceptedUserMail: String?,
+                 var completed: Boolean?,
+                 var ratedByCreator: Boolean?,
+                 var ratedByAccepted: Boolean?
+)
