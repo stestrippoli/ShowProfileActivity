@@ -61,7 +61,11 @@ class TimeSlotEditFragment : Fragment(R.layout.fragment_time_slot_edit) {
                         "${format(date!!.dayOfMonth)}-${format(date.month + 1)}-${format(date.year)}",
                         "${format(time!!.hour)}:${format(time.minute)}",
                         false,
-                        ""
+                        "",
+                        "",
+                        false,
+                        false,
+                        false
                     )
                     db.collection("offers")
                         .document(o.id)

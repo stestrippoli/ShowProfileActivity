@@ -26,6 +26,7 @@ class UserOffersFragment : Fragment() {
         val adapter = ViewPagerAdapter(childFragmentManager)
         adapter.addFragment(AcceptedOffersFragment(), "Accepted")
         adapter.addFragment(AssignedOffersFragment(), "Requested")
+        adapter.addFragment(CompletedOffersFragment(), "Completed")
         viewPager?.adapter = adapter
         tabLayout?.setupWithViewPager(viewPager)
         return v

@@ -72,7 +72,11 @@ class ServiceViewModel: ViewModel() {
             val time = get("time") as String
             val accepted = get("accepted") as Boolean
             val acceptedUser = get("acceptedUser") as String
-            Offer(id, title, description, location, hours, creator, skill, email, date, time, accepted, acceptedUser)
+            val acceptedUserMail = get("acceptedUserMail") as String
+            val completed = get("completed") as Boolean
+            val ratedByAccepted = get("ratedByAccepted") as Boolean
+            val ratedByCreator = get("ratedByCreator") as Boolean
+            Offer(id, title, description, location, hours, creator, skill, email, date, time, accepted, acceptedUser, acceptedUserMail, completed, ratedByCreator, ratedByAccepted)
         }
         catch (e: Exception){
             e.printStackTrace()
