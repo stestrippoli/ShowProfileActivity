@@ -92,6 +92,10 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 val locationbox = view.findViewById<EditText>(R.id.location_e).text.toString()
                 val skillsbox = view.findViewById<EditText>(R.id.skills_e).text.toString()
                 val descbox = view.findViewById<EditText>(R.id.description_e).text.toString()
+                println("------------------")
+                println(namebox)
+                println(locationbox)
+                println("------------------")
                 val imgname = currentPhotoName
                 db.collection("users")
                     .document(profileViewModel.email.value.toString())

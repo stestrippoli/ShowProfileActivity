@@ -48,7 +48,8 @@ class MyConversationRecyclerViewAdapter(
         o.putString("cMail", item.offer.email)
         o.putString("uName", item.user.fullname)
         o.putString("myName", name)
-
+        o.putBoolean("accepted", item.offer.accepted!!)
+        o.putLong("hours", item.offer.hours!!)
 
         holder.itemView.setOnClickListener {
             it.findNavController().navigate(R.id.action_conversationFragment2_to_fragment_chat, o) }

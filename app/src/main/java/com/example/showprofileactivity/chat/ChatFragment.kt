@@ -70,7 +70,6 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
             oMail = creator
         }
 
-
         mainMenu?.findItem(R.id.accept_request)?.isVisible = c
         mainMenu?.findItem(R.id.reject_request)?.isVisible = c
 
@@ -82,9 +81,6 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
         uName = requireArguments().getString("uName").toString()
         (requireActivity() as AppCompatActivity).supportActionBar?.title = uName
-
-
-
 
         db.collection("chats")
             .document(user)
@@ -100,8 +96,8 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
                 else
                     _messages.value = emptyList()
                 setViewModel()
-                requireView().findViewById<ProgressBar>(R.id.chatProgressBar).visibility = View.GONE
-                requireView().findViewById<RecyclerView>(R.id.rv_chat).visibility = View.VISIBLE
+                mainMenu?.findItem(R.id.accept_request)?.isVisible = c
+                mainMenu?.findItem(R.id.reject_request)?.isVisible = c
             }
         _messages.value = emptyList()
         return inflater.inflate(R.layout.fragment_chat, container, false)
@@ -112,12 +108,13 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
         val rv = requireView().findViewById<RecyclerView>(R.id.rv_chat)
         rv.layoutManager = LinearLayoutManager(context)
 
-
         vm.messages.observe(viewLifecycleOwner) { mList ->
             var adapter = MessageAdapter(mList, user)
             rv.adapter = adapter
             rv.adapter?.notifyDataSetChanged()
             rv.scrollToPosition(mList.size-1)
+            requireView().findViewById<ProgressBar>(R.id.chatProgressBar).visibility = View.GONE
+            requireView().findViewById<RecyclerView>(R.id.rv_chat).visibility = View.VISIBLE
         }
 
         val send = requireView().findViewById<Button>(R.id.button_chat_send)
@@ -201,79 +198,90 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.accept_request -> {
-                if(!requireArguments().getString("accepted").toBoolean()){
-                    db.collection("users").document(user).get()
-                        .addOnSuccessListener { res ->
-                            val accUser = res.toUser()!!
-                            val credit = requireArguments().getString("hours")!!.toLong()
-                            if(accUser.credit!! < credit){
-                                Toast
-                                    .makeText(context, "Error: $uName has insufficient credit", Toast.LENGTH_LONG)
-                                    .show()
-                            }
-                            else {
-                                db.collection("users").document(otherUser).get()
-                                    .addOnSuccessListener {
-                                            res ->
-                                        val u1 = res.toUser()!!
-                                        db.collection("users").document(otherUser).update(mapOf(
-                                            "credit" to ((u1.credit as Long) - credit)
-                                        ))
-                                            .addOnSuccessListener {
-                                                db.collection("users").document(user).get()
-                                                    .addOnSuccessListener {
-                                                            res ->
-                                                        val u2 = res.toUser()!!
-                                                        db.collection("users").document(user).update(mapOf(
-                                                            "credit" to ((u2.credit as Long) + credit)
-                                                            ))
-                                                            .addOnSuccessListener {
-                                                                Toast
-                                                                    .makeText(context, "Credit transfered successfully!", Toast.LENGTH_LONG)
-                                                                    .show()
-                                                            }
-                                                            .addOnFailureListener{
-                                                                Toast
-                                                                    .makeText(context, "Error: can't transfer credit", Toast.LENGTH_LONG)
-                                                                    .show()
-                                                            }
-                                                    }
-                                                    .addOnFailureListener{
-                                                        Toast
-                                                            .makeText(context, "Error: can't retreive needed info", Toast.LENGTH_LONG)
-                                                            .show()
-                                                    }
-                                        }
-                                            .addOnFailureListener{
-                                                Toast
-                                                    .makeText(context, "Error: can't transfer credit", Toast.LENGTH_LONG)
-                                                    .show()
+
+                if(!requireArguments().getBoolean("accepted")){
+                    db.collection("offers").document(oid).update(mapOf(
+                        "accepted" to true,
+                        "acceptedUser" to oMail,
+                        "acceptedUserMail" to oMail
+                    )).addOnSuccessListener {
+                        db.collection("users").document(user).get()
+                            .addOnSuccessListener { res ->
+                                val accUser = res.toUser()!!
+                                val credit = requireArguments().getLong("hours")!!.toLong()
+                                if(accUser.credit!! < credit){
+                                    Toast
+                                        .makeText(context, "Error: $uName has insufficient credit", Toast.LENGTH_LONG)
+                                        .show()
+                                }
+                                else {
+                                    db.collection("users").document(otherUser).get()
+                                        .addOnSuccessListener {
+                                                res ->
+                                            val u1 = res.toUser()!!
+                                            db.collection("users").document(otherUser).update(mapOf(
+                                                "credit" to ((u1.credit as Long) - credit)
+                                            ))
+                                                .addOnSuccessListener {
+                                                    db.collection("users").document(user).get()
+                                                        .addOnSuccessListener {
+                                                                res ->
+                                                            val u2 = res.toUser()!!
+                                                            db.collection("users").document(user).update(mapOf(
+                                                                "credit" to ((u2.credit as Long) + credit)
+                                                                ))
+                                                                .addOnSuccessListener {
+                                                                    Toast
+                                                                        .makeText(context, "Credit transfered successfully!", Toast.LENGTH_LONG)
+                                                                        .show()
+                                                                }
+                                                                .addOnFailureListener{
+                                                                    Toast
+                                                                        .makeText(context, "Error: Can't transfer credit", Toast.LENGTH_LONG)
+                                                                        .show()
+                                                                }
+                                                        }
+                                                        .addOnFailureListener{
+                                                            Toast
+                                                                .makeText(context, "Error: Can't retreive needed info", Toast.LENGTH_LONG)
+                                                                .show()
+                                                        }
                                             }
-                                    }
-                                    .addOnFailureListener{
-                                        Toast
-                                            .makeText(context, "Error: can't find the other user", Toast.LENGTH_LONG)
-                                            .show()
-                                    }
+                                                .addOnFailureListener{
+                                                    Toast
+                                                        .makeText(context, "Error: Can't transfer credit", Toast.LENGTH_LONG)
+                                                        .show()
+                                                }
+                                        }
+                                        .addOnFailureListener{
+                                            Toast
+                                                .makeText(context, "Error: Can't find the other user", Toast.LENGTH_LONG)
+                                                .show()
+                                        }
+                                }
+                            }
+                            .addOnFailureListener {
+                                Toast
+                                    .makeText(context, "Error", Toast.LENGTH_LONG)
+                                    .show()
                             }
                         }
                         .addOnFailureListener {
                             Toast
-                                .makeText(context, "Error", Toast.LENGTH_LONG)
+                                .makeText(context, "Error with accepting the offer", Toast.LENGTH_LONG)
                                 .show()
                         }
                 }
                 else {
                     Toast
-                        .makeText(context, "Error: the offer has already been accepted", Toast.LENGTH_LONG)
+                        .makeText(context, "Error: The offer has already been accepted", Toast.LENGTH_LONG)
                         .show()
                 }
-                findNavController().navigate(R.id.action_toEditProfileFragment)
                 true
             }
-            R.id.reject_request ->
-            {
-                findNavController().navigate(R.id.action_showProfileFragment_to_fragment_chat)
+            R.id.reject_request -> {
+                //findNavController().navigate(R.id.action_showProfileFragment_to_fragment_chat)
+                findNavController().navigateUp()
                 true
             }
             else -> {super.onContextItemSelected(item)}

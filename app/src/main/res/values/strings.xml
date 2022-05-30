@@ -5,6 +5,7 @@
     <string name="location">Your Location</string>
     <string name="username">Your Username</string>
     <string name="email">Your Email</string>
+    <string name="credit">Your Credit</string>
     <string name="skills">Skill1 | Skill2 | Skill3</string>
     <string name="description">Your Description</string>
     <string name="labelFullname">Full Name</string>
@@ -12,6 +13,7 @@
     <string name="labelUsername">Username</string>
     <string name="labelRating">Rating</string>
     <string name="labelEmail">Email</string>
+    <string name="labelCredit">Credit</string>
     <string name="labelSkill">Skill</string>
     <string name="labelSkills">Skills</string>
 

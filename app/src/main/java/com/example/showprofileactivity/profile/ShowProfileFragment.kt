@@ -59,9 +59,20 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
                 user = res.toUser()!!
                 setViewModel()
                 mainMenu?.findItem(R.id.modifybtn)?.isVisible = editmode
-                mainMenu?.findItem(R.id.to_chat)?.isVisible = !editmode
                 requireView().findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
                 requireView().findViewById<ConstraintLayout>(R.id.profileLayout).visibility = View.VISIBLE
+                if(editmode) {
+                    requireView().findViewById<TextView>(R.id.labelCredit).visibility =
+                        View.VISIBLE
+                    requireView().findViewById<TextView>(R.id.credit).visibility =
+                        View.VISIBLE
+                }
+                else{
+                    requireView().findViewById<TextView>(R.id.labelCredit).visibility =
+                        View.GONE
+                    requireView().findViewById<TextView>(R.id.credit).visibility =
+                        View.GONE
+                }
             }
             .addOnFailureListener {
                 Toast
@@ -95,6 +106,9 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         }
         profileViewModel.description.observe(viewLifecycleOwner) { description ->
             requireView().findViewById<TextView>(R.id.description).text = description
+        }
+        profileViewModel.credit.observe(viewLifecycleOwner) { credit ->
+            requireView().findViewById<TextView>(R.id.credit).text = credit.toString()
         }
         profileViewModel.picture.observe(viewLifecycleOwner) { picture ->
            downloadImage(picture.toString())
@@ -135,11 +149,6 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
                 findNavController().navigate(R.id.action_toEditProfileFragment)
                 true
             }
-            R.id.to_chat ->
-            {
-                findNavController().navigate(R.id.action_showProfileFragment_to_fragment_chat)
-                true
-            }
             else -> {super.onContextItemSelected(item)}
         }
     }
@@ -155,6 +164,9 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         profileViewModel.saveEmail(email.toString())
         profileViewModel.savePicture(img?:"")
         profileViewModel.savePicturePath(requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()+img)
+        profileViewModel.saveEmail(email as CharSequence)
+        profileViewModel.saveCredit(credit!!)
+        profileViewModel.savePicture(img.toString())
         profileViewModel.saveRating(rating)
 
     }
