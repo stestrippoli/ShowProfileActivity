@@ -95,6 +95,21 @@
                     tools:layout_editor_absoluteY="501dp" />
 
                 <TextView
+                    android:id="@+id/labelRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/labelRating"
+                    android:textColor="#A6A6A6"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rating"
+                    android:textSize="30sp" />
+
+                <TextView
                     android:id="@+id/labelEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

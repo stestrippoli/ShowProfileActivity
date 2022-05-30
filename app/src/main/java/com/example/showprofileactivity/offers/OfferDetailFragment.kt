@@ -1,6 +1,7 @@
 package com.example.showprofileactivity.offers
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageButton
@@ -9,16 +10,24 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.showprofileactivity.R
+import com.example.showprofileactivity.services.ServiceViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 
 class OfferDetailFragment : Fragment() {
 
     private val vm by activityViewModels<OffersViewModel>()
+    private val vmComp by activityViewModels<ServiceViewModel>()
+    private var marked: Boolean = false
+    lateinit var currentUserEmail : String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        currentUserEmail = FirebaseAuth.getInstance().currentUser?.email!!
         return inflater.inflate(R.layout.fragment_offer_detail, container, false)
     }
 
@@ -62,7 +71,62 @@ class OfferDetailFragment : Fragment() {
         o.putLong("hours", vm.hours.value!!)
         o.putBoolean("accepted", vm.accepted.value!!)
         o.putString("oTitle", vm.title.value!!)
+
         button.setOnClickListener { findNavController().navigate(R.id.action_offerDetailFragment_to_fragment_chat, o) }
+
+        val rateButton = view.findViewById<Button>(R.id.rateUserButton)
+        rateButton.visibility = View.INVISIBLE
+        var emailBeingRated = ""
+        var userBeingRated = ""
+        var type = ""
+        if (!requireArguments().getBoolean("rated")) {
+            if (currentUserEmail == vm.acceptedUserMail.value.toString() && !requireArguments().getBoolean("ratedByAccepted")) {
+                rateButton.visibility = View.VISIBLE
+                emailBeingRated = vm.email.value.toString()
+                userBeingRated = vm.creator.value.toString()
+                type = "creator"
+            }
+            else if (currentUserEmail == vm.email.value.toString() && !requireArguments().getBoolean("ratedByCreator")) {
+                rateButton.visibility = View.VISIBLE
+                emailBeingRated = vm.acceptedUserMail.value.toString()
+                userBeingRated = vm.acceptedUser.value.toString()
+                type = "accepted"
+            }
+        }
+        val usersData = Bundle()
+        usersData.putString("type", type)
+        usersData.putString("email", emailBeingRated)
+        usersData.putString("userBeingRated", userBeingRated)
+        usersData.putString("offerId", vm.id.value)
+        rateButton.setOnClickListener{
+            findNavController().navigate(R.id.action_offerDetailFragment_to_rateUserFragment, usersData)
+        }
+
+        val markButton = view.findViewById<Button>(R.id.button)
+        if(vmComp.bookmarks.value!!.contains(vm.id.value)) marked = true
+        if(marked) markButton.text = getString(R.string.rem_bookmark)
+        else markButton.text = getString(R.string.add_bookmark)
+        markButton.setOnClickListener {
+            val newList = handleBookmark(markButton)
+            FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().currentUser?.email!!)
+                .update("bookmarks", newList)
+                .addOnSuccessListener { Log.d("Firebase", "Bookmarks successfully saved.") }
+                .addOnFailureListener{ Log.d("Firebase", "Failed to save bookmarks.") }
+        }
     }
 
+    private fun handleBookmark(markButton: Button): ArrayList<String> {
+        val newList = ArrayList(vmComp.bookmarks.value)
+        if(marked) {
+            newList.remove(vm.id.value)
+            marked = false
+            markButton.text = getString(R.string.add_bookmark)
+        }
+        else {
+            newList.add(vm.id.value)
+            marked = true
+            markButton.text = getString(R.string.rem_bookmark)
+        }
+        return newList
+    }
 }

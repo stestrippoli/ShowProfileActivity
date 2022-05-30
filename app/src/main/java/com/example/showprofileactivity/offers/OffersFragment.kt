@@ -21,7 +21,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class OffersFragment : Fragment(){
+class OffersFragment() : Fragment(){
 
     private var columnCount = 1
     private val offers = OffersCollection
@@ -40,7 +40,7 @@ class OffersFragment : Fragment(){
         val relatedSkill = activity?.getSharedPreferences("skill_offers", Context.MODE_PRIVATE)?.getString("skillName", "None")
         offers.clear()
         for (offer in vm.offers.value!!)
-            if (offer.skill == relatedSkill && offer.email != requireActivity().intent.getBundleExtra("user")?.getString("email")) {
+            if (offer.skill == relatedSkill && offer.accepted == false) {
                 offers.addItem(offer)
             }
 
@@ -146,10 +146,17 @@ class OffersFragment : Fragment(){
         vmOffer.setCreator(offers.ITEMS[position].creator!!)
         vmOffer.setSkill(offers.ITEMS[position].skill!!)
         vmOffer.setEmail(offers.ITEMS[position].email!!)
-        vmOffer.setId(offers.ITEMS[position].id!!)
+        vmOffer.setId(offers.ITEMS[position].id)
         vmOffer.setAccepted(offers.ITEMS[position].accepted!!)
         vmOffer.setAcceptedUser(offers.ITEMS[position].acceptedUser!!)
-        view?.findNavController()?.navigate(R.id.action_toOfferDetailFragment)
+        vmOffer.setAcceptedUserMail(offers.ITEMS[position].acceptedUserMail!!)
+
+        val o = Bundle()
+        o.putBoolean("rated", true)
+        o.putBoolean("ratedByCreator", true)
+        o.putBoolean("ratedByAccepted", true)
+
+        view?.findNavController()?.navigate(R.id.action_toOfferDetailFragment, o)
     }
 
 }

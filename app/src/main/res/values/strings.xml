@@ -10,6 +10,7 @@
     <string name="labelFullname">Full Name</string>
     <string name="labelLocation">Location</string>
     <string name="labelUsername">Username</string>
+    <string name="labelRating">Rating</string>
     <string name="labelEmail">Email</string>
     <string name="labelSkill">Skill</string>
     <string name="labelSkills">Skills</string>
@@ -57,9 +58,26 @@
     <string name="title">Title</string>
     <string name="offer_description">Description</string>
     <string name="skill">Skill</string>
+    <string name="rating">user_rating</string>
+    <string name="rateMessage">Rate the user</string>
+    <string name="rateSubmitButton">Submit</string>
+    <string name="TextViewQl">Valor</string>
     <string name="chat_with_user">Chat with User</string>
     <string name="accept_request">Accept request</string>
     <string name="reject_request">Reject request</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="no_bookmarks">You don\'t have any offer with a bookmark.</string>
+    <string name="add_bookmark">Add to bookmarks</string>
+    <string name="rem_bookmark">Remove from bookmarks</string>
+    <string name="user_offers">Your requests</string>
+    <string name="tabs_desc">Tabs for offer types.</string>
+    <string name="pager_desc">Variable page content.</string>
+    <string name="no_accepted">You haven\'t accepted any offers yet.</string>
+    <string name="no_assigned">You haven\'t requested any services yet.</string>
+    <string name="rateUserButton">Rate User</string>
+    <string name="completedOffers">Completed Offers</string>
+    <string name="no_completed">You haven\'t completed any offers yet</string>
+    <string name="rateComment">Leave a comment (optional)</string>
     <string name="your_chats">Your chats</string>
 
 

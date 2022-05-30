@@ -25,6 +25,8 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
     private val profileViewModel : ProfileViewModel by activityViewModels()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     lateinit var email: String
+    lateinit var rating: String
+    //var rating: String = "☆ 4"
     var user: User? = null
     private var mainMenu: Menu? = null
 
@@ -42,6 +44,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             email = requireArguments().getString("email").toString()
             editmode = false
         }
+
         db.collection("users").document(email).get()
             .addOnSuccessListener { res ->
                 user = res.toUser()!!
@@ -65,6 +68,9 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
 
         profileViewModel.fullname.observe(viewLifecycleOwner) { fullname ->
             requireView().findViewById<TextView>(R.id.fullname).text = fullname
+        }
+        profileViewModel.rating.observe(viewLifecycleOwner) { rating ->
+            requireView().findViewById<TextView>(R.id.rating).text = rating
         }
         profileViewModel.nickname.observe(viewLifecycleOwner) { nickname ->
             requireView().findViewById<TextView>(R.id.nickname).text = nickname
@@ -111,7 +117,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         val myJSON = JSONObject(
             sharedPref.getString("profile",
-                """{"fullname":"Default Name","nickname":"Default nickname","email":"default@email.com","location":"Default location","skills":"Skill1 | Skill2 | Skill3","description": "Default description","img": "android.resource://com.example.showprofileactivity/${R.drawable.propic}"}""")
+                """{"fullname":"Default Name","nickname":"Default nickname","rating": "5", "email":"default@email.com","location":"Default location","skills":"Skill1 | Skill2 | Skill3","description": "Default description","img": "android.resource://com.example.showprofileactivity/${R.drawable.propic}"}""")
         )
 
         val (fullname, username, location, services, description) = user!!
@@ -122,7 +128,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         profileViewModel.saveSkills(services?:"" as String)
         profileViewModel.saveDescription(description?:"Your Description" as String)
         profileViewModel.saveEmail(email)
-        //TODO: TOGLIERE IMG
+        profileViewModel.saveRating(rating)
         if(myJSON.has("img"))
             profileViewModel.savePicture(myJSON.getString("img"))
     }
@@ -130,6 +136,12 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
     fun DocumentSnapshot.toUser(): User? {
         return try{
 
+            rating = get("rating") as String
+            var timesrated = get("timesrated") as String
+            if (timesrated.toInt() != 0) {
+                rating = (rating.toDouble() / timesrated.toDouble()).toString()
+            }
+            rating = "☆$rating"
             val fullname = get("fullname") as String
             val username = get("username") as String?
             val email = get("email") as String?

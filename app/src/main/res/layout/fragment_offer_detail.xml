@@ -173,6 +173,23 @@
                 android:text="@string/click_on_creator_to_show_details"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="@string/add_bookmark"
+                app:icon="@android:drawable/btn_star_big_on"
+                app:iconGravity="textStart" />
+
+            <Button
+                android:id="@+id/rateUserButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/rateUserButton" />
+
         </LinearLayout>
     </ScrollView>
 

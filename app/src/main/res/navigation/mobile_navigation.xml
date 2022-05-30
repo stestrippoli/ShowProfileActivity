@@ -89,6 +89,9 @@
         <action
             android:id="@+id/action_offerDetailFragment_to_fragment_chat"
             app:destination="@id/fragment_chat" />
+        <action
+            android:id="@+id/action_offerDetailFragment_to_rateUserFragment"
+            app:destination="@id/rateUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/offersFragment"
@@ -108,6 +111,44 @@
         android:name="com.example.showprofileactivity.profile.ChatFragment"
         android:label="User Chat"
         tools:layout="@layout/fragment_chat" >
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_saved_offers"
+        android:name="com.example.showprofileactivity.useroffers.SavedOffersFragment"
+        android:label="Bookmarks"
+        tools:layout="@layout/fragment_saved_offers_list" >
+        <action
+            android:id="@+id/action_toOfferDetailFragment"
+            app:destination="@id/offerDetailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_user_offers"
+        android:name="com.example.showprofileactivity.useroffers.UserOffersFragment"
+        android:label="Your requests"
+        tools:layout="@layout/fragment_user_offers" >
+        <action
+            android:id="@+id/action_toOfferDetailFragment"
+            app:destination="@id/offerDetailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/completedOffersFragment2"
+        android:name="com.example.showprofileactivity.useroffers.CompletedOffersFragment"
+        android:label="CompletedOffersFragment" />
+    <fragment
+        android:id="@+id/rateUserFragment"
+        android:name="com.example.showprofileactivity.RateUserFragment"
+        android:label="RateUserFragment" >
+        <action
+            android:id="@+id/action_rateUserFragment_to_serviceFragment"
+            app:destination="@id/serviceFragment" />
     </fragment>
     <fragment
         android:id="@+id/conversationFragment2"

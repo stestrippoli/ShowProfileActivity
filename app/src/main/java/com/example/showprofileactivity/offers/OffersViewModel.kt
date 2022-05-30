@@ -15,6 +15,7 @@ class OffersViewModel: ViewModel() {
     val id = MutableLiveData<String>()
     val accepted = MutableLiveData<Boolean>()
     val acceptedUser = MutableLiveData<String>()
+    val acceptedUserMail = MutableLiveData<String>()
 
     fun setEmail(email: String) {
         this.email.value = email
@@ -45,5 +46,8 @@ class OffersViewModel: ViewModel() {
     }
     fun setAcceptedUser(accU: String) {
         this.acceptedUser.value = accU
+    }
+    fun setAcceptedUserMail(accUM: String) {
+        this.acceptedUserMail.value = accUM
     }
 }

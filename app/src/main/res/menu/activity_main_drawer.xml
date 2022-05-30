@@ -19,6 +19,14 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/timeslots" />
         <item
+            android:id="@+id/fragment_saved_offers"
+            android:icon="@android:drawable/star_big_on"
+            android:title="@string/bookmarks" />
+        <item
+            android:id="@+id/fragment_user_offers"
+            android:icon="@drawable/ic_baseline_check_24"
+            android:title="@string/user_offers" />
+        <item
             android:id="@+id/conversationFragment2"
             android:icon="@drawable/ic_baseline_chat_24"
             android:title="@string/your_chats" />
