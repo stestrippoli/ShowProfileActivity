@@ -22,6 +22,8 @@ class ProfileViewModel: ViewModel() {
     val description: LiveData<CharSequence> = _description
     private var _picture = MutableLiveData<CharSequence>()
     val picture: LiveData<CharSequence> = _picture
+    private var _picturepath = MutableLiveData<CharSequence>()
+    val picturepath: LiveData<CharSequence> = _picturepath
 
     fun saveFullname(newFullname: CharSequence) {
         _fullname.value = newFullname
@@ -46,5 +48,8 @@ class ProfileViewModel: ViewModel() {
     }
     fun savePicture(newPicture: CharSequence) {
         _picture.value = newPicture
+    }
+    fun savePicturePath(newPicture: CharSequence) {
+        _picturepath.value = newPicture
     }
 }

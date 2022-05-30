@@ -2,12 +2,14 @@ package com.example.showprofileactivity.profile
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Environment
 import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -96,21 +98,26 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         }
         profileViewModel.picture.observe(viewLifecycleOwner) { picture ->
            downloadImage(picture.toString())
-           // requireView().findViewById<ImageView>(R.id.profilepic).setImageURI(picture.toString().toUri())
         }
+        profileViewModel.picturepath.observe(viewLifecycleOwner) { picture ->
+            val imageView = requireView().findViewById<ImageView>(R.id.profilepic)
+            imageView.setImageURI(picture.toString().toUri())
+        }
+
     }
 
 
     private fun downloadImage(picture: String){
+
         // Create a storage reference from our app
         val storageRef = FirebaseStorage.getInstance().reference
-        val imgRef = storageRef.child("images/$picture")
+        val imgRef = storageRef.child("/images/$picture")
+        val imageView = requireView().findViewById<ImageView>(R.id.profilepic)
 
         val localFile = File.createTempFile("images", "jpg")
-
-        imgRef.getFile(localFile).addOnSuccessListener {
-            // Local temp file has been created
-
+      imgRef.getFile(localFile).addOnSuccessListener {
+            imageView.setImageURI(localFile.toUri())
+            profileViewModel.savePicturePath(localFile.toString())
         }.addOnFailureListener {
             // Handle any errors
         }
@@ -138,15 +145,16 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
     }
 
     private fun setViewModel(){
-        val (fullname, username, location, services, description, img) = user!!
+        val (fullname, username, email, location, services, description, credit, img) = user!!
 
         profileViewModel.saveFullname(fullname)
         profileViewModel.saveNickname(username?:"Your Username" as String)
         profileViewModel.saveLocation(location?:"Your Location" as String)
         profileViewModel.saveSkills(services?:"" as String)
         profileViewModel.saveDescription(description?:"Your Description" as String)
-        profileViewModel.saveEmail(email)
-        profileViewModel.savePicture(img.toString())
+        profileViewModel.saveEmail(email.toString())
+        profileViewModel.savePicture(img?:"")
+        profileViewModel.savePicturePath(requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()+img)
         profileViewModel.saveRating(rating)
 
     }
@@ -167,7 +175,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             val services = get("services") as String?
             val description = get("description") as String?
             val credit = get("credit") as Long
-            val img = get("img") as String
+            val img = get("img") as String?
             User(fullname, username, email, location, services, description, credit, img)
         } catch(e:Exception){
             e.printStackTrace()
