@@ -112,7 +112,7 @@
     <fragment
         android:id="@+id/conversationFragment2"
         android:name="com.example.showprofileactivity.chat.ConversationFragment"
-        android:label="fragment_conversation_list"
+        android:label="Your chats"
         tools:layout="@layout/fragment_conversation_list" >
         <action
             android:id="@+id/action_conversationFragment2_to_fragment_chat"

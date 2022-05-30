@@ -35,11 +35,15 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
     private val _messages = MutableLiveData<List<Message>>()
     val messages: LiveData<List<Message>> = _messages
     lateinit var oid:String //offer's id
+    lateinit var oTitle: String //title of the offer
     lateinit var user:String    //email of the user currently using the app
     lateinit var otherUser:String    //email of the user interested in the offer (not the creator)
     lateinit var creator:String //email of the creator of the related offer
     lateinit var uName:String   //name of the person the user is messaging with
+    lateinit var myName:String //current user name
+    lateinit var oMail:String
     private var mainMenu: Menu? = null
+    var newChat: Boolean = true
 
     init {
         db =  FirebaseFirestore.getInstance()
@@ -52,8 +56,21 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
         setHasOptionsMenu(true)
         oid = requireArguments().getString("oid").toString()
         user =(requireActivity()!!.intent.extras!!.get("user") as Bundle).getString("email") as String
+        myName =(requireActivity()!!.intent.extras!!.get("user") as Bundle).getString("fullname") as String
         creator = requireArguments().getString("cMail").toString()
-        val c = creator == user
+        oTitle = requireArguments().getString("oTitle").toString()
+        otherUser = requireArguments().getString("otherUser").toString()
+        val c:Boolean
+        if(creator == user){
+            c = true
+            oMail = otherUser
+        }
+        else{
+            c = false
+            oMail = creator
+        }
+
+
         mainMenu?.findItem(R.id.accept_request)?.isVisible = c
         mainMenu?.findItem(R.id.reject_request)?.isVisible = c
 
@@ -61,15 +78,18 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
         uName = requireArguments().getString("uName").toString()
         (requireActivity() as AppCompatActivity).supportActionBar?.title = uName
 
+
         db.collection("chats")
             .document(user)
             .collection("chats")
-            .document("$oid"+"#"+"$creator")
+            .document("$oid"+"#"+"$oMail")
             .addSnapshotListener{ r, e ->
                 if(e!=null)
-                    _messages.value= emptyList()
-                else if(r?.data?.get("messages")!=null)
+                    _messages.value = emptyList()
+                else if(r?.data?.get("messages")!=null) {
+                    newChat = false
                     _messages.value = r.toObject(Chat::class.java)!!.messages
+                }
                 else
                     _messages.value = emptyList()
                 setViewModel()
@@ -107,30 +127,58 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
                 var t1 = messages.value?.toMutableList()
                 t1?.add(m)
 
-                db.collection("chats")
-                    .document(user)
-                    .collection("chats")
-                    .document("$oid" + "#" + "$creator")
-                    .set(mapOf("messages" to t1))
-                    .addOnSuccessListener {
-                        Log.d(
-                            "Firebase",
-                            "Chat successfully updated."
-                        ); rv.adapter?.notifyDataSetChanged()
-                    }
-                    .addOnFailureListener { Log.d("Firebase", "Failed to update chat.") }
-                db.collection("chats")
-                    .document(creator)
-                    .collection("chats")
-                    .document("$oid" + "#" + "$user")
-                    .set(mapOf("messages" to t1))
-                    .addOnSuccessListener {
-                        Log.d(
-                            "Firebase",
-                            "Chat successfully updated."
-                        );
-                    }
-                    .addOnFailureListener { Log.d("Firebase", "Failed to update chat.") }
+                if(newChat){
+                    db.collection("chats")
+                        .document(user)
+                        .collection("chats")
+                        .document("$oid" + "#" + "$oMail")
+                        .set(mapOf("messages" to t1, "offerTitle" to oTitle, "otherUserName" to uName))
+                        .addOnSuccessListener {
+                            Log.d(
+                                "Firebase",
+                                "Chat successfully updated."
+                            ); rv.adapter?.notifyDataSetChanged()
+                        }
+                        .addOnFailureListener { Log.d("Firebase", "Failed to update chat.") }
+                    db.collection("chats")
+                        .document(oMail)
+                        .collection("chats")
+                        .document("$oid" + "#" + "$user")
+                        .set(mapOf("messages" to t1, "offerTitle" to oTitle, "otherUserName" to myName))
+                        .addOnSuccessListener {
+                            Log.d(
+                                "Firebase",
+                                "Chat successfully updated."
+                            );
+                        }
+                        .addOnFailureListener { Log.d("Firebase", "Failed to update chat.") }
+                }
+                else{
+                    db.collection("chats")
+                        .document(user)
+                        .collection("chats")
+                        .document("$oid" + "#" + "$creator")
+                        .update(mapOf("messages" to t1))
+                        .addOnSuccessListener {
+                            Log.d(
+                                "Firebase",
+                                "Chat successfully updated."
+                            ); rv.adapter?.notifyDataSetChanged()
+                        }
+                        .addOnFailureListener { Log.d("Firebase", "Failed to update chat.") }
+                    db.collection("chats")
+                        .document(creator)
+                        .collection("chats")
+                        .document("$oid" + "#" + "$user")
+                        .update(mapOf("messages" to t1))
+                        .addOnSuccessListener {
+                            Log.d(
+                                "Firebase",
+                                "Chat successfully updated."
+                            );
+                        }
+                        .addOnFailureListener { Log.d("Firebase", "Failed to update chat.") }
+                }
             }
         }
     }
@@ -230,11 +278,12 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
 
             val fullname = get("fullname") as String
             val username = get("username") as String?
+            val email = get("email") as String?
             val location = get("location") as String?
             val services = get("services") as String?
             val description = get("description") as String?
             val credit = get("credit") as Long
-            User(fullname, username, location, services, description, credit)
+            User(fullname, username, email, location, services, description, credit)
         } catch(e:Exception){
             e.printStackTrace()
             null

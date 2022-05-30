@@ -56,9 +56,30 @@ class ConversationFragment : Fragment() {
                 if (e != null)
                     _conversations.value = emptyList()
                 else{
-                    _conversations.value = r?.mapNotNull { d -> d.toConversation() }
-
-                    vm.saveConversations(_conversations.value!!)
+                    //_conversations.value = r?.mapNotNull { d -> d.toConversation() }
+                    var conversations: MutableList<Conversation> = mutableListOf()
+                    var count:Int = 0
+                    for(c in r!!){
+                        var offer : Offer
+                        var user: User
+                        FirebaseFirestore.getInstance().collection("offers")
+                            .document(c.id.split("#")[0])
+                            .get()
+                            .addOnSuccessListener { r1 ->
+                                offer = r1?.toOffer() as Offer
+                                FirebaseFirestore.getInstance().collection("users").document(c.id.split("#")[1]).get()
+                                    .addOnSuccessListener { r2 ->
+                                        user = r2?.toUser() as User
+                                        var co = Conversation(user, offer, c.toObject(Chat::class.java)!!.messages)
+                                        conversations.add(co)
+                                        count++
+                                        if(count==r!!.size()){
+                                            _conversations.value = conversations
+                                            vm.saveConversations(_conversations.value!!)
+                                        }
+                                    }
+                            }
+                    }
                 }
             }
             _conversations.value= emptyList()
@@ -69,14 +90,17 @@ class ConversationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val user = requireActivity().intent.getBundleExtra("user")?.getString("email")
+        val name = requireActivity().intent.getBundleExtra("user")?.getString("fullname")
 
-        val vieww = requireView().findViewById<RecyclerView>(R.id.list)
+        val vieww = requireView().findViewById<RecyclerView>(R.id.chatList)
             with(vieww) {
                 layoutManager = LinearLayoutManager(context)
                 vm.conversation.observe(viewLifecycleOwner) {
-                    adapter = MyConversationRecyclerViewAdapter(it,user!!)
+                    adapter = MyConversationRecyclerViewAdapter(it,user!!,name!!)
 
                     adapter?.notifyDataSetChanged()
+                    requireView().findViewById<ProgressBar>(R.id.chatListProgressBar).visibility = View.GONE
+                    requireView().findViewById<RecyclerView>(R.id.chatList).visibility = View.VISIBLE
                 }
 
             }
@@ -84,11 +108,12 @@ class ConversationFragment : Fragment() {
     fun DocumentSnapshot.toConversation(): Conversation? {
 
         return try {
-            val offer = getOffer(this.id.split("#")[0])
-            val user = getUser(this.id.split("#")[1])
+            //val offer = getOffer(this.id.split("#")[0])
+            //val user = getUser(this.id.split("#")[1])
 
-            Conversation(this.id.split("#")[1], this.id.split("#")[0], this.toObject(Chat::class.java)!!.messages )
 
+            //Conversation(this.data?.get("offerTitle").toString(), this.data?.get("otherUserName").toString(), this.id.split("#")[0], this.toObject(Chat::class.java)!!.messages )
+            null
         }
         catch (e: Exception){
             e.printStackTrace()
@@ -140,11 +165,12 @@ class ConversationFragment : Fragment() {
 
             val fullname = get("fullname") as String
             val username = get("username") as String?
+            val email = get("email") as String?
             val location = get("location") as String?
             val services = get("services") as String?
             val description = get("description") as String?
             val credit = get("credit") as Long
-            User(fullname, username, location, services, description, credit)
+            User(fullname, username, email, location, services, description, credit)
         } catch(e:Exception){
             e.printStackTrace()
             null

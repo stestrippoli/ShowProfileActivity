@@ -61,6 +61,7 @@ class OfferDetailFragment : Fragment() {
         o.putString("cMail", vm.email.value)
         o.putLong("hours", vm.hours.value!!)
         o.putBoolean("accepted", vm.accepted.value!!)
+        o.putString("oTitle", vm.title.value!!)
         button.setOnClickListener { findNavController().navigate(R.id.action_offerDetailFragment_to_fragment_chat, o) }
     }
 

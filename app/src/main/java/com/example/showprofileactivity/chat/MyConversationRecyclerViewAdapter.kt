@@ -17,7 +17,8 @@ import com.example.showprofileactivity.databinding.FragmentConversationBinding
  */
 class MyConversationRecyclerViewAdapter(
     private val values: List<Conversation>,
-    private val user : String
+    private val user:String,
+    private val name: String
 ) : RecyclerView.Adapter<MyConversationRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,13 +35,21 @@ class MyConversationRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.chatname.text = item.user
-        holder.chatoffer.text = item.offer
+        holder.chatname.text = item.user.fullname
+        holder.chatoffer.text = item.offer.title
         var o = Bundle()
-        o.putString("cMail", item.user)
-        o.putString("oid", item.offer)
+        o.putString("oid", item.offer.id)
+        o.putString("oTitle", item.offer.title)
         o.putString("user", user)
-        o.putString("uName", "WEEE")
+        if(item.offer.email==user)
+            o.putString("otherUser", item.user.email)
+        else
+            o.putString("otherUser", user)
+        o.putString("cMail", item.offer.email)
+        o.putString("uName", item.user.fullname)
+        o.putString("myName", name)
+
+
         holder.itemView.setOnClickListener {
             it.findNavController().navigate(R.id.action_conversationFragment2_to_fragment_chat, o) }
 

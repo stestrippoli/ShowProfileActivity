@@ -132,11 +132,12 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
 
             val fullname = get("fullname") as String
             val username = get("username") as String?
+            val email = get("email") as String?
             val location = get("location") as String?
             val services = get("services") as String?
             val description = get("description") as String?
             val credit = get("credit") as Long
-            User(fullname, username, location, services, description, credit)
+            User(fullname, username, email, location, services, description, credit)
         } catch(e:Exception){
             e.printStackTrace()
             null

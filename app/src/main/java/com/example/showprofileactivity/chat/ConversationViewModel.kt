@@ -14,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import java.util.*
 
-class Conversation(val user: String, val offer: String, val chat: List<Message>)
+class Conversation(val user:User, val offer:Offer, val chat: List<Message>)
 
 class ChatViewModel: ViewModel() {
     private val _messages = MutableLiveData<List<Message>>()

@@ -76,7 +76,7 @@ class IntroActivity : AppCompatActivity() {
                         .get().addOnSuccessListener { document ->
                             if(document.data == null)
                                 db.collection("users").document(account.email!!)
-                                    .set(User(account.displayName!!, "Your Username", "Your Location", "", "Your Description", 20))
+                                    .set(User(account.displayName!!, "Your Username", account?.email!!, "Your Location", "", "Your Description", 20))
                                     .addOnSuccessListener { Log.d("Firebase", "User successfully added to db") }
                                     .addOnFailureListener{ Log.d("Firebase", "Failed to add user") }
                         }
