@@ -105,41 +105,7 @@ class ConversationFragment : Fragment() {
 
             }
     }
-    fun DocumentSnapshot.toConversation(): Conversation? {
 
-        return try {
-            //val offer = getOffer(this.id.split("#")[0])
-            //val user = getUser(this.id.split("#")[1])
-
-
-            //Conversation(this.data?.get("offerTitle").toString(), this.data?.get("otherUserName").toString(), this.id.split("#")[0], this.toObject(Chat::class.java)!!.messages )
-            null
-        }
-        catch (e: Exception){
-            e.printStackTrace()
-            null
-        }
-    }
-    fun getOffer(oid: String) : Offer?{
-        var offer : Offer? = null
-        FirebaseFirestore.getInstance().collection("offers")
-            .document(oid)
-            .get()
-            .addOnSuccessListener { r ->
-                offer = r?.toOffer()
-            }
-        return offer
-
-    }
-    fun getUser(email: String): User?{
-        var user: User? = null
-        FirebaseFirestore.getInstance().collection("users").document(email).get()
-            .addOnSuccessListener { r ->
-                user = r?.toUser()
-            }
-        return user
-
-    }
     private fun DocumentSnapshot.toOffer(): Offer? {
         return try {
             val title = get("title") as String
@@ -153,7 +119,11 @@ class ConversationFragment : Fragment() {
             val time = get("time") as String
             val accepted = get("accepted") as Boolean
             val acceptedUser = get("acceptedUser") as String
-            Offer(id, title, description, location, hours, creator, skill, email, date, time, accepted, acceptedUser)
+            val acceptedUserMail = get("acceptedUserMail") as String
+            val completed = get("completed") as Boolean
+            val ratedByCreator = get("ratedByCreator") as Boolean
+            val ratedByAccepted = get("ratedByAccepted") as Boolean
+            Offer(id, title, description, location, hours, creator, skill, email, date, time, accepted, acceptedUser, acceptedUserMail, completed, ratedByCreator, ratedByAccepted)
         }
         catch (e: Exception){
             e.printStackTrace()

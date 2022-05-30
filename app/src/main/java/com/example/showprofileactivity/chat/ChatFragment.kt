@@ -132,7 +132,7 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
                         .document(user)
                         .collection("chats")
                         .document("$oid" + "#" + "$oMail")
-                        .set(mapOf("messages" to t1, "offerTitle" to oTitle, "otherUserName" to uName))
+                        .set(mapOf("messages" to t1))
                         .addOnSuccessListener {
                             Log.d(
                                 "Firebase",
@@ -144,7 +144,7 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
                         .document(oMail)
                         .collection("chats")
                         .document("$oid" + "#" + "$user")
-                        .set(mapOf("messages" to t1, "offerTitle" to oTitle, "otherUserName" to myName))
+                        .set(mapOf("messages" to t1))
                         .addOnSuccessListener {
                             Log.d(
                                 "Firebase",
@@ -157,7 +157,7 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
                     db.collection("chats")
                         .document(user)
                         .collection("chats")
-                        .document("$oid" + "#" + "$creator")
+                        .document("$oid" + "#" + "$oMail")
                         .update(mapOf("messages" to t1))
                         .addOnSuccessListener {
                             Log.d(
@@ -167,7 +167,7 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
                         }
                         .addOnFailureListener { Log.d("Firebase", "Failed to update chat.") }
                     db.collection("chats")
-                        .document(creator)
+                        .document(oMail)
                         .collection("chats")
                         .document("$oid" + "#" + "$user")
                         .update(mapOf("messages" to t1))
