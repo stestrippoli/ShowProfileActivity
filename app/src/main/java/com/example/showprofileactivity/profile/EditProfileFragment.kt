@@ -27,7 +27,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.showprofileactivity.R
 import com.example.showprofileactivity.User
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
+//import com.google.firebase.storage.FirebaseStorage
 import org.json.JSONObject
 import java.io.File
 import java.io.FileInputStream
@@ -95,6 +95,10 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 val locationbox = view.findViewById<EditText>(R.id.location_e).text.toString()
                 val skillsbox = view.findViewById<EditText>(R.id.skills_e).text.toString()
                 val descbox = view.findViewById<EditText>(R.id.description_e).text.toString()
+                println("------------------")
+                println(namebox)
+                println(locationbox)
+                println("------------------")
                 db.collection("users")
                     .document(profileViewModel.email.value.toString())
                     .update(
@@ -109,7 +113,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                     )
                     .addOnSuccessListener { Log.d("Firebase", "User profile successfully modified.") }
                     .addOnFailureListener{ Log.d("Firebase", "Failed to modify user profile.") }
-                savePhotoOnDB()
+                //savePhotoOnDB()
                 findNavController().navigateUp()
             }
         })
@@ -162,7 +166,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             imageView!!.setImageURI(data?.data)
     }
 
-    private fun savePhotoOnDB(){
+    /*private fun savePhotoOnDB(){
         // Create a storage reference from our app
         val storageRef = FirebaseStorage.getInstance().reference
 
@@ -176,7 +180,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             }.addOnSuccessListener { taskSnapshot ->
                 print("File uploaded correctly!"+taskSnapshot.metadata.toString())
         }
-    }
+    }*/
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent

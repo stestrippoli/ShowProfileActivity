@@ -7,9 +7,5 @@
         android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/modify"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/to_chat"
-        android:icon="@drawable/ic_baseline_chat_24"
-        android:title="@string/chat_with_user"
-        app:showAsAction="ifRoom" />
+    
 </menu>

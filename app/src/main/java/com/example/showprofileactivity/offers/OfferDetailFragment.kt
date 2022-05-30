@@ -52,6 +52,7 @@ class OfferDetailFragment : Fragment() {
             duration.text = hoursString
         }
 
+        val button = view.findViewById<ImageButton>(R.id.chat_button)
         val o = Bundle()
         val creator = view.findViewById<TextView>(R.id.creator)
         vm.creator.observe(this.viewLifecycleOwner) {
@@ -61,12 +62,16 @@ class OfferDetailFragment : Fragment() {
         vm.id.observe(this.viewLifecycleOwner) {
             o.putString("oid", it)
         }
+        vm.email.observe(this.viewLifecycleOwner) {
+            if(it==currentUserEmail)
+                button.visibility = View.GONE
+        }
         creator.setOnClickListener {
             val b = Bundle()
             b.putString("email", vm.email.value)
             findNavController().navigate(R.id.action_showoffercreator, b)
         }
-        val button = view.findViewById<ImageButton>(R.id.chat_button)
+
         o.putString("cMail", vm.email.value)
         o.putLong("hours", vm.hours.value!!)
         o.putBoolean("accepted", vm.accepted.value!!)

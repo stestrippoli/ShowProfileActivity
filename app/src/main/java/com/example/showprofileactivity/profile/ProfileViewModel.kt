@@ -20,6 +20,8 @@ class ProfileViewModel: ViewModel() {
     val skills: LiveData<CharSequence> = _skills
     private var _description = MutableLiveData<CharSequence>()
     val description: LiveData<CharSequence> = _description
+    private var _credit = MutableLiveData<Long>()
+    val credit: LiveData<Long> = _credit
     private var _picture = MutableLiveData<CharSequence>()
     val picture: LiveData<CharSequence> = _picture
 
@@ -43,6 +45,9 @@ class ProfileViewModel: ViewModel() {
     }
     fun saveDescription(newDescription: CharSequence) {
         _description.value = newDescription
+    }
+    fun saveCredit(newCredit: Long) {
+        _credit.value = newCredit
     }
     fun savePicture(newPicture: CharSequence) {
         _picture.value = newPicture

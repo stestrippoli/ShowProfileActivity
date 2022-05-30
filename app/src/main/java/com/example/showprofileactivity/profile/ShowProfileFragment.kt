@@ -11,18 +11,18 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
+/*import com.bumptech.glide.Glide
 import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
-import com.bumptech.glide.module.AppGlideModule
+import com.bumptech.glide.module.AppGlideModule*/
 import com.example.showprofileactivity.R
 import com.example.showprofileactivity.User
-import com.firebase.ui.storage.images.FirebaseImageLoader
+//import com.firebase.ui.storage.images.FirebaseImageLoader
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+/*import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference*/
 import java.io.File
 import java.io.InputStream
 
@@ -57,9 +57,20 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
                 user = res.toUser()!!
                 setViewModel()
                 mainMenu?.findItem(R.id.modifybtn)?.isVisible = editmode
-                mainMenu?.findItem(R.id.to_chat)?.isVisible = !editmode
                 requireView().findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
                 requireView().findViewById<ConstraintLayout>(R.id.profileLayout).visibility = View.VISIBLE
+                if(editmode) {
+                    requireView().findViewById<TextView>(R.id.labelCredit).visibility =
+                        View.VISIBLE
+                    requireView().findViewById<TextView>(R.id.credit).visibility =
+                        View.VISIBLE
+                }
+                else{
+                    requireView().findViewById<TextView>(R.id.labelCredit).visibility =
+                        View.GONE
+                    requireView().findViewById<TextView>(R.id.credit).visibility =
+                        View.GONE
+                }
             }
             .addOnFailureListener {
                 Toast
@@ -94,14 +105,17 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         profileViewModel.description.observe(viewLifecycleOwner) { description ->
             requireView().findViewById<TextView>(R.id.description).text = description
         }
+        profileViewModel.credit.observe(viewLifecycleOwner) { credit ->
+            requireView().findViewById<TextView>(R.id.credit).text = credit.toString()
+        }
         profileViewModel.picture.observe(viewLifecycleOwner) { picture ->
-           downloadImage(picture.toString())
+           //downloadImage(picture.toString())
            // requireView().findViewById<ImageView>(R.id.profilepic).setImageURI(picture.toString().toUri())
         }
     }
 
 
-    private fun downloadImage(picture: String){
+    /*private fun downloadImage(picture: String){
         // Create a storage reference from our app
         val storageRef = FirebaseStorage.getInstance().reference
         val imgRef = storageRef.child("images/$picture")
@@ -114,7 +128,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         }.addOnFailureListener {
             // Handle any errors
         }
-    }
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -128,24 +142,20 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
                 findNavController().navigate(R.id.action_toEditProfileFragment)
                 true
             }
-            R.id.to_chat ->
-            {
-                findNavController().navigate(R.id.action_showProfileFragment_to_fragment_chat)
-                true
-            }
             else -> {super.onContextItemSelected(item)}
         }
     }
 
     private fun setViewModel(){
-        val (fullname, username, location, services, description, img) = user!!
+        val (fullname, username, email, location, services, description, credit, img) = user!!
 
         profileViewModel.saveFullname(fullname)
         profileViewModel.saveNickname(username?:"Your Username" as String)
         profileViewModel.saveLocation(location?:"Your Location" as String)
         profileViewModel.saveSkills(services?:"" as String)
         profileViewModel.saveDescription(description?:"Your Description" as String)
-        profileViewModel.saveEmail(email)
+        profileViewModel.saveEmail(email as CharSequence)
+        profileViewModel.saveCredit(credit!!)
         profileViewModel.savePicture(img.toString())
         profileViewModel.saveRating(rating)
 
