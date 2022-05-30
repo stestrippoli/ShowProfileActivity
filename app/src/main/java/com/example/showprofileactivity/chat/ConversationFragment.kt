@@ -140,7 +140,8 @@ class ConversationFragment : Fragment() {
             val services = get("services") as String?
             val description = get("description") as String?
             val credit = get("credit") as Long
-            User(fullname, username, email, location, services, description, credit)
+            val img = get("img") as String?
+            User(fullname, username, email, location, services, description, credit, img)
         } catch(e:Exception){
             e.printStackTrace()
             null

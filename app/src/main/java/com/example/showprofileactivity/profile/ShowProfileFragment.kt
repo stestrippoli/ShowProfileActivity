@@ -8,16 +8,23 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Registry
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 import com.example.showprofileactivity.R
 import com.example.showprofileactivity.User
+import com.firebase.ui.storage.images.FirebaseImageLoader
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import org.json.JSONObject
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.io.File
+import java.io.InputStream
 
 
 class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
@@ -88,7 +95,24 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             requireView().findViewById<TextView>(R.id.description).text = description
         }
         profileViewModel.picture.observe(viewLifecycleOwner) { picture ->
-            requireView().findViewById<ImageView>(R.id.profilepic).setImageURI(picture.toString().toUri())
+           downloadImage(picture.toString())
+           // requireView().findViewById<ImageView>(R.id.profilepic).setImageURI(picture.toString().toUri())
+        }
+    }
+
+
+    private fun downloadImage(picture: String){
+        // Create a storage reference from our app
+        val storageRef = FirebaseStorage.getInstance().reference
+        val imgRef = storageRef.child("images/$picture")
+
+        val localFile = File.createTempFile("images", "jpg")
+
+        imgRef.getFile(localFile).addOnSuccessListener {
+            // Local temp file has been created
+
+        }.addOnFailureListener {
+            // Handle any errors
         }
     }
 
@@ -114,13 +138,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
     }
 
     private fun setViewModel(){
-       val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        val myJSON = JSONObject(
-            sharedPref.getString("profile",
-                """{"fullname":"Default Name","nickname":"Default nickname","rating": "5", "email":"default@email.com","location":"Default location","skills":"Skill1 | Skill2 | Skill3","description": "Default description","img": "android.resource://com.example.showprofileactivity/${R.drawable.propic}"}""")
-        )
-
-        val (fullname, username, location, services, description) = user!!
+        val (fullname, username, location, services, description, img) = user!!
 
         profileViewModel.saveFullname(fullname)
         profileViewModel.saveNickname(username?:"Your Username" as String)
@@ -128,9 +146,9 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         profileViewModel.saveSkills(services?:"" as String)
         profileViewModel.saveDescription(description?:"Your Description" as String)
         profileViewModel.saveEmail(email)
+        profileViewModel.savePicture(img.toString())
         profileViewModel.saveRating(rating)
-        if(myJSON.has("img"))
-            profileViewModel.savePicture(myJSON.getString("img"))
+
     }
 
     fun DocumentSnapshot.toUser(): User? {
@@ -149,7 +167,8 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             val services = get("services") as String?
             val description = get("description") as String?
             val credit = get("credit") as Long
-            User(fullname, username, email, location, services, description, credit)
+            val img = get("img") as String
+            User(fullname, username, email, location, services, description, credit, img)
         } catch(e:Exception){
             e.printStackTrace()
             null

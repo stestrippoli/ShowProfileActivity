@@ -74,9 +74,16 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
         mainMenu?.findItem(R.id.accept_request)?.isVisible = c
         mainMenu?.findItem(R.id.reject_request)?.isVisible = c
 
+        val _uL = MutableLiveData<User>()
+        val _oL = MutableLiveData<Offer>()
+        val uObj : User? = null
+        val oObj : Offer? = null
+
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
         uName = requireArguments().getString("uName").toString()
         (requireActivity() as AppCompatActivity).supportActionBar?.title = uName
+
+
 
 
         db.collection("chats")
@@ -121,7 +128,7 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
             if (text != "") {
                 requireView().findViewById<EditText>(R.id.edit_chat_message).text.clear()
                 val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
-                val currentTime = SimpleDateFormat("hh:mm").format(Date())
+                val currentTime = SimpleDateFormat("HH:mm").format(Date())
                 var c = creator == user
                 var m = Message(text, user, c, currentTime, currentDate)
                 var t1 = messages.value?.toMutableList()
@@ -283,7 +290,8 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
             val services = get("services") as String?
             val description = get("description") as String?
             val credit = get("credit") as Long
-            User(fullname, username, email, location, services, description, credit)
+            val img = get("img") as String
+            User(fullname, username, email, location, services, description, credit, img)
         } catch(e:Exception){
             e.printStackTrace()
             null

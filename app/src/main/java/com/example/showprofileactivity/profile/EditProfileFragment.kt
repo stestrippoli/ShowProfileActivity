@@ -27,8 +27,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.showprofileactivity.R
 import com.example.showprofileactivity.User
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import org.json.JSONObject
 import java.io.File
+import java.io.FileInputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -88,18 +90,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
-                with (sharedPref.edit()) {
-                    val profile = JSONObject()
-                    profile.put("nickname", requireView().findViewById<EditText>(R.id.nickname_e).text)
-                    profile.put("location", requireView().findViewById<EditText>(R.id.location_e).text)
-                    profile.put("skills", requireView().findViewById<EditText>(R.id.skills_e).text)
-                    profile.put("description", requireView().findViewById<EditText>(R.id.description_e).text)
-                    //profile.put("img", sharedViewModel.picture.value)
-                    putString("profile", profile.toString())
-                    apply()
-                }
-
                 val namebox = view.findViewById<EditText>(R.id.name_e).text.toString()
                 val nicknamebox = view.findViewById<EditText>(R.id.nickname_e).text.toString()
                 val locationbox = view.findViewById<EditText>(R.id.location_e).text.toString()
@@ -113,11 +103,13 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                             "username" to nicknamebox,
                             "location" to locationbox,
                             "services" to skillsbox,
-                            "description" to descbox
+                            "description" to descbox,
+                            "img" to currentPhotoName
                         )
                     )
                     .addOnSuccessListener { Log.d("Firebase", "User profile successfully modified.") }
                     .addOnFailureListener{ Log.d("Firebase", "Failed to modify user profile.") }
+                savePhotoOnDB()
                 findNavController().navigateUp()
             }
         })
@@ -154,12 +146,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1)
-        //val intent = Intent(Intent.ACTION_PICK)
-        //intent.type = "image/*"
-        //startActivityForResult(intent, 100)
-        //val imageView = findViewById<ImageView>(R.id.propic_e)
-        //val imageBitmap = intent.extras?.get("data") as Bitmap
-        //imageView.setImageBitmap(imageBitmap)
 
     }
 
@@ -176,7 +162,21 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             imageView!!.setImageURI(data?.data)
     }
 
+    private fun savePhotoOnDB(){
+        // Create a storage reference from our app
+        val storageRef = FirebaseStorage.getInstance().reference
 
+        val ImagesRef = storageRef.child("images/$currentPhotoName")
+
+        val stream = FileInputStream(File(currentPhotoPath))
+
+        val uploadTask = ImagesRef.putStream(stream)
+        uploadTask.addOnFailureListener {
+            println(it)
+            }.addOnSuccessListener { taskSnapshot ->
+                print("File uploaded correctly!"+taskSnapshot.metadata.toString())
+        }
+    }
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
@@ -206,6 +206,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     }
 
     lateinit var currentPhotoPath: String
+    lateinit var currentPhotoName: String
 
     @SuppressLint("SimpleDateFormat")
     @Throws(IOException::class)
@@ -221,6 +222,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
             profileViewModel.savePicture(currentPhotoPath)
+            currentPhotoName = "JPEG_${timeStamp}_.jpg"
+
 
         }
     }
@@ -249,4 +252,5 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         profileViewModel.saveDescription(requireView().findViewById<EditText>(R.id.description_e).text)
         profileViewModel.savePicture(currentPhotoPath)
     }
+
 }

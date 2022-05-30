@@ -8,5 +8,6 @@ data class User(
     var location: String?,
     var services: String?,
     var description: String?,
-    var credit: Long?
+    var credit: Long?,
+    var img: String?,
 )

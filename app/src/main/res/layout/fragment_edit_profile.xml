@@ -157,6 +157,7 @@
                 android:inputType="textLongMessage|textMultiLine"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textSize="24sp" />
+
         </LinearLayout>
     </ScrollView>
 

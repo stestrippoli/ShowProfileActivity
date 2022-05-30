@@ -38,6 +38,7 @@ android {
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:30.0.0')
     // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
 
     // Declare the dependency for the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics-ktx'
@@ -55,7 +56,6 @@ dependencies {
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.4.2")
     implementation 'com.google.firebase:firebase-firestore:24.1.2'
     implementation 'com.google.firebase:firebase-auth:21.0.3'
-    implementation 'com.google.firebase:firebase-database-ktx:20.0.5'
 
     // Testing Navigation
     androidTestImplementation("androidx.navigation:navigation-testing:2.4.2")
