@@ -148,7 +148,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
               imageView.setImageBitmap(bitmap)
               profileViewModel.savePicturePath(localFile.path)
               imageView.visibility=View.VISIBLE
-              requireView().findViewById<ProgressBar>(R.id.picprogress).visibility=View.INVISIBLE
+              view?.findViewById<ProgressBar>(R.id.picprogress)?.visibility=View.INVISIBLE
           }
 
       }.addOnFailureListener {

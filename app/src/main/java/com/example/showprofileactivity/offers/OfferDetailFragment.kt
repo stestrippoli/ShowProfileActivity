@@ -89,36 +89,39 @@ class OfferDetailFragment : Fragment() {
         var emailBeingRated = ""
         var userBeingRated = ""
         var type = ""
-        if (!requireArguments().getBoolean("rated")) {
-            if (currentUserEmail == vm.acceptedUserMail.value.toString() && !requireArguments().getBoolean("ratedByAccepted")) {
-                rateButton.visibility = View.VISIBLE
-                emailBeingRated = vm.email.value.toString()
-                userBeingRated = vm.creator.value.toString()
-                type = "creator"
+        val completeButton = view.findViewById<Button>(R.id.completeOffer)
+        if(arguments?.isEmpty == false) {
+            if (!requireArguments().getBoolean("rated")) {
+                if (currentUserEmail == vm.acceptedUserMail.value.toString() && !requireArguments().getBoolean("ratedByAccepted")) {
+                    rateButton.visibility = View.VISIBLE
+                    emailBeingRated = vm.email.value.toString()
+                    userBeingRated = vm.creator.value.toString()
+                    type = "creator"
+                }
+                else if (currentUserEmail == vm.email.value.toString() && !requireArguments().getBoolean("ratedByCreator")) {
+                    rateButton.visibility = View.VISIBLE
+                    emailBeingRated = vm.acceptedUserMail.value.toString()
+                    userBeingRated = vm.acceptedUser.value.toString()
+                    type = "accepted"
+                }
             }
-            else if (currentUserEmail == vm.email.value.toString() && !requireArguments().getBoolean("ratedByCreator")) {
-                rateButton.visibility = View.VISIBLE
-                emailBeingRated = vm.acceptedUserMail.value.toString()
-                userBeingRated = vm.acceptedUser.value.toString()
-                type = "accepted"
+            if (currentUserEmail == vm.acceptedUserMail.value.toString() && requireArguments().getBoolean("ratedByCreator") && vm.creatorComment.value.toString()!=""){
+                ll.visibility = View.VISIBLE
+                commentLab.text = "${vm.creator.value.toString()} commented:"
+                comment.text = vm.creatorComment.value.toString()
             }
-        }
-        if (currentUserEmail == vm.acceptedUserMail.value.toString() && requireArguments().getBoolean("ratedByCreator") && vm.creatorComment.value.toString()!=""){
-            ll.visibility = View.VISIBLE
-            commentLab.text = "${vm.creator.value.toString()} commented:"
-            comment.text = vm.creatorComment.value.toString()
-        }
-        else if (currentUserEmail == vm.email.value.toString() && requireArguments().getBoolean("ratedByAccepted") && vm.userComment.value.toString()!="") {
-            ll.visibility = View.VISIBLE
-            commentLab.text = "${vm.acceptedUser.value.toString()} commented:"
-            comment.text = vm.userComment.value.toString()
+            else if (currentUserEmail == vm.email.value.toString() && requireArguments().getBoolean("ratedByAccepted") && vm.userComment.value.toString()!="") {
+                ll.visibility = View.VISIBLE
+                commentLab.text = "${vm.acceptedUser.value.toString()} commented:"
+                comment.text = vm.userComment.value.toString()
+            }
+
+            completeButton.visibility = View.GONE
+            if (currentUserEmail == vm.acceptedUserMail.value.toString() && !requireArguments().getBoolean("completed")) {
+                completeButton.visibility = View.VISIBLE
+            }
         }
 
-        val completeButton = view.findViewById<Button>(R.id.completeOffer)
-        completeButton.visibility = View.GONE
-        if (currentUserEmail == vm.acceptedUserMail.value.toString() && !requireArguments().getBoolean("completed")) {
-            completeButton.visibility = View.VISIBLE
-        }
         completeButton.setOnClickListener {
             FirebaseFirestore.getInstance().collection("offers").document(vm.id.value.toString())
                 .update("completed", true)

@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -27,7 +28,7 @@ class RateUserFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        email = requireArguments().getString("email").toString()
+        email = FirebaseAuth.getInstance().currentUser!!.email.toString()
         userBeingRated = requireArguments().getString("userBeingRated").toString()
         offerId = requireArguments().getString("offerId").toString()
         type = requireArguments().getString("type").toString()
