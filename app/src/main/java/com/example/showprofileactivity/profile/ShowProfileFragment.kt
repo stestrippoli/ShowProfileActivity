@@ -4,10 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Environment
 import android.view.*
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -90,7 +87,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             requireView().findViewById<TextView>(R.id.fullname).text = fullname
         }
         profileViewModel.rating.observe(viewLifecycleOwner) { rating ->
-            requireView().findViewById<TextView>(R.id.rating).text = rating
+            requireView().findViewById<RatingBar>(R.id.rating).rating = rating.toString().toFloat()
         }
         profileViewModel.nickname.observe(viewLifecycleOwner) { nickname ->
             requireView().findViewById<TextView>(R.id.nickname).text = nickname
@@ -132,9 +129,12 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
       imgRef.getFile(localFile).addOnSuccessListener {
             imageView.setImageURI(localFile.toUri())
             profileViewModel.savePicturePath(localFile.toString())
-        }.addOnFailureListener {
-            // Handle any errors
-        }
+            requireView().findViewById<ProgressBar>(R.id.picprogress).visibility=View.INVISIBLE
+            imageView.visibility=View.VISIBLE
+
+      }.addOnFailureListener {
+          requireView().findViewById<ProgressBar>(R.id.picprogress).visibility=View.INVISIBLE
+          imageView.visibility=View.VISIBLE        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -179,7 +179,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
             if (timesrated.toInt() != 0) {
                 rating = (rating.toDouble() / timesrated.toDouble()).toString()
             }
-            rating = "☆$rating"
+
             val fullname = get("fullname") as String
             val username = get("username") as String?
             val email = get("email") as String?
