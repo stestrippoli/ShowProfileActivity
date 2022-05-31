@@ -19,7 +19,7 @@
         android:id="@+id/profileLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
+        android:visibility="visible"
         tools:context=".MainActivity">
 
 
@@ -35,7 +35,17 @@
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/ic_baseline_account_circle_24" />
+
+        <ProgressBar
+            android:id="@+id/picprogress"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/profilepic"
+            app:layout_constraintEnd_toEndOf="@+id/profilepic"
+            app:layout_constraintStart_toStartOf="@+id/profilepic"
+            app:layout_constraintTop_toTopOf="@+id/profilepic" />
 
         <TextView
             android:id="@+id/fullname"
@@ -99,17 +109,15 @@
                     android:textColor="#A6A6A6"
                     android:textSize="22sp" />
 
-                <TextView
+                <RatingBar
                     android:id="@+id/rating"
-
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:text="@string/rating"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                    android:textSize="30sp"
-                    tools:layout_editor_absoluteX="44dp"
-                    tools:layout_editor_absoluteY="501dp" />
+                    android:numStars="5"
+                    android:stepSize="0.1"
+
+                    android:isIndicator="true"
+                    />
 
                 <TextView
                     android:id="@+id/labelEmail"
