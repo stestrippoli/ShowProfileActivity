@@ -65,7 +65,9 @@ class TimeSlotEditFragment : Fragment(R.layout.fragment_time_slot_edit) {
                         "",
                         false,
                         false,
-                        false
+                        false,
+                        "",
+                        ""
                     )
                     db.collection("offers")
                         .document(o.id)

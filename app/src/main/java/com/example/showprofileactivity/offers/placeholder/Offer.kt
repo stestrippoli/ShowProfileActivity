@@ -16,5 +16,7 @@ data class Offer(
                  var acceptedUserMail: String?,
                  var completed: Boolean?,
                  var ratedByCreator: Boolean?,
-                 var ratedByAccepted: Boolean?
+                 var ratedByAccepted: Boolean?,
+                 var creatorComment: String?,
+                 var userComment: String?
 )

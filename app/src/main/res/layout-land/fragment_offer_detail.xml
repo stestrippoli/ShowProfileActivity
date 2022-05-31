@@ -101,7 +101,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:orientation="vertical">
 
                     <TextView
@@ -154,11 +154,12 @@
                     style="@style/Widget.AppCompat.ImageButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="5"
+                    android:layout_weight="2"
                     android:backgroundTint="#FFFFFF"
                     android:contentDescription="Chat with creator"
                     android:minHeight="48dp"
-                    android:scaleType="center"
+                    android:paddingLeft="0dp"
+                    android:scaleType="fitStart"
                     android:src="@drawable/ic_baseline_chat_24"
                     app:tint="#1E88E5" />
 
@@ -171,6 +172,40 @@
                 android:text="@string/click_on_creator_to_show_details"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
+            <LinearLayout
+                android:id="@+id/commentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:id="@+id/commentLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/commentLabel"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                <TextView
+                    android:id="@+id/comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#28616161"
+                    android:paddingStart="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/comment"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColorHint="#616161" />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/button"
                 android:layout_width="match_parent"
@@ -180,6 +215,24 @@
                 android:text="@string/add_bookmark"
                 app:icon="@android:drawable/btn_star_big_on"
                 app:iconGravity="textStart" />
+
+            <Button
+                android:id="@+id/rateUserButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="@string/rateUserButton"/>
+
+            <Button
+                android:id="@+id/completeOffer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:text="@string/completeOffer"
+                app:icon="@drawable/ic_baseline_check_24"
+                app:iconGravity="textStart"  />
 
         </LinearLayout>
     </ScrollView>

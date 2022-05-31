@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -32,9 +33,10 @@ class CompletedOffersFragment: Fragment() {
         offers.clear()
         for (offer in vm.offers.value!!)
             if (offer.accepted == true && offer.completed == true) {
-                if (offer.acceptedUser == FirebaseAuth.getInstance().currentUser?.displayName || offer.creator == FirebaseAuth.getInstance().currentUser?.displayName)
+                if (offer.acceptedUserMail == FirebaseAuth.getInstance().currentUser?.email || offer.creator == FirebaseAuth.getInstance().currentUser?.displayName)
                     offers.addItem(offer)
             }
+
 
         // Set the adapter
         val offersView = view.findViewById<RecyclerView>(R.id.list)
@@ -70,11 +72,14 @@ class CompletedOffersFragment: Fragment() {
         vmOffer.setAccepted(offers.ITEMS[position].accepted!!)
         vmOffer.setAcceptedUser(offers.ITEMS[position].acceptedUser!!)
         vmOffer.setAcceptedUserMail(offers.ITEMS[position].acceptedUserMail!!)
+        vmOffer.setCreatorComment(offers.ITEMS[position].creatorComment!!)
+        vmOffer.setUserComment(offers.ITEMS[position].userComment!!)
 
         val o = Bundle()
         o.putBoolean("rated", false)
         o.putBoolean("ratedByCreator", offers.ITEMS[position].ratedByCreator!!)
         o.putBoolean("ratedByAccepted", offers.ITEMS[position].ratedByAccepted!!)
+        o.putBoolean("completed", offers.ITEMS[position].completed!!)
 
 
         view?.findNavController()?.navigate(R.id.action_toOfferDetailFragment, o)

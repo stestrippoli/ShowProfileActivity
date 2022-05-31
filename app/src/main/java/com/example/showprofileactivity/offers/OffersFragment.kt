@@ -155,6 +155,7 @@ class OffersFragment() : Fragment(){
         o.putBoolean("rated", true)
         o.putBoolean("ratedByCreator", true)
         o.putBoolean("ratedByAccepted", true)
+        o.putBoolean("completed", offers.ITEMS[position].completed!!)
 
         view?.findNavController()?.navigate(R.id.action_toOfferDetailFragment, o)
     }

@@ -112,7 +112,9 @@ class ConversationFragment : Fragment() {
             val completed = get("completed") as Boolean
             val ratedByCreator = get("ratedByCreator") as Boolean
             val ratedByAccepted = get("ratedByAccepted") as Boolean
-            Offer(id, title, description, location, hours, creator, skill, email, date, time, accepted, acceptedUser, acceptedUserMail, completed, ratedByCreator, ratedByAccepted)
+            val creatorComment = get("creatorComment") as String
+            val userComment = get("userComment") as String
+            Offer(id, title, description, location, hours, creator, skill, email, date, time, accepted, acceptedUser, acceptedUserMail, completed, ratedByCreator, ratedByAccepted, creatorComment, userComment)
         }
         catch (e: Exception){
             e.printStackTrace()

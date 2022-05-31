@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_timeSlotDetailsFragment"
         android:name="com.example.showprofileactivity.timeslots.TimeSlotDetailsFragment"
-        android:label="Time Slot Details"
+        android:label="Offer Details"
         tools:layout="@layout/fragment_time_slot_details">
         <action
             android:id="@+id/action_toEdit"
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/itemFragment"
         android:name="com.example.showprofileactivity.timeslots.TimeSlotFragment"
-        android:label="Fragment list"
+        android:label="Your offers"
         tools:layout="@layout/fragment_item_list" >
         <action
             android:id="@+id/action_itemFragment_to_nav_timeSlotDetailsFragment"
@@ -149,11 +149,11 @@
     <fragment
         android:id="@+id/completedOffersFragment2"
         android:name="com.example.showprofileactivity.useroffers.CompletedOffersFragment"
-        android:label="CompletedOffersFragment" />
+        android:label="Completed Offer" />
     <fragment
         android:id="@+id/rateUserFragment"
         android:name="com.example.showprofileactivity.RateUserFragment"
-        android:label="RateUserFragment" >
+        android:label="Rate User" >
         <action
             android:id="@+id/action_rateUserFragment_to_serviceFragment"
             app:destination="@id/serviceFragment" />

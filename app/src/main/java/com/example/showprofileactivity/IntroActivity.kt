@@ -66,12 +66,13 @@ class IntroActivity : AppCompatActivity() {
         super.onStart()
 
         if(auth.currentUser != null) {
-            findViewById<SignInButton>(R.id.sign_in_button).visibility = View.VISIBLE
-            findViewById<ProgressBar>(R.id.loadingintro).visibility = View.GONE
+            findViewById<SignInButton>(R.id.sign_in_button).visibility = View.GONE
+            findViewById<ProgressBar>(R.id.loadingintro).visibility = View.VISIBLE
             resultLauncher.launch(googleSignIn.signInIntent)
         }
         else{
-
+            findViewById<SignInButton>(R.id.sign_in_button).visibility = View.VISIBLE
+            findViewById<ProgressBar>(R.id.loadingintro).visibility = View.GONE
         }
     }
 

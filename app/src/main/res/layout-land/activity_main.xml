@@ -19,13 +19,18 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:fadingEdge="vertical"
         android:fitsSystemWindows="true"
+        android:requiresFadingEdge="vertical"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
             android:orientation="vertical"
             android:padding="0dp">
 
@@ -36,9 +41,9 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:gravity="center"
-                android:text="Log out"
+                android:text="@string/logout"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/design_default_color_primary" />
+                android:textColor="@color/blue_dark" />
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

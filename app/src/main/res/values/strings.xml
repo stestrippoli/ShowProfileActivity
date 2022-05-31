@@ -53,6 +53,9 @@
     <string name="button">Button</string>
     <string name="clientId">695828131634-j3gs3lioa1g888jtp97sg0o3f66b54kc.apps.googleusercontent.com</string>
     <string name="click_on_creator_to_show_details">"""Click on creator's name to show details"""</string>
+    <string name="commentLabel">The user commented:</string>
+    <string name="logout">Logout</string>
+    <string name="comment">Comment</string>
     <string name="duration">Duration</string>
     <string name="offer_location">Location</string>
     <string name="creator">Creator</string>
@@ -77,6 +80,7 @@
     <string name="no_accepted">You haven\'t accepted any offers yet.</string>
     <string name="no_assigned">You haven\'t requested any services yet.</string>
     <string name="rateUserButton">Rate User</string>
+    <string name="completeOffer">Mark as completed</string>
     <string name="completedOffers">Completed Offers</string>
     <string name="no_completed">You haven\'t completed any offers yet</string>
     <string name="rateComment">Leave a comment (optional)</string>

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -72,16 +73,22 @@ class RateUserFragment : Fragment() {
                         texto.text = "Failure"
 
                     }
+                var comment = view.findViewById<TextInputEditText>(R.id.commentText).text.toString()
                 var ratedType = ""
+                var commentType = ""
                 if (type == "accepted") {
                     ratedType = "ratedByCreator"
+                    commentType = "creatorComment"
                 }
                 else if (type == "creator") {
                     ratedType = "ratedByAccepted"
+                    commentType = "userComment"
                 }
                 val data2 = mapOf(
-                    ratedType to true
+                    ratedType to true,
+                    commentType to comment
                 )
+                println(comment)
                 db.collection("offers").document(offerId).update(data2)
                     .addOnSuccessListener {
                         texto.text = "Success"

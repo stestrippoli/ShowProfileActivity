@@ -152,6 +152,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
           }
 
       }.addOnFailureListener {
+            println("debug: Erroreeee")
           requireView().findViewById<ProgressBar>(R.id.picprogress).visibility=View.INVISIBLE
           imageView.visibility=View.VISIBLE        }
     }

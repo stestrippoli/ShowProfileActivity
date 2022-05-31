@@ -202,7 +202,7 @@ class ChatFragment : Fragment(R.layout.fragment_chat) {
                 if(!requireArguments().getBoolean("accepted")){
                     db.collection("offers").document(oid).update(mapOf(
                         "accepted" to true,
-                        "acceptedUser" to oMail,
+                        "acceptedUser" to uName,
                         "acceptedUserMail" to oMail
                     )).addOnSuccessListener {
                         db.collection("users").document(user).get()

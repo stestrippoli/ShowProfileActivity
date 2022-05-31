@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
@@ -80,7 +81,11 @@ class OfferDetailFragment : Fragment() {
         button.setOnClickListener { findNavController().navigate(R.id.action_offerDetailFragment_to_fragment_chat, o) }
 
         val rateButton = view.findViewById<Button>(R.id.rateUserButton)
-        rateButton.visibility = View.INVISIBLE
+        rateButton.visibility = View.GONE
+        val ll = view.findViewById<LinearLayout>(R.id.commentLayout)
+        ll.visibility = View.GONE
+        val commentLab = view.findViewById<TextView>(R.id.commentLabel)
+        val comment = view.findViewById<TextView>(R.id.comment)
         var emailBeingRated = ""
         var userBeingRated = ""
         var type = ""
@@ -98,6 +103,34 @@ class OfferDetailFragment : Fragment() {
                 type = "accepted"
             }
         }
+        if (currentUserEmail == vm.acceptedUserMail.value.toString() && requireArguments().getBoolean("ratedByCreator") && vm.creatorComment.value.toString()!=""){
+            ll.visibility = View.VISIBLE
+            commentLab.text = "${vm.creator.value.toString()} commented:"
+            comment.text = vm.creatorComment.value.toString()
+        }
+        else if (currentUserEmail == vm.email.value.toString() && requireArguments().getBoolean("ratedByAccepted") && vm.userComment.value.toString()!="") {
+            ll.visibility = View.VISIBLE
+            commentLab.text = "${vm.acceptedUser.value.toString()} commented:"
+            comment.text = vm.userComment.value.toString()
+        }
+
+        val completeButton = view.findViewById<Button>(R.id.completeOffer)
+        completeButton.visibility = View.GONE
+        if (currentUserEmail == vm.acceptedUserMail.value.toString() && !requireArguments().getBoolean("completed")) {
+            completeButton.visibility = View.VISIBLE
+        }
+        completeButton.setOnClickListener {
+            FirebaseFirestore.getInstance().collection("offers").document(vm.id.value.toString())
+                .update("completed", true)
+                .addOnSuccessListener {
+                    Log.d("Firebase", "Offer successfully set as completed.")
+                    completeButton.visibility = View.GONE
+                    rateButton.visibility = View.VISIBLE
+                }
+                .addOnFailureListener{ Log.d("Firebase", "Could not set offer as completed.") }
+        }
+
+
         val usersData = Bundle()
         usersData.putString("type", type)
         usersData.putString("email", emailBeingRated)
