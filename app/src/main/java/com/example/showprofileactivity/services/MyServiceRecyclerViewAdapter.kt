@@ -5,11 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.navigation.findNavController
 import com.example.showprofileactivity.R
 import com.example.showprofileactivity.services.placeholder.Service
-import org.json.JSONObject
 
 class MyServiceRecyclerViewAdapter(
     private var values: MutableList<Service>,
@@ -17,7 +17,7 @@ class MyServiceRecyclerViewAdapter(
 ) : RecyclerView.Adapter<MyServiceRecyclerViewAdapter.ViewHolder>() {
 
     private var context: Context? = null;
-
+    var lastPosition = -1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val v = LayoutInflater.from(parent.context)

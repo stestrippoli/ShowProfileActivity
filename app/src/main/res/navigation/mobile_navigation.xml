@@ -63,7 +63,11 @@
             app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_showProfileFragment_to_fragment_chat"
-            app:destination="@id/fragment_chat" />
+            app:destination="@id/fragment_chat"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -76,7 +80,11 @@
         tools:layout="@layout/fragment_service_list" >
         <action
             android:id="@+id/action_serviceFragment_to_offersFragment"
-            app:destination="@id/offersFragment" />
+            app:destination="@id/offersFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
     </fragment>
     <fragment
         android:id="@+id/offerDetailFragment"

@@ -4,6 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -61,7 +65,14 @@ class IntroActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        if(auth.currentUser != null) resultLauncher.launch(googleSignIn.signInIntent)
+        if(auth.currentUser != null) {
+            findViewById<SignInButton>(R.id.sign_in_button).visibility = View.VISIBLE
+            findViewById<ProgressBar>(R.id.loadingintro).visibility = View.GONE
+            resultLauncher.launch(googleSignIn.signInIntent)
+        }
+        else{
+
+        }
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
@@ -78,11 +89,11 @@ class IntroActivity : AppCompatActivity() {
                                     .addOnSuccessListener { Log.d("Firebase", "User successfully added to db") }
                                     .addOnFailureListener{ Log.d("Firebase", "Failed to add user") }
                         }
-
                     Toast.makeText(this, "Successfully logged in as " + account.displayName, Toast.LENGTH_SHORT).show()
                     var b = Bundle()
                     b.putString("fullname", account.displayName)
                     b.putString("email", account.email)
+
                     var i = Intent(this, MainActivity::class.java)
                     i.putExtra("user", b)
                     startActivity(i)

@@ -1,9 +1,11 @@
 package com.example.showprofileactivity.chat
 
+import android.content.Context
 import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.navigation.findNavController
 import com.example.showprofileactivity.R
@@ -20,9 +22,10 @@ class MyConversationRecyclerViewAdapter(
     private val user:String,
     private val name: String
 ) : RecyclerView.Adapter<MyConversationRecyclerViewAdapter.ViewHolder>() {
-
+    var lastPosition = -1
+    lateinit var context : Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
+        context = parent.context
         return ViewHolder(
             FragmentConversationBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -37,6 +40,7 @@ class MyConversationRecyclerViewAdapter(
         val item = values[position]
         holder.chatname.text = item.user.fullname
         holder.chatoffer.text = item.offer.title
+
         var o = Bundle()
         o.putString("oid", item.offer.id)
         o.putString("oTitle", item.offer.title)

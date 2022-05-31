@@ -1,28 +1,34 @@
 package com.example.showprofileactivity.profile
 
+import android.os.Bundle
+import android.view.*
+import androidx.fragment.app.Fragment
+import android.widget.ImageButton
+
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.view.*
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.showprofileactivity.R
+import com.example.showprofileactivity.User
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import org.json.JSONObject
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
@@ -52,8 +58,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         btn!!.setOnClickListener {
             btn.performLongClick()
         }
+
         currentPhotoPath = profileViewModel.picture.value.toString()
-        currentPhotoName = profileViewModel.picture.value.toString()
         profileViewModel.fullname.observe(viewLifecycleOwner) { fullname ->
             requireView().findViewById<EditText>(R.id.name_e).setText(fullname)
         }
@@ -73,12 +79,9 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             requireView().findViewById<EditText>(R.id.description_e).setText(description)
         }
 
-        profileViewModel.picturepath.observe(viewLifecycleOwner) { picture ->
-            val bm = BitmapFactory.decodeFile(picture.toString())
-            requireView().findViewById<ImageButton>(R.id.propic_e).setImageBitmap(bm)
-            //requireView().findViewById<ImageButton>(R.id.propic_e).setImageURI(picture.toString().toUri())
+        profileViewModel.picture.observe(viewLifecycleOwner) { picture ->
+            requireView().findViewById<ImageButton>(R.id.propic_e).setImageURI(picture.toString().toUri())
         }
-
 
 
 
@@ -92,11 +95,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 val locationbox = view.findViewById<EditText>(R.id.location_e).text.toString()
                 val skillsbox = view.findViewById<EditText>(R.id.skills_e).text.toString()
                 val descbox = view.findViewById<EditText>(R.id.description_e).text.toString()
-                println("------------------")
-                println(namebox)
-                println(locationbox)
-                println("------------------")
-                val imgname = currentPhotoName
                 db.collection("users")
                     .document(profileViewModel.email.value.toString())
                     .update(
@@ -106,7 +104,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                             "location" to locationbox,
                             "services" to skillsbox,
                             "description" to descbox,
-                            "img" to imgname,
+                            "img" to currentPhotoName
                         )
                     )
                     .addOnSuccessListener { Log.d("Firebase", "User profile successfully modified.") }
@@ -157,6 +155,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
         if (resultCode == Activity.RESULT_OK && requestCode == 100) {
             imageView!!.setImageURI(data?.data)
+            //val imgbox = findViewById<ImageButton>(R.id.propic_e)
         }
 
         if (requestCode == 1)
@@ -167,7 +166,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         // Create a storage reference from our app
         val storageRef = FirebaseStorage.getInstance().reference
 
-        val ImagesRef = storageRef.child("/images/$currentPhotoName")
+        val ImagesRef = storageRef.child("images/$currentPhotoName")
 
         val stream = FileInputStream(File(currentPhotoPath))
 
@@ -221,7 +220,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
-            deleteOldPhoto()
             currentPhotoPath = absolutePath
             profileViewModel.savePicture(currentPhotoPath)
             currentPhotoName = "JPEG_${timeStamp}_.jpg"
@@ -229,20 +227,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
         }
     }
-    private fun deleteOldPhoto(){
-        // Create a storage reference from our app
-        val storageRef = FirebaseStorage.getInstance().reference
 
-// Create a reference to the file to delete
-        val desertRef = storageRef.child("/images/$currentPhotoName")
-
-// Delete the file
-        desertRef.delete().addOnSuccessListener {
-            println("File deleted successfully")
-        }.addOnFailureListener {
-            print(it)
-        }
-    }
     private val photolauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){ result ->
 
@@ -265,8 +250,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         val skillslist = requireView().findViewById<EditText>(R.id.skills_e).text.toString()
         profileViewModel.saveSkills(skillslist.replace(" | ", ", "))
         profileViewModel.saveDescription(requireView().findViewById<EditText>(R.id.description_e).text)
-        profileViewModel.savePicture(currentPhotoName)
-        profileViewModel.savePicturePath(currentPhotoPath)
+        profileViewModel.savePicture(currentPhotoPath)
     }
 
 }

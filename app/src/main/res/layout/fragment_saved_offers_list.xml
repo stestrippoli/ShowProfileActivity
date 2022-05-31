@@ -13,6 +13,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
+            android:layoutAnimation="@anim/layout_animation"
+
             android:name="com.example.showprofileactivity.useroffers.SavedOffersFragment"
             app:layoutManager="LinearLayoutManager"
             tools:context=".useroffers.SavedOffersFragment"
