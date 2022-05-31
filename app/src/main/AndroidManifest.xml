@@ -21,13 +21,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ShowProfileActivity">
+        android:theme="@style/Theme.TipTime">
 
         <activity
             android:name="com.example.showprofileactivity.MainActivity"
             android:exported="false"
             android:label="Time Banking"
-            android:theme="@style/Theme.ShowProfileActivity.NoActionBar">
+            android:theme="@style/Theme.TipTime.NoActionBar">
 
         </activity>
         <activity
