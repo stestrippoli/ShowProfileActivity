@@ -9,6 +9,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.*
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
@@ -59,7 +60,10 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             btn.performLongClick()
         }
 
-        currentPhotoPath = profileViewModel.picture.value.toString()
+        currentPhotoPath = profileViewModel.picturepath.value.toString()
+        currentPhotoName = profileViewModel.picture.value.toString()
+        oldPhoto = profileViewModel.picture.value.toString()
+
         profileViewModel.fullname.observe(viewLifecycleOwner) { fullname ->
             requireView().findViewById<EditText>(R.id.name_e).setText(fullname)
         }
@@ -78,16 +82,13 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         profileViewModel.description.observe(viewLifecycleOwner) { description ->
             requireView().findViewById<EditText>(R.id.description_e).setText(description)
         }
-
-        profileViewModel.picture.observe(viewLifecycleOwner) { picture ->
-            requireView().findViewById<ImageButton>(R.id.propic_e).setImageURI(picture.toString().toUri())
+        profileViewModel.picturepath.observe(viewLifecycleOwner) { picture ->
+            val bitmap = getCroppedBitmap(
+                Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picture.toString()),400,400,false))
+            requireView().findViewById<ImageButton>(R.id.propic_e).setImageBitmap(bitmap)
         }
 
-
-
         registerForContextMenu(btn)
-
-
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val namebox = view.findViewById<EditText>(R.id.name_e).text.toString()
@@ -115,6 +116,30 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         })
     }
 
+    fun getCroppedBitmap(bitmap: Bitmap): Bitmap? {
+        val output = Bitmap.createBitmap(
+            bitmap.width,
+            bitmap.height, Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(output)
+        val color = -0xbdbdbe
+        val paint = Paint()
+        val rect = Rect(0, 0, bitmap.width, bitmap.height)
+        paint.setAntiAlias(true)
+        canvas.drawARGB(0, 0, 0, 0)
+        paint.setColor(color)
+        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        canvas.drawCircle(
+            (bitmap.width / 2).toFloat(), (bitmap.height / 2).toFloat(),
+            (bitmap.width / 2).toFloat(), paint
+        )
+        paint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.SRC_IN))
+        canvas.drawBitmap(bitmap, rect, rect, paint)
+        canvas.rotate(90F)
+        //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
+        //return _bmp;
+        return output
+    }
 
     override fun onCreateContextMenu(
         menu: ContextMenu,
@@ -150,20 +175,22 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val imageView = view?.findViewById<ImageView>(R.id.propic_e)
+        val imageView = view?.findViewById<ImageButton>(R.id.propic_e)
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK && requestCode == 100) {
-            imageView!!.setImageURI(data?.data)
-            //val imgbox = findViewById<ImageButton>(R.id.propic_e)
+            profileViewModel.savePicturePath(currentPhotoPath)
+            val bitmap = getCroppedBitmap(
+                Bitmap.createScaledBitmap(BitmapFactory.decodeFile(currentPhotoPath),400,400,false))
+            requireView().findViewById<ImageButton>(R.id.propic_e).setImageBitmap(bitmap)
         }
 
         if (requestCode == 1)
-            imageView!!.setImageURI(data?.data)
+            profileViewModel.savePicturePath(currentPhotoPath)
     }
 
     private fun savePhotoOnDB(){
-        // Create a storage reference from our app
+        deletePreviousImage()
         val storageRef = FirebaseStorage.getInstance().reference
 
         val ImagesRef = storageRef.child("images/$currentPhotoName")
@@ -199,6 +226,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                     )
 
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    takePictureIntent.putExtra("path", it.absoluteFile)
                     photolauncher.launch(takePictureIntent)
                 }
             }
@@ -207,7 +235,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     lateinit var currentPhotoPath: String
     lateinit var currentPhotoName: String
-
+    lateinit var oldPhoto: String
     @SuppressLint("SimpleDateFormat")
     @Throws(IOException::class)
     private fun createImageFile(): File {
@@ -215,16 +243,28 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
+            "PNG_${timeStamp}_", /* prefix */
+            ".png", /* suffix */
             storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
-            profileViewModel.savePicture(currentPhotoPath)
-            currentPhotoName = "JPEG_${timeStamp}_.jpg"
+            currentPhotoName = "PNG_${timeStamp}_.png"
+            profileViewModel.savePicture(currentPhotoName)
+
+        }
+    }
 
 
+    private fun deletePreviousImage() {
+        val storageRef = FirebaseStorage.getInstance().reference
+
+        val desertRef = storageRef.child("/images/$oldPhoto")
+
+        desertRef.delete().addOnSuccessListener {
+            println("Previous image deleted correctly.")
+        }.addOnFailureListener {
+            println("Previous image NOT DELETED.")
         }
     }
 
@@ -232,8 +272,9 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         ActivityResultContracts.StartActivityForResult()){ result ->
 
         if (result.resultCode == Activity.RESULT_OK && result.data!=null) {
-            val imgbox = view?.findViewById<ImageButton>(R.id.propic_e)
-            imgbox!!.setImageURI(currentPhotoPath.toUri())
+            profileViewModel.savePicturePath(currentPhotoPath)
+
+
         }
     }
 
@@ -250,7 +291,9 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         val skillslist = requireView().findViewById<EditText>(R.id.skills_e).text.toString()
         profileViewModel.saveSkills(skillslist.replace(" | ", ", "))
         profileViewModel.saveDescription(requireView().findViewById<EditText>(R.id.description_e).text)
-        profileViewModel.savePicture(currentPhotoPath)
+        profileViewModel.savePicture(currentPhotoName)
+        profileViewModel.savePicturePath(currentPhotoPath)
+
     }
 
 }

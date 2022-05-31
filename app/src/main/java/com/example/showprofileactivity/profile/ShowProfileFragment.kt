@@ -1,6 +1,7 @@
 package com.example.showprofileactivity.profile
 
 import android.content.Context
+import android.graphics.*
 import android.os.Bundle
 import android.os.Environment
 import android.view.*
@@ -111,31 +112,75 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
            downloadImage(picture.toString())
         }
         profileViewModel.picturepath.observe(viewLifecycleOwner) { picture ->
-            val imageView = requireView().findViewById<ImageView>(R.id.profilepic)
-            imageView.setImageURI(picture.toString().toUri())
-        }
 
+                val imageView = requireView().findViewById<ImageView>(R.id.profilepic)
+                val bitmap = getCroppedBitmap(
+                    Bitmap.createScaledBitmap(
+                        BitmapFactory.decodeFile(picture.toString()),
+                        400,
+                        400,
+                        false
+                    )
+                )
+
+                if (bitmap != null) {
+                    imageView.setImageBitmap(bitmap)
+                }
+
+        }
     }
 
 
-    private fun downloadImage(picture: String){
+    fun downloadImage(picture: String){
 
         // Create a storage reference from our app
         val storageRef = FirebaseStorage.getInstance().reference
         val imgRef = storageRef.child("/images/$picture")
         val imageView = requireView().findViewById<ImageView>(R.id.profilepic)
 
-        val localFile = File.createTempFile("images", "jpg")
-      imgRef.getFile(localFile).addOnSuccessListener {
-            imageView.setImageURI(localFile.toUri())
-            profileViewModel.savePicturePath(localFile.toString())
-            requireView().findViewById<ProgressBar>(R.id.picprogress).visibility=View.INVISIBLE
-            imageView.visibility=View.VISIBLE
+        val localFile = File.createTempFile("images", "png", requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES))
+        imgRef.getFile(localFile).addOnSuccessListener {
+
+          val bitmap = getCroppedBitmap(
+              Bitmap.createScaledBitmap(BitmapFactory.decodeFile(localFile.path),400,400,false))
+
+          if(bitmap != null) {
+              imageView.setImageBitmap(bitmap)
+              profileViewModel.savePicturePath(localFile.path)
+              imageView.visibility=View.VISIBLE
+              requireView().findViewById<ProgressBar>(R.id.picprogress).visibility=View.INVISIBLE
+          }
 
       }.addOnFailureListener {
           requireView().findViewById<ProgressBar>(R.id.picprogress).visibility=View.INVISIBLE
           imageView.visibility=View.VISIBLE        }
     }
+    fun getCroppedBitmap(bitmap: Bitmap): Bitmap? {
+        val output = Bitmap.createBitmap(
+            bitmap.width,
+            bitmap.height, Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(output)
+        val color = -0xbdbdbe
+        val paint = Paint()
+        val rect = Rect(0, 0, bitmap.width, bitmap.height)
+        paint.setAntiAlias(true)
+        canvas.drawARGB(0, 0, 0, 0)
+
+        paint.setColor(color)
+        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        canvas.drawCircle(
+            (bitmap.width / 2).toFloat(), (bitmap.height / 2).toFloat(),
+            (bitmap.width / 2).toFloat(), paint
+        )
+        paint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.SRC_IN))
+        canvas.drawBitmap(bitmap, rect, rect, paint)
+        canvas.rotate(90F)
+        //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
+        //return _bmp;
+        return output
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -143,6 +188,8 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         inflater.inflate(R.menu.custom_menu, menu)
         mainMenu?.findItem(R.id.modifybtn)?.isVisible = false
     }
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.modifybtn -> {
@@ -163,12 +210,18 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         profileViewModel.saveDescription(description?:"Your Description" as String)
         profileViewModel.saveEmail(email.toString())
         profileViewModel.savePicture(img?:"")
-        profileViewModel.savePicturePath(requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()+img)
         profileViewModel.saveEmail(email as CharSequence)
         profileViewModel.saveCredit(credit!!)
         profileViewModel.savePicture(img.toString())
         profileViewModel.saveRating(rating)
 
+    }
+
+    override fun onDestroyView() {
+        val imageView = requireView().findViewById<ImageView>(R.id.profilepic)
+        imageView.visibility=View.INVISIBLE
+        requireView().findViewById<ProgressBar>(R.id.picprogress).visibility=View.VISIBLE
+        super.onDestroyView()
     }
 
     fun DocumentSnapshot.toUser(): User? {

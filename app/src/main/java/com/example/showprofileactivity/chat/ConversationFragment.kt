@@ -1,37 +1,26 @@
 package com.example.showprofileactivity.chat
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.annotation.NonNull
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.showprofileactivity.Message
-import com.example.showprofileactivity.MessageAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.showprofileactivity.R
 import com.example.showprofileactivity.User
-import com.example.showprofileactivity.chat.placeholder.PlaceholderContent
 import com.example.showprofileactivity.offers.placeholder.Chat
 import com.example.showprofileactivity.offers.placeholder.Offer
-import com.example.showprofileactivity.services.ServiceViewModel
-import com.example.showprofileactivity.services.placeholder.Service
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
-import kotlinx.coroutines.processNextEventInCurrentThread
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 
 
 class ConversationFragment : Fragment() {
@@ -141,6 +130,7 @@ class ConversationFragment : Fragment() {
             val description = get("description") as String?
             val credit = get("credit") as Long
             val img = get("img") as String?
+
             User(fullname, username, email, location, services, description, credit, img)
         } catch(e:Exception){
             e.printStackTrace()

@@ -10,17 +10,18 @@
 
     <ImageButton
         android:id="@+id/propic_e"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="225dp"
+        android:layout_height="213dp"
         android:layout_marginTop="16dp"
+        android:background="@null"
         android:contentDescription="@string/propic"
-        android:src="@android:drawable/ic_menu_gallery"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintVertical_weight="1" />
+        app:layout_constraintVertical_weight="1"
+        app:srcCompat="@drawable/circimg_profile" />
 
     <ScrollView
         android:id="@+id/scrollView2"

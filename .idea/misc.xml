@@ -19,6 +19,9 @@
         <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/menu/image_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/menu/main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/maria/Documents/MAD/Time-Banking-Application/app/src/main/res/menu/navdrawer_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/drawable/circimg.xml" value="0.1" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/drawable/circimg_profile.xml" value="0.163" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/drawable/circle.xml" value="0.1" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/drawable/side_nav_bar.xml" value="0.1" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/font/roboto.xml" value="0.1" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout-land/activity_edit_profile.xml" value="0.18" />
@@ -49,11 +52,11 @@
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_blank2.xml" value="0.1829059829059829" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_completed_offers.xml" value="0.12" />
-        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_conversation.xml" value="0.1" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_conversation.xml" value="0.15" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_conversation_list.xml" value="0.1829059829059829" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_date_picker.xml" value="0.1" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_date_picker2.xml" value="0.15598290598290598" />
-        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_edit_profile.xml" value="0.25" />
+        <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_edit_profile.xml" value="0.22" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_gallery.xml" value="0.1" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_home.xml" value="0.1675213675213675" />
         <entry key="..\:/Users/stest/AndroidStudioProjects/ShowProfileActivity/app/src/main/res/layout/fragment_item.xml" value="0.33" />
