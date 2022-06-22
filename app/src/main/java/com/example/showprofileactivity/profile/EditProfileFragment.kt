@@ -11,6 +11,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.*
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
@@ -21,6 +22,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
@@ -38,6 +40,7 @@ import java.util.*
 
 
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
+    var picTaken:Boolean = false
 
     private val profileViewModel : ProfileViewModel by activityViewModels()
 
@@ -53,6 +56,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         setHasOptionsMenu(true)
       return inflater.inflate(R.layout.fragment_edit_profile, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val btn = view?.findViewById<ImageButton>(R.id.propic_e)
 
@@ -83,12 +87,21 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             requireView().findViewById<EditText>(R.id.description_e).setText(description)
         }
         profileViewModel.picturepath.observe(viewLifecycleOwner) { picture ->
-            val bitmap = getCroppedBitmap(
-                Bitmap.createScaledBitmap(BitmapFactory.decodeFile(picture.toString()),400,400,false))
-            requireView().findViewById<ImageButton>(R.id.propic_e).setImageBitmap(bitmap)
+            if(picture!="null") {
+                val bitmap = getCroppedBitmap(
+                    Bitmap.createScaledBitmap(
+                        BitmapFactory.decodeFile(picture.toString()),
+                        400,
+                        400,
+                        false
+                    )
+                )
+                requireView().findViewById<ImageButton>(R.id.propic_e).setImageBitmap(bitmap)
+            }
         }
 
         registerForContextMenu(btn)
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val namebox = view.findViewById<EditText>(R.id.name_e).text.toString()
@@ -96,21 +109,40 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 val locationbox = view.findViewById<EditText>(R.id.location_e).text.toString()
                 val skillsbox = view.findViewById<EditText>(R.id.skills_e).text.toString()
                 val descbox = view.findViewById<EditText>(R.id.description_e).text.toString()
-                db.collection("users")
-                    .document(profileViewModel.email.value.toString())
-                    .update(
-                        mapOf(
-                            "fullname" to namebox,
-                            "username" to nicknamebox,
-                            "location" to locationbox,
-                            "services" to skillsbox,
-                            "description" to descbox,
-                            "img" to currentPhotoName
+                if(picTaken){
+                    db.collection("users")
+                        .document(profileViewModel.email.value.toString())
+                        .update(
+                            mapOf(
+                                "fullname" to namebox,
+                                "username" to nicknamebox,
+                                "location" to locationbox,
+                                "services" to skillsbox,
+                                "description" to descbox,
+                                "img" to currentPhotoName
+                            )
                         )
-                    )
-                    .addOnSuccessListener { Log.d("Firebase", "User profile successfully modified.") }
-                    .addOnFailureListener{ Log.d("Firebase", "Failed to modify user profile.") }
-                savePhotoOnDB()
+                        .addOnSuccessListener { Log.d("Firebase", "User profile successfully modified.") }
+                        .addOnFailureListener{ Log.d("Firebase", "Failed to modify user profile.") }
+                }
+                else{
+                    db.collection("users")
+                        .document(profileViewModel.email.value.toString())
+                        .update(
+                            mapOf(
+                                "fullname" to namebox,
+                                "username" to nicknamebox,
+                                "location" to locationbox,
+                                "services" to skillsbox,
+                                "description" to descbox
+                            )
+                        )
+                        .addOnSuccessListener { Log.d("Firebase", "User profile successfully modified.") }
+                        .addOnFailureListener{ Log.d("Firebase", "Failed to modify user profile.") }
+                }
+
+                if(picTaken)
+                    savePhotoOnDB()
                 findNavController().navigateUp()
             }
         })
@@ -128,7 +160,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         paint.setAntiAlias(true)
         canvas.drawARGB(0, 0, 0, 0)
         paint.setColor(color)
-        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
         canvas.drawCircle(
             (bitmap.width / 2).toFloat(), (bitmap.height / 2).toFloat(),
             (bitmap.width / 2).toFloat(), paint
@@ -136,8 +167,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         paint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.SRC_IN))
         canvas.drawBitmap(bitmap, rect, rect, paint)
         canvas.rotate(90F)
-        //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
-        //return _bmp;
         return output
     }
 
@@ -175,7 +204,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val imageView = view?.findViewById<ImageButton>(R.id.propic_e)
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK && requestCode == 100) {
@@ -202,7 +230,10 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             println(it)
             }.addOnSuccessListener { taskSnapshot ->
                 print("File uploaded correctly!"+taskSnapshot.metadata.toString())
-        }
+            }
+            .addOnFailureListener{
+                println("Error: file couldn't be uploaded")
+            }
     }
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
@@ -250,7 +281,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
             currentPhotoName = "PNG_${timeStamp}_.png"
-            profileViewModel.savePicture(currentPhotoName)
+            //profileViewModel.savePicture(currentPhotoName)
 
         }
     }
@@ -273,15 +304,13 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
         if (result.resultCode == Activity.RESULT_OK && result.data!=null) {
             profileViewModel.savePicturePath(currentPhotoPath)
-
-
+            picTaken=true
         }
     }
 
     override fun onDestroyView() {
         updatevm()
         super.onDestroyView()
-
     }
 
     fun updatevm() {
@@ -292,7 +321,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         profileViewModel.saveSkills(skillslist.replace(" | ", ", "))
         profileViewModel.saveDescription(requireView().findViewById<EditText>(R.id.description_e).text)
         profileViewModel.savePicture(currentPhotoName)
-        profileViewModel.savePicturePath(currentPhotoPath)
+        if(picTaken)
+            profileViewModel.savePicturePath(currentPhotoPath)
 
     }
 

@@ -39,6 +39,7 @@ class TimeSlotEditFragment : Fragment(R.layout.fragment_time_slot_edit) {
         super.onCreate(savedInstanceState)
         activity?.onBackPressedDispatcher?.addCallback(this, object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
+                println("strano")
                 val titlebox = view?.findViewById<EditText>(R.id.title_e)?.text.toString()
                 val description = view?.findViewById<EditText>(R.id.description_e)?.text.toString()
                 val location = view?.findViewById<EditText>(R.id.location_e)?.text.toString()

@@ -36,6 +36,8 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
     //var rating: String = "☆ 4"
     var user: User? = null
     private var mainMenu: Menu? = null
+    var picDownloaded=false
+    var ready=false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +57,7 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         db.collection("users").document(email).get()
             .addOnSuccessListener { res ->
                 user = res.toUser()!!
+                ready=true
                 setViewModel()
                 mainMenu?.findItem(R.id.modifybtn)?.isVisible = editmode
                 requireView().findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
@@ -85,34 +88,45 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         super.onViewCreated(view, savedInstanceState)
 
         profileViewModel.fullname.observe(viewLifecycleOwner) { fullname ->
-            requireView().findViewById<TextView>(R.id.fullname).text = fullname
+            if(ready)
+                requireView().findViewById<TextView>(R.id.fullname).text = fullname
         }
         profileViewModel.rating.observe(viewLifecycleOwner) { rating ->
-            requireView().findViewById<RatingBar>(R.id.rating).rating = rating.toString().toFloat()
+            if(ready)
+                requireView().findViewById<RatingBar>(R.id.rating).rating = rating.toString().toFloat()
         }
         profileViewModel.nickname.observe(viewLifecycleOwner) { nickname ->
-            requireView().findViewById<TextView>(R.id.nickname).text = nickname
+            if(ready)
+                requireView().findViewById<TextView>(R.id.nickname).text = nickname
         }
         profileViewModel.email.observe(viewLifecycleOwner) { email ->
-            requireView().findViewById<TextView>(R.id.email).text = email
+            if(ready)
+                requireView().findViewById<TextView>(R.id.email).text = email
         }
         profileViewModel.location.observe(viewLifecycleOwner) { location ->
-            requireView().findViewById<TextView>(R.id.location).text = location
+            if(ready)
+                requireView().findViewById<TextView>(R.id.location).text = location
         }
         profileViewModel.skills.observe(viewLifecycleOwner) { skills ->
-            requireView().findViewById<TextView>(R.id.skills).text = skills
+            if(ready)
+                requireView().findViewById<TextView>(R.id.skills).text = skills
         }
         profileViewModel.description.observe(viewLifecycleOwner) { description ->
-            requireView().findViewById<TextView>(R.id.description).text = description
+            if(ready)
+                requireView().findViewById<TextView>(R.id.description).text = description
         }
         profileViewModel.credit.observe(viewLifecycleOwner) { credit ->
-            requireView().findViewById<TextView>(R.id.credit).text = credit.toString()
+            if(ready)
+                requireView().findViewById<TextView>(R.id.credit).text = credit.toString()
         }
         profileViewModel.picture.observe(viewLifecycleOwner) { picture ->
-           downloadImage(picture.toString())
+            if(ready) {
+                downloadImage(picture.toString())
+                picDownloaded = true
+            }
         }
         profileViewModel.picturepath.observe(viewLifecycleOwner) { picture ->
-
+            if(picture!="null"&&picDownloaded) {
                 val imageView = requireView().findViewById<ImageView>(R.id.profilepic)
                 val bitmap = getCroppedBitmap(
                     Bitmap.createScaledBitmap(
@@ -126,6 +140,8 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
                 if (bitmap != null) {
                     imageView.setImageBitmap(bitmap)
                 }
+                picDownloaded=false
+            }
 
         }
     }
@@ -139,23 +155,26 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         val imageView = requireView().findViewById<ImageView>(R.id.profilepic)
 
         val localFile = File.createTempFile("images", "png", requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES))
-        imgRef.getFile(localFile).addOnSuccessListener {
+        imgRef.getFile(localFile)
+            .addOnSuccessListener {
+                val bitmap = getCroppedBitmap(
+                    Bitmap.createScaledBitmap(BitmapFactory.decodeFile(localFile.path),400,400,false))
 
-          val bitmap = getCroppedBitmap(
-              Bitmap.createScaledBitmap(BitmapFactory.decodeFile(localFile.path),400,400,false))
-
-          if(bitmap != null) {
-              imageView.setImageBitmap(bitmap)
-              profileViewModel.savePicturePath(localFile.path)
-              imageView.visibility=View.VISIBLE
-              view?.findViewById<ProgressBar>(R.id.picprogress)?.visibility=View.INVISIBLE
-          }
-
-      }.addOnFailureListener {
-            println("debug: Erroreeee")
-          requireView().findViewById<ProgressBar>(R.id.picprogress).visibility=View.INVISIBLE
-          imageView.visibility=View.VISIBLE        }
+                if(bitmap != null) {
+                    imageView.setImageBitmap(bitmap)
+                    profileViewModel.savePicturePath(localFile.path)
+                    imageView.visibility=View.VISIBLE
+                    view?.findViewById<ProgressBar>(R.id.picprogress)?.visibility=View.INVISIBLE
+                }
+                println("File downloaded successfully")
+            }
+            .addOnFailureListener {
+                requireView().findViewById<ProgressBar>(R.id.picprogress).visibility=View.INVISIBLE
+                imageView.visibility=View.VISIBLE
+                println("Error: file couldn't be downloaded")
+            }
     }
+
     fun getCroppedBitmap(bitmap: Bitmap): Bitmap? {
         val output = Bitmap.createBitmap(
             bitmap.width,
@@ -213,9 +232,8 @@ class ShowProfileFragment : Fragment(R.layout.fragment_show_profile) {
         profileViewModel.savePicture(img?:"")
         profileViewModel.saveEmail(email as CharSequence)
         profileViewModel.saveCredit(credit!!)
-        profileViewModel.savePicture(img.toString())
+        //profileViewModel.savePicture(img.toString())
         profileViewModel.saveRating(rating)
-
     }
 
     override fun onDestroyView() {
